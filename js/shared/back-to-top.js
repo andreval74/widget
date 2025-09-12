@@ -33,14 +33,11 @@ class BackToTop {
         this.button = document.getElementById('back-to-top');
         
         if (!this.button) {
-            console.warn('⚠️ Botão back-to-top não encontrado');
             return;
         }
 
         this.setupEventListeners();
         this.checkScroll(); // Verificar posição inicial
-        
-        console.log('🔝 Sistema back-to-top inicializado');
     }
 
     /**

@@ -5,7 +5,17 @@
             }
 
             // Disparar evento personalizado
-            const event = new CustomEvent('templateLoaded', {
+ // Inicialização automática quando DOM estiver pronto
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // Aguardar um pouco para garantir que todos os elementos estão prontos
+    setTimeout(() => {
+        const headerElements = document.querySelectorAll('[data-component="header"]');
+        const footerElements = document.querySelectorAll('[data-component="footer"]');
+        
+        templateLoader.loadDefaultTemplates();
+    }, 100);
+});t event = new CustomEvent('templateLoaded', {
                 detail: {
                     templatePath: templatePath,
                     containerId: containerId,
@@ -186,9 +196,8 @@ class TemplateLoader {
 
         try {
             await Promise.all(promises);
-            console.log('Todos os templates padrão foram carregados');
         } catch (error) {
-            console.error('Erro ao carregar templates padrão:', error);
+            // Template loading error handled silently
         }
     }
 
@@ -213,8 +222,6 @@ class TemplateLoader {
                 link.classList.add('active');
             }
         });
-
-        console.log('Funcionalidades do header inicializadas');
     }
 
     /**
@@ -234,8 +241,6 @@ class TemplateLoader {
         tooltips.forEach(tooltip => {
             new bootstrap.Tooltip(tooltip);
         });
-
-        console.log('Funcionalidades do footer inicializadas');
     }
 
     /**

@@ -232,8 +232,7 @@ pm2 save
 
 echo "✅ Servidor rodando em produção"
 echo "📊 Monitor: pm2 monit"
-echo "📜 Logs: pm2 logs widget-saas"
-echo "🔄 Restart: pm2 restart widget-saas"
+echo " Restart: pm2 restart widget-saas"
 EOF
 
     chmod +x start-prod.sh

@@ -225,7 +225,6 @@ Ao assinar esta mensagem, você está se autenticando no sistema XCafe Widget Sa
             try {
                 await this.authenticateWithWallet();
             } catch (error) {
-                console.error('Erro ao reautenticar:', error);
                 this.logout();
             }
         }

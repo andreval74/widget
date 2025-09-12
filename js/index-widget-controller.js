@@ -43,7 +43,7 @@ class IndexWidgetController {
         const currentThemeExample = document.getElementById('current-theme-example');
 
         if (widgetContainer) {
-            console.log('🎨 Alterando tema do widget para:', theme);
+            // ...existing code...
 
             // Atualizar data-theme
             widgetContainer.setAttribute('data-theme', theme);
@@ -58,7 +58,7 @@ class IndexWidgetController {
                     existingWidget.classList.remove('dark');
                 }
 
-                console.log('✅ Classe do widget atualizada:', existingWidget.className);
+                // ...existing code...
             } else {
                 // Se widget não existe, criar novo
                 if (window.TokenSaleWidget) {
