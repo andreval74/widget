@@ -91,7 +91,7 @@ class XCafeHeaderManager {
             connectBtn.addEventListener('click', () => {
                 if (this.isConnected) {
                     // Se já conectado, redirecionar para dashboard
-                    window.location.href = 'dashboard-modular.html';
+                    window.location.href = 'dashboard.html';
                 } else {
                     // Se não conectado, conectar carteira
                     this.connectWallet();

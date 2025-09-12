@@ -93,7 +93,7 @@ class AdminPanel {
                                         '<button class="btn btn-warning me-2" onclick="connectWallet()">Trocar Carteira</button>' : 
                                         '<button class="btn btn-primary me-2" onclick="connectWallet()">Conectar Carteira</button>'
                                     }
-                                    <a href="dashboard-modular.html" class="btn btn-outline-secondary">Voltar ao Dashboard</a>
+                                    <a href="dashboard.html" class="btn btn-outline-secondary">Voltar ao Dashboard</a>
                                 </div>
                             </div>
                         </div>

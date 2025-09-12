@@ -147,7 +147,7 @@ class HeaderController {
                 // Redirecionamento automático para dashboard
                 setTimeout(() => {
                     console.log('🚀 Redirecionando para dashboard...');
-                    window.location.href = 'dashboard-modular.html';
+                    window.location.href = 'dashboard.html';
                 }, 1000); // 1 segundo de delay para mostrar o feedback
             });
 
@@ -211,7 +211,7 @@ class HeaderController {
                 
                 // Redirecionamento imediato para dashboard
                 setTimeout(() => {
-                    window.location.href = 'dashboard-modular.html';
+                    window.location.href = 'dashboard.html';
                 }, 1500); // 1.5 segundos para mostrar mensagem
             }
         } catch (error) {
@@ -238,7 +238,7 @@ class HeaderController {
      */
     handleDashboardClick() {
         if (this.currentState === this.states.CONNECTED) {
-            window.location.href = 'dashboard-modular.html';
+            window.location.href = 'dashboard.html';
         } else {
             this.showWarning('Conecte sua carteira primeiro');
         }

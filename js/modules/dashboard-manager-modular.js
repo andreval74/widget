@@ -25,6 +25,10 @@ class DashboardManagerModular {
             }
             
             this.checkAdminAccess();
+            
+            // Inicializar sistema de chains
+            await this.initializeChainsSystem();
+            
             this.setupNavigation();
             await this.showSection('overview');
             this.updateConnectionStatus(true);
@@ -97,6 +101,7 @@ class DashboardManagerModular {
     setupNavigation() {
         console.log('⚙️ Configurando navegação...');
         
+        // Navegação tradicional para menus fixos (backup)
         document.querySelectorAll('.nav-link[data-section]').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -112,6 +117,15 @@ class DashboardManagerModular {
                 this.showSection(section);
             });
         });
+
+        // Navegação dinâmica via eventos customizados do menu modular
+        document.addEventListener('dashboardNavigation', (event) => {
+            const { section } = event.detail;
+            console.log(`🎯 Navegação dinâmica recebida: ${section}`);
+            this.showSection(section);
+        });
+
+        console.log('✅ Sistema de navegação configurado (fixo + dinâmico)');
     }
 
     async showSection(sectionName) {
@@ -480,6 +494,124 @@ class DashboardManagerModular {
 
     getCurrentSection() {
         return this.currentSection;
+    }
+
+    // ============================================================================
+    // SISTEMA DE CHAINS - INTEGRAÇÃO PRINCIPAL COM DASHBOARD
+    // ============================================================================
+
+    /**
+     * Inicializa o sistema de chains de forma assíncrona
+     * Integra o sistema de redes blockchain com o dashboard modular
+     * Garante que redes estejam disponíveis antes de carregar seções que precisam delas
+     */
+    async initializeChainsSystem() {
+        try {
+            console.log('🔗 Inicializando sistema de chains...');
+            
+            // Importar chains utils dinamicamente para evitar dependências circulares
+            const { initializeChainsSystem, fetchAllNetworks } = await import('../shared/chains-utils.js');
+            
+            // Inicializar e carregar redes do cache, arquivo local ou API
+            const networks = await initializeChainsSystem();
+            
+            // Armazenar redes no contexto do dashboard para acesso rápido
+            this.availableNetworks = networks;
+            
+            // Notificar outras partes do sistema que chains estão prontas
+            // Outras seções podem escutar este evento para carregar dados dependentes
+            window.dispatchEvent(new CustomEvent('chainsSystemReady', {
+                detail: { networks }
+            }));
+            
+            console.log(`✅ Sistema de chains inicializado com ${networks.length} redes`);
+            
+        } catch (error) {
+            console.error('❌ Erro ao inicializar sistema de chains:', error);
+            
+            // Fallback para redes básicas hardcoded se tudo falhar
+            // Garante que o sistema continue funcionando mesmo com problemas de rede
+            this.availableNetworks = [
+                { name: 'Ethereum Mainnet', chainId: 1, supported: true },
+                { name: 'BSC Mainnet', chainId: 56, supported: true },
+                { name: 'BSC Testnet', chainId: 97, supported: true },
+                { name: 'Polygon', chainId: 137, supported: true }
+            ];
+            
+            console.log('⚠️ Usando fallback de redes básicas');
+        }
+    }
+
+    /**
+     * Obtém rede específica por Chain ID
+     * Método de conveniência para busca rápida de redes específicas
+     * 
+     * @param {number|string} chainId - ID da rede blockchain
+     * @returns {Object|null} Objeto da rede ou null se não encontrada
+     */
+    getNetworkByChainId(chainId) {
+        if (!this.availableNetworks) {
+            console.warn('Sistema de chains não inicializado');
+            return null;
+        }
+        
+        return this.availableNetworks.find(network => network.chainId === parseInt(chainId));
+    }
+
+    /**
+     * Obtém todas as redes disponíveis
+     * Acesso direto à lista completa de redes carregadas
+     * 
+     * @returns {Array} Lista de redes disponíveis ou array vazio
+     */
+    getAvailableNetworks() {
+        return this.availableNetworks || [];
+    }
+
+    /**
+     * Busca redes por nome, Chain ID ou outros critérios
+     * Implementa busca local nos dados já carregados para performance
+     * 
+     * @param {string} query - Termo de busca
+     * @returns {Array} Lista de redes que correspondem à busca
+     */
+    searchNetworks(query) {
+        if (!this.availableNetworks || !query) {
+            return this.availableNetworks || [];
+        }
+        
+        const searchTerm = query.toLowerCase();
+        return this.availableNetworks.filter(network => 
+            network.name.toLowerCase().includes(searchTerm) ||
+            network.shortName?.toLowerCase().includes(searchTerm) ||
+            network.chainId.toString().includes(searchTerm)
+        );
+    }
+
+    /**
+     * Atualiza cache de redes forçadamente
+     * Útil para recarregar redes quando o usuário reporta problemas
+     * ou quando novas redes são adicionadas
+     * 
+     * @returns {Promise<Array>} Nova lista de redes após atualização
+     */
+    async refreshNetworks() {
+        try {
+            const { fetchAllNetworks } = await import('../shared/chains-utils.js');
+            this.availableNetworks = await fetchAllNetworks();
+            
+            // Notificar componentes da interface sobre a atualização
+            // Permite que formulários e seletores se atualizem automaticamente
+            window.dispatchEvent(new CustomEvent('chainsUpdated', {
+                detail: { networks: this.availableNetworks }
+            }));
+            
+            return this.availableNetworks;
+            
+        } catch (error) {
+            console.error('Erro ao atualizar redes:', error);
+            throw error;
+        }
     }
 }
 

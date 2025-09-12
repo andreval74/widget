@@ -1,0 +1,349 @@
+[
+  {
+    "name": "Ethereum Mainnet",
+    "chain": "ETH",
+    "icon": "ethereum",
+    "rpc": [
+      "https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
+      "https://rpc.ankr.com/eth",
+      "https://ethereum.publicnode.com",
+      "https://cloudflare-eth.com",
+      "https://eth.meowrpc.com"
+    ],
+    "features": [
+      {
+        "name": "EIP155"
+      },
+      {
+        "name": "EIP1559"
+      }
+    ],
+    "faucets": [],
+    "nativeCurrency": {
+      "name": "Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    },
+    "infoURL": "https://ethereum.org",
+    "shortName": "eth",
+    "chainId": 1,
+    "networkId": 1,
+    "slip44": 60,
+    "ens": {
+      "registry": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e"
+    },
+    "explorers": [
+      {
+        "name": "etherscan",
+        "url": "https://etherscan.io",
+        "standard": "EIP3091"
+      }
+    ],
+    "supported": true
+  },
+  {
+    "name": "Sepolia",
+    "title": "Ethereum Testnet Sepolia",
+    "chain": "ETH",
+    "rpc": [
+      "https://sepolia.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
+      "https://rpc.sepolia.org",
+      "https://rpc-sepolia.rockx.com",
+      "https://rpc.sepolia.ethpandaops.io"
+    ],
+    "faucets": [
+      "http://fauceth.komputing.org?chain=11155111&address=${ADDRESS}"
+    ],
+    "nativeCurrency": {
+      "name": "Sepolia Ether",
+      "symbol": "SEP",
+      "decimals": 18
+    },
+    "infoURL": "https://sepolia.otterscan.io",
+    "shortName": "sep",
+    "chainId": 11155111,
+    "networkId": 11155111,
+    "explorers": [
+      {
+        "name": "sepolia etherscan",
+        "url": "https://sepolia.etherscan.io",
+        "standard": "EIP3091"
+      }
+    ],
+    "supported": true
+  },
+  {
+    "name": "BNB Smart Chain Mainnet",
+    "chain": "BSC",
+    "rpc": [
+      "https://bsc-dataseed.binance.org",
+      "https://bsc-dataseed1.binance.org",
+      "https://bsc-dataseed2.binance.org",
+      "https://bsc-dataseed3.binance.org",
+      "https://bsc-dataseed4.binance.org",
+      "https://bsc.publicnode.com",
+      "https://bsc-mainnet.public.blastapi.io",
+      "https://endpoints.omniatech.io/v1/bsc/mainnet/public"
+    ],
+    "faucets": [],
+    "nativeCurrency": {
+      "name": "BNB Chain Native Token",
+      "symbol": "BNB",
+      "decimals": 18
+    },
+    "infoURL": "https://www.bnbchain.org/en",
+    "shortName": "bnb",
+    "chainId": 56,
+    "networkId": 56,
+    "slip44": 714,
+    "explorers": [
+      {
+        "name": "bscscan",
+        "url": "https://bscscan.com",
+        "standard": "EIP3091"
+      }
+    ],
+    "supported": true
+  },
+  {
+    "name": "BNB Smart Chain Testnet",
+    "chain": "BSC",
+    "rpc": [
+      "https://data-seed-prebsc-1-s1.binance.org:8545",
+      "https://data-seed-prebsc-2-s1.binance.org:8545",
+      "https://data-seed-prebsc-1-s2.binance.org:8545",
+      "https://data-seed-prebsc-2-s2.binance.org:8545",
+      "https://data-seed-prebsc-1-s3.binance.org:8545",
+      "https://data-seed-prebsc-2-s3.binance.org:8545",
+      "https://bsc-testnet.publicnode.com"
+    ],
+    "faucets": [
+      "https://testnet.bnbchain.org/faucet-smart"
+    ],
+    "nativeCurrency": {
+      "name": "BNB Chain Native Token",
+      "symbol": "tBNB",
+      "decimals": 18
+    },
+    "infoURL": "https://testnet.bnbchain.org/en",
+    "shortName": "bnbt",
+    "chainId": 97,
+    "networkId": 97,
+    "explorers": [
+      {
+        "name": "bscscan-testnet",
+        "url": "https://testnet.bscscan.com",
+        "standard": "EIP3091"
+      }
+    ],
+    "supported": true
+  },
+  {
+    "name": "Polygon Mainnet",
+    "chain": "Polygon",
+    "rpc": [
+      "https://polygon-rpc.com/",
+      "https://rpc-mainnet.matic.network",
+      "https://polygon.publicnode.com",
+      "https://rpc.ankr.com/polygon",
+      "https://endpoints.omniatech.io/v1/matic/mainnet/public"
+    ],
+    "faucets": [],
+    "nativeCurrency": {
+      "name": "MATIC",
+      "symbol": "MATIC",
+      "decimals": 18
+    },
+    "infoURL": "https://polygon.technology/",
+    "shortName": "matic",
+    "chainId": 137,
+    "networkId": 137,
+    "slip44": 966,
+    "explorers": [
+      {
+        "name": "polygonscan",
+        "url": "https://polygonscan.com",
+        "standard": "EIP3091"
+      }
+    ],
+    "supported": true
+  },
+  {
+    "name": "Polygon Testnet Mumbai",
+    "chain": "Polygon",
+    "rpc": [
+      "https://matic-mumbai.chainstacklabs.com",
+      "https://rpc-mumbai.maticvigil.com",
+      "https://matic-testnet-archive-rpc.bwarelabs.com",
+      "https://endpoints.omniatech.io/v1/matic/mumbai/public"
+    ],
+    "faucets": [
+      "https://faucet.polygon.technology/"
+    ],
+    "nativeCurrency": {
+      "name": "MATIC",
+      "symbol": "MATIC",
+      "decimals": 18
+    },
+    "infoURL": "https://polygon.technology/",
+    "shortName": "maticmum",
+    "chainId": 80001,
+    "networkId": 80001,
+    "explorers": [
+      {
+        "name": "polygonscan",
+        "url": "https://mumbai.polygonscan.com",
+        "standard": "EIP3091"
+      }
+    ],
+    "supported": true
+  },
+  {
+    "name": "Arbitrum One",
+    "chainId": 42161,
+    "shortName": "arb1",
+    "chain": "ETH",
+    "networkId": 42161,
+    "nativeCurrency": {
+      "name": "Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    },
+    "rpc": [
+      "https://arb1.arbitrum.io/rpc",
+      "https://arbitrum.publicnode.com",
+      "https://rpc.ankr.com/arbitrum"
+    ],
+    "faucets": [],
+    "explorers": [
+      {
+        "name": "Arbiscan",
+        "url": "https://arbiscan.io",
+        "standard": "EIP3091"
+      }
+    ],
+    "infoURL": "https://arbitrum.io",
+    "parent": {
+      "type": "L2",
+      "chain": "eip155-1",
+      "bridges": [
+        {
+          "url": "https://bridge.arbitrum.io"
+        }
+      ]
+    },
+    "supported": true
+  },
+  {
+    "name": "Optimism",
+    "chain": "ETH",
+    "rpc": [
+      "https://mainnet.optimism.io",
+      "https://optimism.publicnode.com",
+      "https://rpc.ankr.com/optimism"
+    ],
+    "faucets": [],
+    "nativeCurrency": {
+      "name": "Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    },
+    "infoURL": "https://optimism.io",
+    "shortName": "oeth",
+    "chainId": 10,
+    "networkId": 10,
+    "explorers": [
+      {
+        "name": "etherscan",
+        "url": "https://optimistic.etherscan.io",
+        "standard": "EIP3091"
+      }
+    ],
+    "supported": true
+  },
+  {
+    "name": "Base",
+    "chain": "ETH",
+    "rpc": [
+      "https://mainnet.base.org",
+      "https://base.publicnode.com",
+      "https://rpc.ankr.com/base"
+    ],
+    "faucets": [],
+    "nativeCurrency": {
+      "name": "Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    },
+    "infoURL": "https://base.org",
+    "shortName": "base",
+    "chainId": 8453,
+    "networkId": 8453,
+    "icon": "base",
+    "explorers": [
+      {
+        "name": "basescan",
+        "url": "https://basescan.org",
+        "standard": "EIP3091"
+      }
+    ],
+    "supported": true
+  },
+  {
+    "name": "Fantom Opera",
+    "chain": "FTM",
+    "rpc": [
+      "https://rpc.ftm.tools",
+      "https://fantom.publicnode.com",
+      "https://rpc.ankr.com/fantom"
+    ],
+    "faucets": [],
+    "nativeCurrency": {
+      "name": "Fantom",
+      "symbol": "FTM",
+      "decimals": 18
+    },
+    "infoURL": "https://fantom.foundation",
+    "shortName": "ftm",
+    "chainId": 250,
+    "networkId": 250,
+    "icon": "fantom",
+    "explorers": [
+      {
+        "name": "ftmscan",
+        "url": "https://ftmscan.com",
+        "standard": "EIP3091"
+      }
+    ],
+    "supported": true
+  },
+  {
+    "name": "Avalanche C-Chain",
+    "chain": "AVAX",
+    "icon": "avalanche",
+    "rpc": [
+      "https://api.avax.network/ext/bc/C/rpc",
+      "https://avalanche.publicnode.com",
+      "https://rpc.ankr.com/avalanche"
+    ],
+    "faucets": [],
+    "nativeCurrency": {
+      "name": "Avalanche",
+      "symbol": "AVAX",
+      "decimals": 18
+    },
+    "infoURL": "https://www.avax.network/",
+    "shortName": "avax",
+    "chainId": 43114,
+    "networkId": 43114,
+    "slip44": 9005,
+    "explorers": [
+      {
+        "name": "snowtrace",
+        "url": "https://snowtrace.io",
+        "standard": "EIP3091"
+      }
+    ],
+    "supported": true
+  }
+]

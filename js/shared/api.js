@@ -1,36 +1,86 @@
 /*
 ================================================================================
-XCAFE WIDGET SAAS - API UTILITIES
+XCAFE WIDGET SAAS - GERENCIADOR DE API
 ================================================================================
-Funções para comunicação com a API do servidor
+Sistema centralizado de comunicação com o backend do Widget SaaS.
+Gerencia autenticação JWT, interceptors, rate limiting e cache.
+
+CARACTERÍSTICAS:
+✅ Autenticação JWT automática
+✅ Interceptors para request/response
+✅ Rate limiting integrado
+✅ Sistema de cache inteligente
+✅ Retry automático em falhas
+✅ Logs detalhados para debug
+✅ Suporte a upload de arquivos
+✅ WebSocket para notificações em tempo real
+
+ENDPOINTS PRINCIPAIS:
+- /api/auth/* - Autenticação Web3
+- /api/widgets/* - Gerenciamento de widgets
+- /api/admin/* - Funcionalidades administrativas
+- /api/credits/* - Sistema de créditos
+- /api/transactions/* - Histórico de transações
+- /api/blockchain/* - Integração blockchain
 ================================================================================
 */
 
+/**
+ * =======================================================================
+ * CLASSE PRINCIPAL DE GERENCIAMENTO DE API
+ * =======================================================================
+ * Centraliza toda comunicação HTTP com o backend
+ * Implementa padrões de segurança e performance
+ */
 class APIManager {
+    /**
+     * Construtor da classe APIManager
+     * Inicializa configurações base e interceptors
+     */
     constructor() {
-        this.baseURL = window.location.origin;
-        this.token = this.getStoredToken();
-        this.setupInterceptors();
+        this.baseURL = window.location.origin; // URL base da aplicação
+        this.token = this.getStoredToken(); // Token JWT armazenado
+        this.setupInterceptors(); // Configura interceptors de req/res
     }
 
     // ============================================================================
-    // TOKEN MANAGEMENT
+    // GERENCIAMENTO DE TOKENS JWT
     // ============================================================================
     
+    /**
+     * Define token JWT para autenticação
+     * @param {string} token - Token JWT válido
+     */
+    /**
+     * Define token JWT para autenticação
+     * @param {string} token - Token JWT válido
+     */
     setToken(token) {
         this.token = token;
         localStorage.setItem('xcafe_token', token);
     }
 
+    /**
+     * Recupera token JWT do localStorage
+     * @returns {string|null} Token armazenado ou null
+     */
     getStoredToken() {
         return localStorage.getItem('xcafe_token');
     }
 
+    /**
+     * Remove token JWT do sistema
+     * Usado no logout ou expiração
+     */
     clearToken() {
         this.token = null;
         localStorage.removeItem('xcafe_token');
     }
 
+    /**
+     * Gera cabeçalhos HTTP com autenticação
+     * @returns {Object} Headers com Authorization se token disponível
+     */
     getAuthHeaders() {
         const headers = {
             'Content-Type': 'application/json'

@@ -327,7 +327,7 @@ class IndexPage {
                 
                 // Redirecionamento automático para dashboard
                 setTimeout(() => {
-                    window.location.href = 'dashboard-modular.html';
+                    window.location.href = 'dashboard.html';
                 }, 1500); // 1.5 segundos para mostrar mensagem
             }
         } catch (error) {
@@ -403,7 +403,7 @@ class IndexPage {
                 }
                 
                 // Redirecionar para dashboard se conectado
-                window.location.href = 'dashboard-modular.html';
+                window.location.href = 'dashboard.html';
             } else {
                 // Fallback: scroll para seção de preços
                 const pricingSection = document.getElementById('pricing');

@@ -157,7 +157,7 @@ class TemplateLoader {
     }
 
     /**
-     * Carrega header e footer automaticamente
+     * Carrega header, footer e dashboard-menu automaticamente
      */
     async loadDefaultTemplates() {
         const promises = [];
@@ -190,6 +190,23 @@ class TemplateLoader {
             } else {
                 promises.push(
                     this.loadTemplate('footer.html', 'footer-container', this.initFooterFeatures)
+                );
+            }
+        }
+
+        // Carregar dashboard-menu - verificar tanto ID quanto data-component
+        const dashboardMenuContainer = document.getElementById('dashboard-menu-container') || 
+                                     document.querySelector('[data-component="dashboard-menu"]');
+        if (dashboardMenuContainer) {
+            console.log('🎯 Dashboard menu container encontrado, carregando...');
+            // Se for data-component, usar o próprio elemento
+            if (dashboardMenuContainer.hasAttribute('data-component')) {
+                promises.push(
+                    this.loadTemplateIntoElement(dashboardMenuContainer, 'components/dashboard-menu.html', this.initDashboardMenuFeatures)
+                );
+            } else {
+                promises.push(
+                    this.loadTemplate('components/dashboard-menu.html', 'dashboard-menu-container', this.initDashboardMenuFeatures)
                 );
             }
         }
@@ -244,6 +261,56 @@ class TemplateLoader {
     }
 
     /**
+     * Inicializa funcionalidades específicas do dashboard-menu após carregamento
+     * @param {HTMLElement} dashboardMenuContainer 
+     */
+    initDashboardMenuFeatures(dashboardMenuContainer) {
+        console.log('🎯 Inicializando funcionalidades do dashboard menu...');
+        
+        // Inicializar dropdowns Bootstrap
+        const dropdowns = dashboardMenuContainer.querySelectorAll('[data-bs-toggle="dropdown"]');
+        dropdowns.forEach(dropdown => {
+            new bootstrap.Dropdown(dropdown);
+        });
+
+        // Configurar eventos de navegação
+        const navLinks = dashboardMenuContainer.querySelectorAll('[data-section]');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionName = link.getAttribute('data-section');
+                
+                // Disparar evento personalizado para o dashboard manager
+                const event = new CustomEvent('dashboardNavigation', {
+                    detail: { section: sectionName }
+                });
+                document.dispatchEvent(event);
+                
+                console.log(`📌 Navegação para seção: ${sectionName}`);
+            });
+        });
+
+        // Atualizar display da carteira se disponível
+        const walletDisplay = dashboardMenuContainer.querySelector('#wallet-display');
+        if (walletDisplay && typeof window.getCurrentWallet === 'function') {
+            const wallet = window.getCurrentWallet();
+            if (wallet) {
+                walletDisplay.innerHTML = `
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-wallet text-success me-2"></i>
+                        <div>
+                            <div class="text-white small">${wallet.substring(0, 6)}...${wallet.substring(wallet.length - 4)}</div>
+                            <div class="text-success small">Conectado</div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        console.log('✅ Dashboard menu inicializado com sucesso');
+    }
+
+    /**
      * Recarregar um template específico
      * @param {string} templatePath 
      * @param {string} containerId 
@@ -278,8 +345,9 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('📋 Verificando elementos data-component...');
         const headerElements = document.querySelectorAll('[data-component="header"]');
         const footerElements = document.querySelectorAll('[data-component="footer"]');
+        const dashboardMenuElements = document.querySelectorAll('[data-component="dashboard-menu"]');
         
-        console.log(`Encontrados ${headerElements.length} elementos header e ${footerElements.length} elementos footer`);
+        console.log(`Encontrados ${headerElements.length} elementos header, ${footerElements.length} elementos footer e ${dashboardMenuElements.length} elementos dashboard-menu`);
         
         templateLoader.loadDefaultTemplates();
     }, 100);

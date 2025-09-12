@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<!-- 
+=======================================================================
+PÁGINA DASHBOARD INDIVIDUAL - CONTRATOS
+=======================================================================
+Exemplo de página dashboard individual usando sistema modular:
+- Menu lateral carregado dinamicamente (dashboard-menu.html)
+- Conteúdo específico da seção contratos
+- Arquivos menores e mais organizados
+- Manutenção facilitada (um arquivo por funcionalidade)
+=======================================================================
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Contratos - Widget SaaS</title>
+    
+    <!-- Dependências Bootstrap e FontAwesome -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- CSS Unificado -->
+    <link href="css/dashboard.css" rel="stylesheet">
+    
+    <!-- JavaScript Modular -->
+    <script src="js/shared/template-loader.js"></script>
+    <script src="js/shared/chains-utils.js"></script>
+    <script src="js/modules/dashboard-manager-modular.js"></script>
+</head>
+<body>
+    <!-- 
+    ===========================================
+    STATUS DE CONEXÃO
+    ===========================================
+    Indicador visual do status da conexão Web3
+    -->
+    <div id="connection-status" class="connection-status disconnected">
+        <i class="fas fa-times-circle me-1"></i>
+        Verificando...
+    </div>
+
+    <!-- 
+    ===========================================
+    MENU LATERAL DINÂMICO
+    ===========================================
+    Carregado automaticamente via data-component
+    Arquivo: components/dashboard-menu.html
+    -->
+    <div data-component="dashboard-menu"></div>
+
+    <!-- 
+    ===========================================
+    CONTEÚDO PRINCIPAL - CONTRATOS
+    ===========================================
+    Conteúdo específico da página de contratos
+    -->
+    <main class="main-content">
+        <div id="main-content">
+            <!-- Cabeçalho da seção -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1 class="h3 mb-0">
+                        <i class="fas fa-file-contract text-primary me-2"></i>
+                        Meus Contratos
+                    </h1>
+                    <p class="text-muted mb-0">Gerencie seus contratos de venda de tokens</p>
+                </div>
+                <button class="btn btn-primary" onclick="navigateToSection('new-contract')">
+                    <i class="fas fa-plus me-2"></i>Novo Contrato
+                </button>
+            </div>
+
+            <!-- Lista de Contratos -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-list me-2"></i>
+                                Contratos Ativos
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <!-- Exemplo de contrato -->
+                            <div class="contract-item p-3 border rounded mb-3">
+                                <div class="row align-items-center">
+                                    <div class="col-md-3">
+                                        <h6 class="mb-1">MeuToken (MTK)</h6>
+                                        <small class="text-muted">Binance Smart Chain</small>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="small text-muted">Endereço:</div>
+                                        <code class="small">0x1234...5678</code>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="small text-muted">Preço:</div>
+                                        <strong>$0.15 USDT</strong>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <span class="badge bg-success">Ativo</span>
+                                    </div>
+                                    <div class="col-md-2 text-end">
+                                        <div class="dropdown">
+                                            <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="dropdown">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i>Editar</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-chart-line me-2"></i>Analytics</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-code me-2"></i>Widget Code</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-pause me-2"></i>Pausar</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Estado vazio -->
+                            <div id="empty-state" class="text-center py-5" style="display: none;">
+                                <i class="fas fa-file-contract fa-3x text-muted mb-3"></i>
+                                <h5 class="text-muted">Nenhum contrato cadastrado</h5>
+                                <p class="text-muted">Cadastre seu primeiro contrato para começar a vender tokens</p>
+                                <button class="btn btn-primary" onclick="navigateToSection('new-contract')">
+                                    <i class="fas fa-plus me-2"></i>Cadastrar Primeiro Contrato
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estatísticas Rápidas -->
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <i class="fas fa-file-contract fa-2x text-primary mb-2"></i>
+                            <h4 class="text-primary">1</h4>
+                            <small class="text-muted">Contratos Ativos</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <i class="fas fa-dollar-sign fa-2x text-success mb-2"></i>
+                            <h4 class="text-success">$1,250</h4>
+                            <small class="text-muted">Volume Total</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <i class="fas fa-chart-line fa-2x text-info mb-2"></i>
+                            <h4 class="text-info">156</h4>
+                            <small class="text-muted">Vendas Realizadas</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 
+    ===========================================
+    SCRIPTS ESPECÍFICOS DA PÁGINA
+    ===========================================
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        /**
+         * ===========================================
+         * INICIALIZAÇÃO DA PÁGINA DASHBOARD CONTRACTS
+         * ===========================================
+         */
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('📄 Inicializando Dashboard Contracts...');
+            
+            // Aguardar carregamento do menu dinâmico
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // Marcar item de menu como ativo
+            const contractsLink = document.querySelector('[data-section="contracts"]');
+            if (contractsLink) {
+                contractsLink.classList.add('active');
+                console.log('✅ Menu "Contratos" marcado como ativo');
+            }
+
+            // Inicializar funcionalidades específicas da página
+            initializeContractsPage();
+        });
+
+        /**
+         * Inicializa funcionalidades da página de contratos
+         */
+        function initializeContractsPage() {
+            console.log('⚙️ Inicializando funcionalidades de contratos...');
+            
+            // Configurar dropdowns
+            const dropdowns = document.querySelectorAll('[data-bs-toggle="dropdown"]');
+            dropdowns.forEach(dropdown => {
+                new bootstrap.Dropdown(dropdown);
+            });
+
+            console.log('✅ Página de contratos inicializada');
+        }
+
+        /**
+         * Função de navegação entre seções
+         * @param {string} section - Nome da seção
+         */
+        function navigateToSection(section) {
+            const event = new CustomEvent('dashboardNavigation', {
+                detail: { section: section }
+            });
+            document.dispatchEvent(event);
+        }
+
+        /**
+         * Função global de logout
+         */
+        function logout() {
+            if (confirm('Tem certeza que deseja sair?')) {
+                localStorage.removeItem('wallet_address');
+                sessionStorage.clear();
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>

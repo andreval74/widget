@@ -1,27 +1,85 @@
 /*
 ================================================================================
-XCAFE WIDGET SAAS - AUTHENTICATION UTILITIES
+XCAFE WIDGET SAAS - SISTEMA DE AUTENTICAÇÃO WEB3
 ================================================================================
-Sistema de autenticação Web3 com MetaMask
+Sistema de autenticação baseado 100% em MetaMask (sem senhas).
+Utiliza assinatura digital para verificação de identidade.
+
+CARACTERÍSTICAS:
+✅ Autenticação MetaMask (sem senhas)
+✅ Verificação por assinatura digital
+✅ Sistema de permissões hierárquico
+✅ Auto-refresh de tokens JWT
+✅ Detecção de mudança de conta
+✅ Logout automático em desconexões
+✅ Cache inteligente de sessões
+✅ Suporte a múltiplas redes
+
+FLUXO DE AUTENTICAÇÃO:
+1. Conectar MetaMask
+2. Solicitar assinatura de mensagem
+3. Backend valida assinatura
+4. Retorna JWT + dados do usuário
+5. Armazena sessão localmente
+
+HIERARQUIA DE USUÁRIOS:
+- Super Admin (primeiro usuário)
+- Admin (gerencia sistema)
+- Moderador (relatórios)
+- Usuário (widgets próprios)
 ================================================================================
 */
 
+/**
+ * =======================================================================
+ * CLASSE PRINCIPAL DE GERENCIAMENTO DE AUTENTICAÇÃO
+ * =======================================================================
+ * Controla todo o ciclo de vida da autenticação Web3
+ */
 class AuthManager {
+    /**
+     * Inicializa o gerenciador de autenticação
+     * Configura estado inicial e event listeners
+     */
     constructor() {
-        this.user = null;
-        this.token = null;
-        this.isAuthenticated = false;
-        this.userType = null;
-        this.permissions = [];
+        this.user = null; // Dados do usuário logado
+        this.token = null; // Token JWT atual
+        this.isAuthenticated = false; // Status de autenticação
+        this.userType = null; // Tipo: admin, moderador, usuário
+        this.permissions = []; // Permissões específicas
         
-        this.init();
+        this.init(); // Inicialização assíncrona
     }
 
+    /**
+     * ===========================================
+     * INICIALIZAÇÃO DO SISTEMA
+     * ===========================================
+     * Verifica autenticação armazenada e configura listeners
+     */
+    /**
+     * ===========================================
+     * INICIALIZAÇÃO DO SISTEMA
+     * ===========================================
+     * Verifica autenticação armazenada e configura listeners
+     */
     async init() {
-        await this.checkStoredAuth();
-        this.setupEventListeners();
+        await this.checkStoredAuth(); // Verifica sessão armazenada
+        this.setupEventListeners(); // Configura listeners de eventos
     }
 
+    /**
+     * ===========================================
+     * VERIFICAÇÃO DE AUTENTICAÇÃO ARMAZENADA
+     * ===========================================
+     * Recupera e valida sessão salva no localStorage
+     */
+    /**
+     * ===========================================
+     * VERIFICAÇÃO DE AUTENTICAÇÃO ARMAZENADA
+     * ===========================================
+     * Recupera e valida sessão salva no localStorage
+     */
     async checkStoredAuth() {
         const token = localStorage.getItem('xcafe_token');
         const userData = localStorage.getItem('xcafe_user');
@@ -34,7 +92,7 @@ class AuthManager {
                 this.userType = this.user.userType;
                 this.permissions = this.user.permissions || [];
                 
-                // Verificar se o token ainda é válido
+                // Verificar se o token ainda é válido no servidor
                 await this.validateToken();
             } catch (error) {
                 console.warn('Token armazenado inválido:', error);
@@ -43,11 +101,23 @@ class AuthManager {
         }
     }
 
+    /**
+     * ===========================================
+     * VALIDAÇÃO DE TOKEN NO SERVIDOR
+     * ===========================================
+     * Verifica se o JWT ainda é válido no backend
+     */
+    /**
+     * ===========================================
+     * VALIDAÇÃO DE TOKEN NO SERVIDOR
+     * ===========================================
+     * Verifica se o JWT ainda é válido no backend
+     */
     async validateToken() {
         try {
             const response = await api.auth.checkStatus();
             if (!response.success) {
-                this.clearAuth();
+                this.clearAuth(); // Token inválido, limpa autenticação
             }
         } catch (error) {
             console.warn('Falha na validação do token:', error);
@@ -55,20 +125,43 @@ class AuthManager {
         }
     }
 
+    /**
+     * ===========================================
+     * CONFIGURAÇÃO DE EVENT LISTENERS
+     * ===========================================
+     * Monitora mudanças na wallet e status de conexão
+     */
+    /**
+     * ===========================================
+     * CONFIGURAÇÃO DE EVENT LISTENERS
+     * ===========================================
+     * Monitora mudanças na wallet e status de conexão
+     */
     setupEventListeners() {
-        // Listener para mudanças na carteira
+        // Listener para mudanças no status da carteira MetaMask
         window.addEventListener('walletStatusChanged', (event) => {
             const { isConnected, account } = event.detail;
             
             if (!isConnected && this.isAuthenticated) {
+                // Wallet desconectada - fazer logout automático
                 this.logout();
             } else if (isConnected && this.user && this.user.address !== account) {
-                // Endereço da carteira mudou
+                // Endereço da carteira mudou - revalidar autenticação
                 this.handleAddressChange(account);
             }
         });
     }
 
+    /**
+     * ===========================================
+     * AUTENTICAÇÃO PRINCIPAL COM WALLET
+     * ===========================================
+     * Fluxo completo de autenticação Web3:
+     * 1. Conecta wallet
+     * 2. Obtém assinatura
+     * 3. Valida no servidor
+     * 4. Armazena sessão
+     */
     async authenticateWithWallet() {
         try {
             // Verificar se a wallet está conectada
@@ -355,7 +448,7 @@ Ao assinar esta mensagem, você está se autenticando no sistema XCafe Widget Sa
                 window.location.href = '/admin-panel.html';
                 break;
             default:
-                window.location.href = '/dashboard-modular.html';
+                window.location.href = '/dashboard.html';
         }
     }
 
