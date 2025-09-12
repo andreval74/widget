@@ -1,0 +1,210 @@
+<!-- Novo Contrato Page -->
+<div class="new-contract-section">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Criar Novo Contrato</h2>
+        <button class="btn btn-outline-secondary" onclick="dashboardManager.showSection('contracts')">
+            <i class="fas fa-arrow-left"></i> Voltar
+        </button>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Formulário de Criação -->
+            <form id="new-contract-form">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Informações Básicas</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Nome do Contrato *</label>
+                                <input type="text" class="form-control" id="contract-name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Tipo de Widget *</label>
+                                <select class="form-select" id="widget-type" required>
+                                    <option value="">Selecione o tipo</option>
+                                    <option value="payment">Pagamento</option>
+                                    <option value="subscription">Assinatura</option>
+                                    <option value="donation">Doação</option>
+                                    <option value="custom">Personalizado</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Descrição</label>
+                                <textarea class="form-control" id="contract-description" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Configurações do Widget -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Configurações do Widget</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Valor (ETH) *</label>
+                                <input type="number" class="form-control" id="widget-price" step="0.001" min="0" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Comissão (%)</label>
+                                <input type="number" class="form-control" id="widget-commission" value="5" min="0" max="100">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Cor Principal</label>
+                                <input type="color" class="form-control form-control-color" id="widget-color" value="#007bff">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Posição</label>
+                                <select class="form-select" id="widget-position">
+                                    <option value="bottom-right">Inferior Direita</option>
+                                    <option value="bottom-left">Inferior Esquerda</option>
+                                    <option value="top-right">Superior Direita</option>
+                                    <option value="top-left">Superior Esquerda</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Configurações Avançadas -->
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Configurações Avançadas</h5>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="advanced-settings-toggle">
+                            <label class="form-check-label" for="advanced-settings-toggle">
+                                Ativar
+                            </label>
+                        </div>
+                    </div>
+                    <div class="card-body" id="advanced-settings" style="display: none;">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Limite de Uso</label>
+                                <input type="number" class="form-control" id="usage-limit" min="0">
+                                <small class="form-text text-muted">0 = ilimitado</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Data de Expiração</label>
+                                <input type="date" class="form-control" id="expiration-date">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Domínios Permitidos</label>
+                                <textarea class="form-control" id="allowed-domains" rows="2" 
+                                          placeholder="exemplo.com&#10;outrosite.com.br"></textarea>
+                                <small class="form-text text-muted">Um domínio por linha. Deixe vazio para permitir todos.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botões de Ação -->
+                <div class="d-flex justify-content-end gap-2 mb-4">
+                    <button type="button" class="btn btn-outline-secondary" onclick="dashboardManager.showSection('contracts')">
+                        Cancelar
+                    </button>
+                    <button type="button" class="btn btn-outline-primary" onclick="previewWidget()">
+                        <i class="fas fa-eye"></i> Visualizar
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-plus"></i> Criar Contrato
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Preview do Widget -->
+        <div class="col-lg-4">
+            <div class="card sticky-top">
+                <div class="card-header">
+                    <h5 class="mb-0">Preview do Widget</h5>
+                </div>
+                <div class="card-body">
+                    <div id="widget-preview" class="border rounded p-3 text-center">
+                        <i class="fas fa-cube fa-2x text-muted mb-3"></i>
+                        <p class="text-muted">Preencha as informações para ver o preview</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Event listeners para o formulário
+document.addEventListener('DOMContentLoaded', function() {
+    // Toggle configurações avançadas
+    document.getElementById('advanced-settings-toggle').addEventListener('change', function() {
+        const advancedDiv = document.getElementById('advanced-settings');
+        advancedDiv.style.display = this.checked ? 'block' : 'none';
+    });
+
+    // Preview em tempo real
+    const previewFields = ['contract-name', 'widget-type', 'widget-price', 'widget-color'];
+    previewFields.forEach(fieldId => {
+        document.getElementById(fieldId).addEventListener('input', updatePreview);
+    });
+
+    // Submit do formulário
+    document.getElementById('new-contract-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        createNewContract();
+    });
+});
+
+function updatePreview() {
+    const name = document.getElementById('contract-name').value;
+    const type = document.getElementById('widget-type').value;
+    const price = document.getElementById('widget-price').value;
+    const color = document.getElementById('widget-color').value;
+
+    const preview = document.getElementById('widget-preview');
+    
+    if (name && type && price) {
+        preview.innerHTML = `
+            <div class="widget-preview-item" style="color: ${color};">
+                <i class="fas fa-cube fa-2x mb-2"></i>
+                <h6>${name}</h6>
+                <p class="small">${type}</p>
+                <strong>${price} ETH</strong>
+            </div>
+        `;
+    } else {
+        preview.innerHTML = `
+            <i class="fas fa-cube fa-2x text-muted mb-3"></i>
+            <p class="text-muted">Preencha as informações para ver o preview</p>
+        `;
+    }
+}
+
+function previewWidget() {
+    // Implementar preview em modal ou nova janela
+    if (typeof dashboardManager !== 'undefined') {
+        dashboardManager.previewWidget();
+    }
+}
+
+function createNewContract() {
+    const formData = {
+        name: document.getElementById('contract-name').value,
+        type: document.getElementById('widget-type').value,
+        description: document.getElementById('contract-description').value,
+        price: document.getElementById('widget-price').value,
+        commission: document.getElementById('widget-commission').value,
+        color: document.getElementById('widget-color').value,
+        position: document.getElementById('widget-position').value,
+        usageLimit: document.getElementById('usage-limit').value,
+        expirationDate: document.getElementById('expiration-date').value,
+        allowedDomains: document.getElementById('allowed-domains').value
+    };
+
+    if (typeof dashboardManager !== 'undefined') {
+        dashboardManager.createContract(formData);
+    }
+}
+</script>

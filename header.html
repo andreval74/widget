@@ -1,0 +1,125 @@
+<!-- Header CSS -->
+<link href="css/header.css" rel="stylesheet">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <div class="container">
+        <!-- Brand -->
+        <a class="navbar-brand" href="index.html">
+            <i class="fas fa-cube me-2 text-primary"></i>
+            <span class="fw-bold text-primary">Widget SaaS</span>
+        </a>
+
+        <!-- Mobile Toggle -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navigation -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- Menu Items -->
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">
+                        <i class="fas fa-home me-1"></i>Início
+                    </a>
+                </li>
+                
+                <!-- Dropdown: Recursos -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-star me-1"></i>Recursos
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#features">
+                            <i class="fas fa-puzzle-piece me-2"></i>Widgets
+                        </a></li>
+                        <li><a class="dropdown-item" href="#how-it-works">
+                            <i class="fas fa-cogs me-2"></i>Como Funciona
+                        </a></li>
+                        <li><a class="dropdown-item" href="#demo">
+                            <i class="fas fa-play me-2"></i>Demonstração
+                        </a></li>
+                    </ul>
+                </li>
+
+                <!-- Dropdown: Serviços -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-cube me-1"></i>Serviços
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="dashboard-modular.html">
+                            <i class="fas fa-chart-line me-2"></i>Dashboard
+                        </a></li>
+                        <li><a class="dropdown-item" href="#">
+                            <i class="fas fa-plus me-2"></i>Criar Widget
+                        </a></li>
+                        <li><a class="dropdown-item" href="#">
+                            <i class="fas fa-code me-2"></i>API
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#pricing">
+                            <i class="fas fa-dollar-sign me-2"></i>Preços
+                        </a></li>
+                    </ul>
+                </li>
+
+                <!-- Dropdown: Suporte -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-life-ring me-1"></i>Suporte
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">
+                            <i class="fas fa-book me-2"></i>Documentação
+                        </a></li>
+                        <li><a class="dropdown-item" href="#">
+                            <i class="fas fa-video me-2"></i>Tutoriais
+                        </a></li>
+                        <li><a class="dropdown-item" href="#">
+                            <i class="fas fa-comments me-2"></i>Contato
+                        </a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- Wallet Connection Area -->
+            <div class="d-flex align-items-center gap-3">
+                <!-- Botão de Carteira - Padrão XCafe -->
+                <button id="connect-wallet-btn" class="btn btn-sm wallet-btn" title="Conectar Carteira">
+                    <i class="fas fa-wallet me-1"></i>
+                    <span id="wallet-text">Conectar</span>
+                </button>
+                
+                <!-- Botão de Idiomas - Padrão XCafe -->
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-primary dropdown-toggle language-btn" type="button" 
+                            data-bs-toggle="dropdown" aria-expanded="false" title="Selecionar Idioma">
+                        <span id="current-flag">🇧🇷</span>
+                        <span class="d-none d-md-inline ms-1" id="current-lang">PT</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#" data-lang="pt" data-flag="🇧🇷">
+                            🇧🇷 Português
+                        </a></li>
+                        <li><a class="dropdown-item" href="#" data-lang="en" data-flag="🇺🇸">
+                            🇺🇸 English
+                        </a></li>
+                        <li><a class="dropdown-item" href="#" data-lang="es" data-flag="🇪🇸">
+                            🇪🇸 Español
+                        </a></li>
+                        <li><a class="dropdown-item" href="#" data-lang="fr" data-flag="🇫🇷">
+                            🇫🇷 Français
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Google Translate Element (Invisível) -->
+            <div id="google_translate_element" style="display: none;"></div>
+        </div>
+    </div>
+</nav>
+
+<!-- Header JavaScript -->
+<script src="js/header.js"></script>

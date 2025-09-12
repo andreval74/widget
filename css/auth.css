@@ -1,0 +1,137 @@
+/**
+ * ================================================================================
+ * AUTH.CSS - Estilos para a Página de Autenticação
+ * ================================================================================
+ * Estilos específicos para autenticação Web3 e onboarding
+ * ================================================================================
+ */
+
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.auth-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.auth-step {
+    text-align: center;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.auth-step.hidden {
+    display: none;
+}
+
+.wallet-btn {
+    background: linear-gradient(45deg, #f39c12, #e67e22);
+    border: none;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 20px 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.wallet-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    color: white;
+}
+
+.setup-btn {
+    background: linear-gradient(45deg, #8e44ad, #9b59b6);
+}
+
+.admin-btn {
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+}
+
+.user-btn {
+    background: linear-gradient(45deg, #27ae60, #229954);
+}
+
+.wallet-address {
+    font-family: monospace;
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    word-break: break-all;
+    margin: 15px 0;
+}
+
+.user-type-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.super-admin { 
+    background: #e74c3c; 
+    color: white; 
+}
+
+.admin { 
+    background: #f39c12; 
+    color: white; 
+}
+
+.moderator { 
+    background: #3498db; 
+    color: white; 
+}
+
+.normal { 
+    background: #27ae60; 
+    color: white; 
+}
+
+.first-admin { 
+    background: #8e44ad; 
+    color: white; 
+}
+
+.loading {
+    margin: 20px 0;
+}
+
+.status-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.error-msg {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    color: #856404;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
