@@ -31,7 +31,7 @@ Widget SaaS é uma plataforma Web3 para criação e incorporação de widgets de
 
 ### Dashboard Modular
 - **Carregamento sob demanda:** Páginas individuais em `dashboard/pages/`
-- **Menu lateral:** `components/dashboard-menu.html` (reutilizável)
+- **Menu lateral:** `dashboard/dashboard-menu.html` (organizado na pasta dashboard)
 - **Seções:** overview, contracts, new-contract, settings, reports, support
 - **Navegação:** `DashboardManagerModular.showSection(sectionName)`
 
@@ -89,7 +89,7 @@ Widget SaaS é uma plataforma Web3 para criação e incorporação de widgets de
 ### Dashboard Modular
 - **Navegação:** `DashboardManagerModular` carrega seções sob demanda
 - **Template system:** `TemplateLoader` para componentes reutilizáveis
-- **Estrutura:** Menu em `components/dashboard-menu.html`, páginas em `dashboard/pages/`
+- **Estrutura:** Menu em `dashboard/dashboard-menu.html`, páginas em `dashboard/pages/`
 
 ## Exemplos Importantes
 - **Widget Embed:**

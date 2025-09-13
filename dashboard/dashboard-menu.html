@@ -1,0 +1,148 @@
+<!-- 
+================================================================================
+DASHBOARD MENU - WIDGET SAAS
+================================================================================
+Menu lateral condensado com navegação retrátil
+================================================================================
+-->
+<nav class="sidebar">
+    <!-- Cabeçalho do Dashboard -->
+    <div class="sidebar-header">
+        <div class="brand-info">
+            <h5 class="mb-0">
+                <i class="fas fa-cube text-primary me-0"></i>
+                Widget SaaS
+            </h5>
+            <small class="text-muted">Plataforma Web3</small>
+        </div>
+
+        <!-- Informações da Carteira (condensado) -->
+        <div class="wallet-info mt-2 p-2 bg-light rounded">
+            <div id="wallet-info-display">
+                <code class="badge bg-success d-block text-center py-1" id="connected-wallet-address">
+                    Conectando...
+                </code>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menu de Navegação -->
+    <div class="sidebar-body">
+        <ul class="nav flex-column">
+
+            <!-- Dashboard Principal -->
+            <li class="nav-item">
+                <a class="nav-link text-success" href="#" onclick="location.reload(); return false;">
+                    <i class="fas fa-tachometer-alt me-2"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <!-- Seção de Contratos (Retrátil) -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-toggle="collapse" href="#contractsMenu" role="button"
+                    aria-expanded="false">
+                    <i class="fas fa-cube me-2"></i>
+                    Contratos
+                    <i class="fas fa-chevron-down ms-auto menu-arrow"></i>
+                </a>
+                <div class="collapse" id="contractsMenu">
+                    <div class="nav-submenu">
+                        <a class="nav-link nav-sublink" href="#" data-section="contracts">
+                            <i class="fas fa-list me-2"></i>Meus Contratos
+                        </a>
+                        <a class="nav-link nav-sublink" href="#" data-section="new-contract">
+                            <i class="fas fa-plus me-2"></i>Novo Contrato
+                        </a>
+                        <a class="nav-link nav-sublink" href="#" data-section="templates">
+                            <i class="fas fa-copy me-2"></i>Templates
+                        </a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Seção de Analytics (Retrátil) -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-toggle="collapse" href="#analyticsMenu" role="button"
+                    aria-expanded="false">
+                    <i class="fas fa-chart-line me-2"></i>
+                    Analytics
+                    <i class="fas fa-chevron-down ms-auto menu-arrow"></i>
+                </a>
+                <div class="collapse" id="analyticsMenu">
+                    <div class="nav-submenu">
+                        <a class="nav-link nav-sublink" href="#" data-section="transactions">
+                            <i class="fas fa-exchange-alt me-2"></i>Transações
+                        </a>
+                        <a class="nav-link nav-sublink" href="#" data-section="earnings">
+                            <i class="fas fa-dollar-sign me-2"></i>Ganhos
+                        </a>
+                        <a class="nav-link nav-sublink" href="#" data-section="reports">
+                            <i class="fas fa-chart-bar me-2"></i>Relatórios
+                        </a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Seção Financeiro (Retrátil) -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-toggle="collapse" href="#financialMenu" role="button"
+                    aria-expanded="false">
+                    <i class="fas fa-wallet me-2"></i>
+                    Financeiro
+                    <i class="fas fa-chevron-down ms-auto menu-arrow"></i>
+                </a>
+                <div class="collapse" id="financialMenu">
+                    <div class="nav-submenu">
+                        <a class="nav-link nav-sublink" href="#" data-section="credits">
+                            <i class="fas fa-coins me-2"></i>Créditos
+                        </a>
+                        <a class="nav-link nav-sublink" href="#" data-section="buy-credits">
+                            <i class="fas fa-shopping-cart me-2"></i>Comprar
+                        </a>
+                        <a class="nav-link nav-sublink" href="#" data-section="billing">
+                            <i class="fas fa-receipt me-2"></i>Faturamento
+                        </a>
+                        <a class="nav-link nav-sublink" href="#" data-section="withdraw">
+                            <i class="fas fa-money-bill-wave me-2"></i>Saques
+                        </a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Seção do Sistema (Retrátil) -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-toggle="collapse" href="#systemMenu" role="button"
+                    aria-expanded="false">
+                    <i class="fas fa-cogs me-2"></i>
+                    Sistema
+                    <i class="fas fa-chevron-down ms-auto menu-arrow"></i>
+                </a>
+                <div class="collapse" id="systemMenu">
+                    <div class="nav-submenu">
+                        <a class="nav-link nav-sublink" href="#" data-section="settings">
+                            <i class="fas fa-cog me-2"></i>Configurações
+                        </a>
+                        <a class="nav-link nav-sublink" href="#" data-section="support">
+                            <i class="fas fa-question-circle me-2"></i>Suporte
+                        </a>
+                        <a class="nav-link nav-sublink" href="../admin-panel.html" id="admin-menu-item">
+                            <i class="fas fa-shield-alt me-2"></i>Admin Panel
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Dashboard Rodapé -->
+    <li class="nav-item">
+        <a class="nav-link text-danger" href="#" onclick="logout()">
+            <i class="fas fa-sign-out-alt me-2"></i>Sair do Sistema
+        </a>
+    </li>
+</nav>
+
+<!-- Scripts do Dashboard Menu -->
+<script src="../js/shared/wallet-menu-manager.js"></script>
+<script src="../js/modules/dashboard-menu-manager.js"></script>

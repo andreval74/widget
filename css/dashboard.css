@@ -100,6 +100,52 @@ body {
     text-align: center;
 }
 
+/* ===== MENU RETRÁTIL SIDEBAR ===== */
+/* Estilos para menus colapsáveis na sidebar */
+.nav-link[data-bs-toggle="collapse"] {
+    position: relative;
+    cursor: pointer;
+}
+
+.nav-link .menu-arrow {
+    transition: transform 0.3s ease;
+    font-size: 0.8rem;
+}
+
+.nav-link[aria-expanded="true"] .menu-arrow {
+    transform: rotate(180deg);
+}
+
+.nav-submenu {
+    margin-left: 1rem;
+    border-left: 2px solid rgba(var(--bs-primary-rgb), 0.2);
+    padding-left: 0.5rem;
+}
+
+.nav-sublink {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+    margin-bottom: 0.2rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.nav-sublink:hover {
+    background: rgba(var(--bs-primary-rgb), 0.1);
+    padding-left: 1rem;
+}
+
+/* Animação suave para collapse */
+.collapse {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Wallet info condensado */
+.wallet-info {
+    background: rgba(var(--bs-light-rgb), 0.8) !important;
+    border: 1px solid rgba(var(--bs-border-color-rgb), 0.3);
+}
+
 /* ===== CARDS E COMPONENTES ===== */
 
 /* Cards base com hover unificado */

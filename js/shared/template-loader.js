@@ -202,11 +202,11 @@ class TemplateLoader {
             // Se for data-component, usar o próprio elemento
             if (dashboardMenuContainer.hasAttribute('data-component')) {
                 promises.push(
-                    this.loadTemplateIntoElement(dashboardMenuContainer, 'components/dashboard-menu.html', this.initDashboardMenuFeatures)
+                    this.loadTemplateIntoElement(dashboardMenuContainer, 'dashboard/dashboard-menu.html', this.initDashboardMenuFeatures)
                 );
             } else {
                 promises.push(
-                    this.loadTemplate('components/dashboard-menu.html', 'dashboard-menu-container', this.initDashboardMenuFeatures)
+                    this.loadTemplate('dashboard/dashboard-menu.html', 'dashboard-menu-container', this.initDashboardMenuFeatures)
                 );
             }
         }
