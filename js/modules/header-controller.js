@@ -104,14 +104,21 @@ class HeaderController {
     getElements() {
         this.elements = {
             connectBtn: document.getElementById('connect-wallet-btn'),
-            dashboardBtn: document.getElementById('dashboard-btn'),
-            languageBtn: document.getElementById('language-btn')
+            dashboardBtn: document.querySelector('.dashboard-item'), // Link dashboard no dropdown
+            languageBtn: document.getElementById('current-language-btn'), // Botão de idioma atual
+            walletText: document.getElementById('wallet-text'),
+            currentFlag: document.getElementById('current-flag'),
+            walletDropdown: document.getElementById('wallet-dropdown-menu')
         };
 
-        // Verificar se todos os elementos foram encontrados
+        // Verificar elementos críticos (apenas mostrar warn para elementos realmente importantes)
+        const criticalElements = ['connectWalletBtn'];
+        
         for (const [key, element] of Object.entries(this.elements)) {
-            if (!element) {
-                console.warn(`⚠️ Elemento não encontrado: ${key}`);
+            if (!element && criticalElements.includes(key)) {
+                console.warn(`⚠️ Elemento crítico não encontrado: ${key}`);
+            } else if (!element) {
+                console.debug(`ℹ️ Elemento opcional não encontrado: ${key}`);
             }
         }
     }
@@ -295,8 +302,8 @@ class HeaderController {
 
         switch (this.currentState) {
             case this.states.CONNECTED:
-                const account = this.web3Manager.getCurrentAccount();
-                const shortAddress = account.slice(0, 6) + '...' + account.slice(-4);
+                const account = this.web3Manager.account; // Usar propriedade account diretamente
+                const shortAddress = account ? account.slice(0, 6) + '...' + account.slice(-4) : '';
                 
                 btn.className = 'btn btn-sm wallet-btn connected';
                 btn.innerHTML = `<i class="fas fa-wallet me-1"></i><span>${shortAddress}</span>`;

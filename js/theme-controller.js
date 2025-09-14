@@ -26,9 +26,10 @@ class ThemeController {
     }
 
     setupSimpleThemeToggle() {
-        // Aguardar o header carregar - usa múltiplas tentativas
+        // Verificar se existem elementos de tema no header
+        // Se não existir, não configurar o toggle (página pode não ter tema toggle)
         let attempts = 0;
-        const maxAttempts = 50; // 5 segundos total
+        const maxAttempts = 10; // Reduzir tentativas para 1 segundo total
         
         const checkHeader = () => {
             attempts++;
@@ -49,7 +50,8 @@ class ThemeController {
                 // Tentar novamente em 100ms
                 setTimeout(checkHeader, 100);
             } else {
-                console.warn('⚠️ Header button not found after maximum attempts');
+                // Não exibir warning se não há elementos de tema - é normal em algumas páginas
+                console.log('ℹ️ Theme toggle elements not found - theme toggle disabled for this page');
             }
         };
         

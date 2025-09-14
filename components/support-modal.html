@@ -1,0 +1,213 @@
+<!-- Modal de Suporte/Contato Universal -->
+<div class="modal fade" id="support-modal" tabindex="-1" aria-labelledby="supportModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="supportModalLabel">
+                    <i class="fas fa-headset me-2"></i>Suporte & Contato
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <div class="modal-body">
+                <!-- Tabs de Navegação -->
+                <ul class="nav nav-pills nav-fill mb-4" id="supportTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="contact-tab" data-bs-toggle="pill" data-bs-target="#contact-form" type="button" role="tab">
+                            <i class="fas fa-envelope me-1"></i> Contato
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="support-tab" data-bs-toggle="pill" data-bs-target="#support-options" type="button" role="tab">
+                            <i class="fas fa-life-ring me-1"></i> Suporte
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="community-tab" data-bs-toggle="pill" data-bs-target="#community-links" type="button" role="tab">
+                            <i class="fas fa-users me-1"></i> Comunidade
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Conteúdo das Tabs -->
+                <div class="tab-content" id="supportTabContent">
+                    
+                    <!-- Formulário de Contato -->
+                    <div class="tab-pane fade show active" id="contact-form" role="tabpanel">
+                        <form id="contact-support-form">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="contact-name" class="form-label">Nome *</label>
+                                    <input type="text" class="form-control" id="contact-name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="contact-email" class="form-label">E-mail *</label>
+                                    <input type="email" class="form-control" id="contact-email" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="contact-subject" class="form-label">Assunto *</label>
+                                <select class="form-select" id="contact-subject" required>
+                                    <option value="">Selecione o assunto...</option>
+                                    <option value="saiba-mais">Saiba mais sobre a plataforma</option>
+                                    <option value="suporte-tecnico">Suporte técnico</option>
+                                    <option value="comercial">Questões comerciais</option>
+                                    <option value="integracao">Ajuda com integração</option>
+                                    <option value="bug-report">Reportar problema</option>
+                                    <option value="outros">Outros</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="contact-message" class="form-label">Mensagem *</label>
+                                <textarea class="form-control" id="contact-message" rows="4" placeholder="Descreva sua dúvida ou solicitação..." required></textarea>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="contact-wallet" class="form-label">Carteira (opcional)</label>
+                                <input type="text" class="form-control" id="contact-wallet" placeholder="0x..." readonly>
+                                <small class="text-muted">Preenchido automaticamente se conectado</small>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane me-1"></i> Enviar Mensagem
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Opções de Suporte -->
+                    <div class="tab-pane fade" id="support-options" role="tabpanel">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-book-open text-primary fa-3x mb-3"></i>
+                                        <h5>Documentação</h5>
+                                        <p class="text-muted">Guias e tutoriais completos para usar nossa plataforma</p>
+                                        <a href="#" class="btn btn-outline-primary">Ver Docs</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-question-circle text-warning fa-3x mb-3"></i>
+                                        <h5>FAQ</h5>
+                                        <p class="text-muted">Respostas para as perguntas mais frequentes</p>
+                                        <a href="#" class="btn btn-outline-warning">Ver FAQ</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-video text-success fa-3x mb-3"></i>
+                                        <h5>Tutoriais</h5>
+                                        <p class="text-muted">Vídeos passo a passo para integração</p>
+                                        <a href="#" class="btn btn-outline-success">Ver Vídeos</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-code text-info fa-3x mb-3"></i>
+                                        <h5>API Docs</h5>
+                                        <p class="text-muted">Documentação técnica completa da API</p>
+                                        <a href="#" class="btn btn-outline-info">Ver API</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Links da Comunidade -->
+                    <div class="tab-pane fade" id="community-links" role="tabpanel">
+                        <div class="row justify-content-center">
+                            <!-- WhatsApp -->
+                            <div class="col-md-6 mb-4">
+                                <div class="card border-success">
+                                    <div class="card-body text-center">
+                                        <i class="fab fa-whatsapp text-success fa-4x mb-3"></i>
+                                        <h5>WhatsApp</h5>
+                                        <p class="text-muted">Suporte direto pelo WhatsApp</p>
+                                        <a href="https://wa.me/5543999446606" target="_blank" class="btn btn-success">
+                                            <i class="fab fa-whatsapp me-1"></i> Abrir Chat
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Telegram -->
+                            <div class="col-md-6 mb-4">
+                                <div class="card border-primary">
+                                    <div class="card-body text-center">
+                                        <i class="fab fa-telegram text-primary fa-4x mb-3"></i>
+                                        <h5>Comunidade Telegram</h5>
+                                        <p class="text-muted">Junte-se à nossa comunidade</p>
+                                        <a href="#" target="_blank" class="btn btn-primary">
+                                            <i class="fab fa-telegram me-1"></i> Entrar no Grupo
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Horário de Atendimento -->
+                        <div class="alert alert-info text-center mt-4">
+                            <i class="fas fa-clock me-2"></i>
+                            <strong>Horário de Atendimento:</strong> Segunda a Sexta, 9h às 18h (GMT-3)
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="modal-footer bg-light">
+                <small class="text-muted">
+                    <i class="fas fa-shield-alt me-1"></i>
+                    Suas informações são tratadas com total segurança e privacidade.
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CSS específico do modal -->
+<style>
+.support-modal .nav-pills .nav-link {
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.support-modal .nav-pills .nav-link.active {
+    background-color: var(--bs-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+.support-modal .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.support-modal .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.support-modal .fa-4x {
+    transition: transform 0.3s ease;
+}
+
+.support-modal .card:hover .fa-4x {
+    transform: scale(1.1);
+}
+
+#contact-wallet {
+    background-color: #f8f9fa;
+}
+</style>

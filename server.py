@@ -425,6 +425,11 @@ class WidgetSaaSHandler(BaseHTTPRequestHandler):
             self.send_json_response(result)
             return
         
+        if path == 'api/support/contact':
+            result = self.handle_support_contact(data)
+            self.send_json_response(result)
+            return
+        
         self.send_error_response(404, "Endpoint not found")
 
     def serve_static_file(self, path):
@@ -758,6 +763,68 @@ class WidgetSaaSHandler(BaseHTTPRequestHandler):
             return {
                 "success": False,
                 "error": "Erro ao regenerar API Key"
+            }
+
+    def handle_support_contact(self, data):
+        """Processa formulário de contato/suporte"""
+        try:
+            # Validar dados obrigatórios
+            required_fields = ['name', 'email', 'subject', 'message']
+            for field in required_fields:
+                if field not in data or not data[field].strip():
+                    return {
+                        "success": False,
+                        "error": f"Campo obrigatório faltando: {field}"
+                    }
+            
+            # Dados do contato
+            contact_data = {
+                "id": f"contact_{int(time.time())}_{secrets.token_hex(4)}",
+                "name": data['name'].strip(),
+                "email": data['email'].strip(),
+                "subject": data['subject'].strip(),
+                "message": data['message'].strip(),
+                "wallet": data.get('wallet', '').strip(),
+                "page": data.get('page', ''),
+                "timestamp": datetime.now().isoformat(),
+                "status": "pending"
+            }
+            
+            # Salvar contato em arquivo JSON
+            contact_file = 'data/support_contacts.json'
+            contacts = []
+            
+            try:
+                if os.path.exists(contact_file):
+                    with open(contact_file, 'r', encoding='utf-8') as f:
+                        contacts = json.load(f)
+            except:
+                contacts = []
+            
+            contacts.append(contact_data)
+            
+            # Salvar de volta
+            os.makedirs('data', exist_ok=True)
+            with open(contact_file, 'w', encoding='utf-8') as f:
+                json.dump(contacts, f, indent=2, ensure_ascii=False)
+            
+            # Log da ação
+            print(f"📧 Support Contact: {contact_data['name']} ({contact_data['email']}) - {contact_data['subject']}")
+            
+            # TODO: Aqui você pode integrar com serviços de email como SendGrid, SES, etc.
+            # Por enquanto, apenas salva no arquivo
+            
+            return {
+                "success": True,
+                "message": "Mensagem enviada com sucesso! Entraremos em contato em breve.",
+                "contactId": contact_data['id']
+            }
+            
+        except Exception as e:
+            print(f"Error handling support contact: {e}")
+            return {
+                "success": False,
+                "error": "Erro interno do servidor. Tente novamente."
             }
 
     def log_message(self, format, *args):
