@@ -212,6 +212,46 @@ class DataManager {
         }
     }
 
+    /**
+     * Atualiza dados do usuário
+     */
+    async updateUser(wallet, userData = {}) {
+        try {
+            const users = await this.readFileFromStorage(this.files.users);
+            const lines = users.split('\n');
+            let updated = false;
+            
+            const updatedLines = lines.map(line => {
+                if (line.startsWith('#') || !line.trim()) return line;
+                
+                const [userWallet, name, email, dateCreated, status] = line.split('|');
+                if (userWallet === wallet) {
+                    updated = true;
+                    return [
+                        wallet,
+                        userData.name || name,
+                        userData.email || email,
+                        dateCreated,
+                        userData.status || status
+                    ].join('|');
+                }
+                return line;
+            });
+            
+            if (updated) {
+                await this.writeFileToStorage(this.files.users, updatedLines.join('\n'));
+                await this.log(`Usuário atualizado: ${wallet}`);
+                return { success: true, message: 'Usuário atualizado' };
+            } else {
+                return { success: false, message: 'Usuário não encontrado' };
+            }
+            
+        } catch (error) {
+            await this.log(`Erro ao atualizar usuário: ${error.message}`, 'error');
+            return { success: false, message: error.message };
+        }
+    }
+
     // ==================== OPERAÇÕES DE CRÉDITOS ====================
     
     /**

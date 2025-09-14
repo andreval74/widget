@@ -210,9 +210,15 @@ class HeaderController {
         try {
             this.setState(this.states.CONNECTING);
             
-            const account = await this.web3Manager.connectWallet();
+            const result = await this.web3Manager.connect();
             
-            if (account) {
+            if (result === null) {
+                // Solicitação já pendente - não mostrar erro
+                this.setState(this.states.DISCONNECTED);
+                return;
+            }
+            
+            if (result && result.account) {
                 this.setState(this.states.CONNECTED);
                 this.showSuccess('Carteira conectada! Redirecionando...');
                 
@@ -223,7 +229,11 @@ class HeaderController {
             }
         } catch (error) {
             this.setState(this.states.ERROR);
-            throw error;
+            
+            // Não mostrar erro para solicitações pendentes
+            if (!error.message || !error.message.includes('already pending')) {
+                throw error;
+            }
         }
     }
 
@@ -472,6 +482,15 @@ class HeaderController {
      */
     refresh() {
         this.updateUI();
+    }
+    
+    // ==================== MÉTODOS DE COMPATIBILIDADE ====================
+    
+    /**
+     * Alias para updateUI para compatibilidade
+     */
+    updateConnectionButton() {
+        this.updateConnectButton();
     }
 }
 
