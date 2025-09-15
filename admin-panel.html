@@ -135,6 +135,12 @@ RECURSOS TÉCNICOS:
                     Redes Blockchain
                 </a>
             </li>
+            <li class="admin-nav-item" data-auth="admin">
+                <a href="#emails" class="admin-nav-link" data-section="emails">
+                    <i class="fas fa-envelope-open-text me-2"></i>
+                    Config. E-mails
+                </a>
+            </li>
             <li class="admin-nav-item">
                 <a href="#" class="admin-nav-link" onclick="auth.logout()">
                     <i class="fas fa-sign-out-alt me-2"></i>
@@ -585,6 +591,187 @@ RECURSOS TÉCNICOS:
                 </div>
             </div>
         </section>
+
+        <!-- Configuração de E-mails Section -->
+        <section id="section-emails" class="admin-section" data-auth="admin">
+            <div class="container-fluid">
+                <div class="row mb-4">
+                    <div class="col">
+                        <h1><i class="fas fa-envelope-open-text me-2"></i>Configuração de E-mails</h1>
+                        <p class="text-muted">Gerencie os e-mails de destino por assunto do formulário de contato</p>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-success" onclick="addEmailConfig()">
+                            <i class="fas fa-plus me-2"></i>Adicionar Configuração
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Configurações Atuais -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-cog me-2"></i>E-mails por Assunto
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="emailConfigTable">
+                                        <thead>
+                                            <tr>
+                                                <th width="30%">Assunto</th>
+                                                <th width="40%">E-mail Destino</th>
+                                                <th width="15%">Status</th>
+                                                <th width="15%">Ações</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="emailConfigList">
+                                            <!-- Configs carregadas dinamicamente -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Configurações Globais -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-server me-2"></i>Configurações SMTP
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="smtpConfigForm">
+                                    <div class="mb-3">
+                                        <label class="form-label">Servidor SMTP</label>
+                                        <input type="text" class="form-control" id="smtpHost" placeholder="smtp.gmail.com">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Porta</label>
+                                                <input type="number" class="form-control" id="smtpPort" placeholder="587">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Segurança</label>
+                                                <select class="form-select" id="smtpSecurity">
+                                                    <option value="tls">TLS</option>
+                                                    <option value="ssl">SSL</option>
+                                                    <option value="none">Nenhuma</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Usuário</label>
+                                        <input type="email" class="form-control" id="smtpUser" placeholder="seu@email.com">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Senha</label>
+                                        <input type="password" class="form-control" id="smtpPass" placeholder="••••••••">
+                                    </div>
+                                    <button type="button" class="btn btn-primary" onclick="saveSmtpConfig()">
+                                        <i class="fas fa-save me-2"></i>Salvar SMTP
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary" onclick="testSmtpConfig()">
+                                        <i class="fas fa-vials me-2"></i>Testar
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-chart-pie me-2"></i>Estatísticas
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row text-center">
+                                    <div class="col-6">
+                                        <div class="border-end">
+                                            <div class="fs-4 fw-bold text-primary" id="totalEmails">0</div>
+                                            <small class="text-muted">E-mails Enviados</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="fs-4 fw-bold text-success" id="emailSuccess">0%</div>
+                                        <small class="text-muted">Taxa de Sucesso</small>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="d-grid">
+                                    <button class="btn btn-outline-info" onclick="viewEmailLogs()">
+                                        <i class="fas fa-history me-2"></i>Ver Logs
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal: Configuração de E-mail -->
+        <div class="modal fade" id="emailConfigModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fas fa-envelope me-2"></i>Configuração de E-mail
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="emailConfigFormModal">
+                            <input type="hidden" id="configId">
+                            <div class="mb-3">
+                                <label class="form-label">Assunto do Formulário</label>
+                                <select class="form-select" id="configSubject" required>
+                                    <option value="">Selecione o assunto...</option>
+                                    <option value="saiba-mais">💡 Saiba mais sobre a plataforma</option>
+                                    <option value="suporte-tecnico">🛠️ Suporte técnico</option>
+                                    <option value="comercial">💼 Questões comerciais</option>
+                                    <option value="integracao">🔗 Ajuda com integração</option>
+                                    <option value="bug-report">🐛 Reportar problema</option>
+                                    <option value="outros">📋 Outros</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">E-mail de Destino</label>
+                                <input type="email" class="form-control" id="configEmail" placeholder="destino@empresa.com" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Nome do Responsável</label>
+                                <input type="text" class="form-control" id="configResponsible" placeholder="Nome do responsável">
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="configActive" checked>
+                                <label class="form-check-label" for="configActive">
+                                    Configuração ativa
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-success" onclick="saveEmailConfig()">
+                            <i class="fas fa-save me-2"></i>Salvar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- Modal: Criar Admin -->

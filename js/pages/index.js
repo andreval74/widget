@@ -383,44 +383,14 @@ class IndexPage {
 
     // Botão "Começar Agora"
     initGetStartedButton() {
-        const getStartedBtn = document.getElementById('get-started');
-        if (getStartedBtn) {
-            getStartedBtn.addEventListener('click', () => this.handleGetStarted());
-        }
+        // Botão agora é gerenciado pelo wallet.js centralizado
+        console.log('✅ Botão Get Started gerenciado pelo wallet.js');
     }
 
     // Ação do botão começar agora
     async handleGetStarted() {
-        try {
-            // Se Web3 disponível, verificar conexão
-            if (this.web3Manager) {
-                const isConnected = await this.web3Manager.isConnected();
-                
-                if (!isConnected) {
-                    // Se não conectado, conectar primeiro
-                    await this.handleConnect();
-                    return;
-                }
-                
-                // Redirecionar para dashboard se conectado
-                window.location.href = 'dashboard.html';
-            } else {
-                // Fallback: scroll para seção de preços
-                const pricingSection = document.getElementById('pricing');
-                if (pricingSection) {
-                    pricingSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                } else {
-                    // Último fallback: página de auth
-                    window.location.href = 'auth.html';
-                }
-            }
-        } catch (error) {
-            console.error('Erro ao iniciar:', error);
-            this.showError('Erro ao iniciar. Tente novamente.');
-        }
+        // Esta função não é mais necessária - wallet.js gerencia tudo
+        console.log('ℹ️ Get Started agora é gerenciado pelo wallet.js');
     }
 
     // ========================================================================

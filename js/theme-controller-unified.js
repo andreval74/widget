@@ -9,7 +9,7 @@ Integra funcionalidades do theme-controller.js + index-widget-controller.js
 
 class ThemeController {
     constructor() {
-        this.currentTheme = localStorage.getItem('xcafe-theme') || 'light';
+        this.currentTheme = localStorage.getItem('xcafe-theme') || 'dark';
         this.observers = [];
         this.init();
     }

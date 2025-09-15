@@ -210,28 +210,21 @@ class HeaderController {
         try {
             this.setState(this.states.CONNECTING);
             
-            const result = await this.web3Manager.connect();
+            // Usar função global COM redirecionamento
+            const account = await window.connectWalletGlobal(true);
             
-            if (result === null) {
-                // Solicitação já pendente - não mostrar erro
-                this.setState(this.states.DISCONNECTED);
-                return;
-            }
-            
-            if (result && result.account) {
+            if (account) {
                 this.setState(this.states.CONNECTED);
                 this.showSuccess('Carteira conectada! Redirecionando...');
-                
-                // Redirecionamento imediato para dashboard
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html';
-                }, 1500); // 1.5 segundos para mostrar mensagem
+                // O redirecionamento é feito automaticamente pela função global
+            } else {
+                this.setState(this.states.DISCONNECTED);
             }
         } catch (error) {
             this.setState(this.states.ERROR);
             
-            // Não mostrar erro para solicitações pendentes
-            if (!error.message || !error.message.includes('already pending')) {
+            // Não mostrar erro para solicitações canceladas pelo usuário
+            if (error.code !== 4001) {
                 throw error;
             }
         }

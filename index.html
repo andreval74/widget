@@ -12,7 +12,8 @@
     <meta name="keywords" content="widget, tokens, blockchain, metamask, venda, SaaS">
     <meta name="author" content="Widget SaaS Team">
     <!-- Favicon temporário com emoji -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📦</text></svg>">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📦</text></svg>">
     <!-- <link rel="icon" type="image/png" sizes="32x32" href="imgs/xcafe-32x32.png"> -->
     <!-- <link rel="icon" type="image/png" sizes="16x16" href="imgs/xcafe-16x16.png"> -->
 
@@ -26,7 +27,7 @@
 
     <!-- CSS UNIFICADO - Substitui main.css + menu.css + dashboard.css + auth.css + admin.css -->
     <link href="css/styles.css" rel="stylesheet">
-    
+
     <!-- CSS específico do Widget (apenas se necessário) -->
     <link href="css/widget-sale.css" rel="stylesheet">
 </head>
@@ -48,15 +49,16 @@
                         Plataforma SaaS que permite integrar facilmente um widget de venda de tokens em qualquer site.
                         Sistema de créditos pré-pagos e comissão automática de 2%.
                     </p>
-                    <div class="d-flex flex-wrap gap-3">
+
+                    <div class="d-flex flex-wrap gap-3 mb-3" style="margin: 10px 0; padding: 5px 0;">
                         <button id="get-started" class="btn btn-warning btn-lg btn-custom">
                             <i class="fas fa-rocket me-2"></i>
                             Começar Agora
                         </button>
-                        <a href="#demo" class="btn btn-success btn-lg btn-custom">
+                        <button id="ver-demo" class="btn btn-primary btn-lg btn-custom">
                             <i class="fas fa-play me-2"></i>
                             Ver Demo
-                        </a>
+                        </button>
                     </div>
                 </div>
                 <div class="col-lg-6 text-center">
@@ -67,6 +69,8 @@
             </div>
         </div>
     </section>
+
+    <hr class="section-separator">
 
     <!-- Stats Section -->
     <section class="stats-section section-primary">
@@ -278,48 +282,42 @@
                 </p>
             </div>
 
-            <div class="row justify-content-center">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5><i class="fas fa-desktop me-2"></i>Preview do Widget em Ação</h5>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- Seletor de Tema -->
+                        <div class="mb-5 text-center">
+                            <label class="form-label fw-bold">🎨 Escolha o Tema:</label>
+                            <div class="btn-group" role="group">
+                                <input type="radio" class="btn-check" name="theme-selector" id="theme-light"
+                                    autocomplete="off" checked>
+                                <label class="btn btn-outline-primary" for="theme-light">
+                                    <i class="fas fa-sun me-1"></i>Claro
+                                </label>
+
+                                <input type="radio" class="btn-check" name="theme-selector" id="theme-dark"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="theme-dark">
+                                    <i class="fas fa-moon me-1"></i>Escuro
+                                </label>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <!-- Seletor de Tema -->
-                                    <div class="mb-5 text-center">
-                                        <label class="form-label fw-bold">🎨 Escolha o Tema:</label>
-                                        <div class="btn-group" role="group">
-                                            <input type="radio" class="btn-check" name="theme-selector" id="theme-light"
-                                                autocomplete="off" checked>
-                                            <label class="btn btn-outline-primary" for="theme-light">
-                                                <i class="fas fa-sun me-1"></i>Claro
-                                            </label>
 
-                                            <input type="radio" class="btn-check" name="theme-selector" id="theme-dark"
-                                                autocomplete="off">
-                                            <label class="btn btn-outline-primary" for="theme-dark">
-                                                <i class="fas fa-moon me-1"></i>Escuro
-                                            </label>
-                                        </div>
-                                    </div>
+                        <!-- Container do Widget com fundo fixo -->
+                        <div>
+                            <div id="widget-demo-container" data-token-widget data-api-key="demo-key"
+                                data-sale-id="demo-sale" data-theme="light">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h6><i class="fas fa-code me-2 text-primary"></i>Como Integrar (Super Fácil):</h6>
 
-                                    <!-- Container do Widget com fundo fixo -->
-                                    <div>
-                                        <div id="widget-demo-container" data-token-widget data-api-key="demo-key"
-                                            data-sale-id="demo-sale" data-theme="light">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <h6><i class="fas fa-code me-2 text-primary"></i>Como Integrar (Super Fácil):</h6>
-
-                                    <!-- Exemplo Completo HTML -->
-                                    <div class="mb-3">
-                                        <label class="text-muted small"><i class="fas fa-file-code me-1"></i>Exemplo
-                                            Completo - Cole no seu HTML:</label>
-                                        <pre class="bg-dark text-light p-3 rounded border"><code><span class="text-info">&lt;!DOCTYPE html&gt;
+                        <!-- Exemplo Completo HTML -->
+                        <div class="mb-3">
+                            <label class="text-muted small"><i class="fas fa-file-code me-1"></i>Exemplo
+                                Completo - Cole no seu HTML:</label>
+                            <pre class="bg-dark text-light p-3 rounded border"><code><span class="text-info">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
     &lt;title&gt;Meu Site&lt;/title&gt;
@@ -336,48 +334,40 @@
     <span class="text-primary">&lt;script src="https://cdn.xcafe.app/widget.js"&gt;&lt;/script&gt;</span>
 <span class="text-info">&lt;/body&gt;
 &lt;/html&gt;</span></code></pre>
-                                    </div>
-                                    <div class="mt-4">
-                                        <h6><i class="fas fa-star me-2 text-warning"></i>Recursos Inclusos:</h6>
-                                        <hr class="my-3">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <ul class="list-unstyled">
-                                                    <li class="mb-2"><i
-                                                            class="fas fa-magic text-success me-2"></i>Integração
-                                                        ultra-simples</li>
-                                                    <li class="mb-2"><i
-                                                            class="fab fa-ethereum text-primary me-2"></i>Conexão
-                                                        MetaMask automática</li>
-                                                    <li class="mb-2"><i class="fas fa-palette text-info me-2"></i>Temas
-                                                        claro/escuro</li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <ul class="list-unstyled">
-                                                    <li class="mb-2"><i
-                                                            class="fas fa-shield-alt text-warning me-2"></i>Sistema
-                                                        de segurança avançado</li>
-                                                    <li class="mb-2"><i
-                                                            class="fas fa-mobile-alt text-purple me-2"></i>Interface
-                                                        responsiva</li>
-                                                    <li class="mb-2"><i
-                                                            class="fas fa-network-wired text-danger me-2"></i>Suporte a
-                                                        múltiplas redes</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
+                        </div>
+                        <div class="mt-4">
+                            <h6><i class="fas fa-star me-2 text-warning"></i>Recursos Inclusos:</h6>
+                            <hr class="my-3">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2"><i class="fas fa-magic text-success me-2"></i>Integração
+                                            ultra-simples</li>
+                                        <li class="mb-2"><i class="fab fa-ethereum text-primary me-2"></i>Conexão
+                                            MetaMask automática</li>
+                                        <li class="mb-2"><i class="fas fa-palette text-info me-2"></i>Temas
+                                            claro/escuro</li>
+                                    </ul>
                                 </div>
-                            </div>
-                            <div class="alert alert-info mt-3">
-                                <i class="fas fa-shield-alt me-2"></i>
-                                <strong>Sistema de Segurança:</strong> Todas as informações críticas (nome do token,
-                                símbolo, preço, quantidades) são armazenadas no servidor e validadas via blockchain.
-                                Isso previne fraudes e garante a integridade dos dados.
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2"><i class="fas fa-shield-alt text-warning me-2"></i>Sistema
+                                            de segurança avançado</li>
+                                        <li class="mb-2"><i class="fas fa-mobile-alt text-purple me-2"></i>Interface
+                                            responsiva</li>
+                                        <li class="mb-2"><i class="fas fa-network-wired text-danger me-2"></i>Suporte a
+                                            múltiplas redes</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="alert alert-info mt-3">
+                    <i class="fas fa-shield-alt me-2"></i>
+                    <strong>Sistema de Segurança:</strong> Todas as informações críticas (nome do token,
+                    símbolo, preço, quantidades) são armazenadas no servidor e validadas via blockchain.
+                    Isso previne fraudes e garante a integridade dos dados.
                 </div>
             </div>
         </div>
@@ -461,13 +451,11 @@
             </div>
         </div>
     </section>
-    
+
     <hr class="section-separator">
 
     <!-- Support Include -->
     <div data-component="support"></div>
-
-    <hr class="section-separator">
 
     <!-- Footer Include -->
     <div data-component="footer"></div>
@@ -476,38 +464,36 @@
     <button class="back-to-top" id="backToTopBtn" onclick="scrollToTop()">
         <i class="fas fa-arrow-up"></i>
     </button>
-   
+
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- ========================================================================
-         SISTEMA JAVASCRIPT OTIMIZADO - SEM DUPLICAÇÕES
-         ======================================================================== -->
-    
     <!-- 1. Configurações Centralizadas -->
     <script src="js/config/blockchain-config.js"></script>
-    
-    <!-- 2. Módulos Core Otimizados -->
+
+    <!-- 2. Wallet Manager Centralizado -->
+    <script src="js/shared/wallet.js"></script>
+
+    <!-- 3. Módulos Core Otimizados -->
     <script src="js/modules/data-manager.js"></script>
-    <script src="js/modules/web3-optimized.js"></script>
     <script src="js/modules/auth-manager-optimized.js"></script>
     <script src="js/modules/header-controller.js"></script>
     <script src="js/modules/widget-sale.js"></script>
-    
-    <!-- 3. Utilitários Compartilhados Otimizados -->
+
+    <!-- 4. Utilitários Compartilhados Otimizados -->
     <script src="js/shared/template-loader-optimized.js"></script>
-    <script src="js/shared/support-modal.js"></script>
     <script src="js/shared/back-to-top.js"></script>
-    
+    <script src="js/support.js"></script>
+
     <!-- 4. Controlador de Tema Unificado -->
     <script src="js/theme-controller-unified.js"></script>
-    
+
     <!-- 5. Controlador de Página Otimizado -->
     <script src="js/pages/index-optimized.js"></script>
-    
+
     <!-- 6. Coordenador Principal -->
     <script src="js/xcafe-app-optimized.js"></script>
-        
+
 </body>
 
 </html>

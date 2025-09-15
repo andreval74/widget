@@ -93,7 +93,7 @@ class TemplateLoader {
     }
 
     /**
-     * Carrega templates padrão (header e footer) automaticamente
+     * Carrega templates padrão (header, footer e support) automaticamente
      */
     async loadDefaultTemplates() {
         const promises = [];
@@ -112,6 +112,14 @@ class TemplateLoader {
             const containerId = element.id || `footer-container-${Math.random().toString(36).substr(2, 9)}`;
             element.id = containerId;
             promises.push(this.loadTemplate('footer.html', containerId));
+        });
+
+        // Carregar support se existir container
+        const supportElements = document.querySelectorAll('[data-component="support"]');
+        supportElements.forEach(element => {
+            const containerId = element.id || `support-container-${Math.random().toString(36).substr(2, 9)}`;
+            element.id = containerId;
+            promises.push(this.loadTemplate('support.html', containerId));
         });
 
         // Aguardar todos os carregamentos
@@ -221,8 +229,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Verificar se existem elementos de template para carregar
         const headerElements = document.querySelectorAll('[data-component="header"]');
         const footerElements = document.querySelectorAll('[data-component="footer"]');
+        const supportElements = document.querySelectorAll('[data-component="support"]');
         
-        if (headerElements.length > 0 || footerElements.length > 0) {
+        if (headerElements.length > 0 || footerElements.length > 0 || supportElements.length > 0) {
             const templateLoader = new TemplateLoader();
             templateLoader.loadDefaultTemplates();
         } else {

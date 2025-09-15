@@ -1,14 +1,11 @@
-// Sistema padronizado XCafe - Gerenciamento de carteira e idiomas
+// Sistema padronizado XCafe - Apenas tema e idiomas (SEM CARTEIRA)
 class XCafeHeaderManager {
     constructor() {
-        this.isConnected = false;
-        this.currentAddress = null;
         this.googleTranslateLoaded = false;
         this.init();
     }
 
     async init() {
-        await this.checkWalletConnection();
         this.setupEventListeners();
         this.setupLanguageSelector();
         this.loadGoogleTranslate();
@@ -56,107 +53,15 @@ class XCafeHeaderManager {
         }, 2000);
     }
 
-    async checkWalletConnection() {
-        try {
-            if (typeof window.ethereum !== 'undefined') {
-                const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-                if (accounts && accounts.length > 0) {
-                    this.setConnected(accounts[0]);
-                } else {
-                    this.setDisconnected();
-                }
-            } else {
-                this.setDisconnected();
-            }
-        } catch (error) {
-            console.error('Erro ao verificar conexão:', error);
-            this.setDisconnected();
-        }
-    }
-
-    async connectWallet() {
-        try {
-            if (typeof window.ethereum === 'undefined') {
-                alert('MetaMask não encontrado! Por favor instale o MetaMask.');
-                window.open('https://metamask.io', '_blank');
-                return;
-            }
-
-            const accounts = await window.ethereum.request({
-                method: 'eth_requestAccounts'
-            });
-
-            if (accounts && accounts.length > 0) {
-                this.setConnected(accounts[0]);
-            }
-        } catch (error) {
-            console.error('Erro ao conectar carteira:', error);
-            if (error.code === 4001) {
-                alert('Conexão rejeitada pelo usuário');
-            } else {
-                alert('Erro ao conectar carteira: ' + error.message);
-            }
-        }
-    }
-
-    setConnected(address) {
-        this.isConnected = true;
-        this.currentAddress = address;
-        
-        const button = document.getElementById('connect-wallet-btn');
-        const text = document.getElementById('wallet-text');
-        
-        if (button && text) {
-            // Adiciona classe connected
-            button.classList.add('connected');
-            button.title = `Conectado: ${address}`;
-            
-            // Mostra endereço abreviado
-            const shortAddress = address.slice(0, 6) + '...' + address.slice(-4);
-            text.textContent = shortAddress;
-            
-            // Remove ícone da carteira quando conectado
-            const icon = button.querySelector('i');
-            if (icon) {
-                icon.style.display = 'none';
-            }
-        }
-    }
-
-    setDisconnected() {
-        this.isConnected = false;
-        this.currentAddress = null;
-        
-        const button = document.getElementById('connect-wallet-btn');
-        const text = document.getElementById('wallet-text');
-        
-        if (button && text) {
-            // Remove classe connected
-            button.classList.remove('connected');
-            button.title = 'Conectar Carteira';
-            text.textContent = 'Conectar';
-            
-            // Mostra ícone da carteira
-            const icon = button.querySelector('i');
-            if (icon) {
-                icon.style.display = 'inline';
-            }
-        }
-    }
-
     setupEventListeners() {
-        // Event listener removido - Bootstrap cuida do dropdown automaticamente
+        // Botão "Começar Agora" já é gerenciado pelo wallet.js
+        // Não precisa de handler específico aqui
+        console.log('✅ Header event listeners configurados (wallet gerenciado centralmente)');
+    }
 
-        // Monitorar mudanças na carteira
-        if (window.ethereum) {
-            window.ethereum.on('accountsChanged', (accounts) => {
-                if (accounts.length === 0) {
-                    this.setDisconnected();
-                } else {
-                    this.setConnected(accounts[0]);
-                }
-            });
-        }
+    async handleGetStarted() {
+        // Esta função não é mais necessária - wallet.js gerencia tudo
+        console.log('ℹ️ Get Started agora é gerenciado pelo wallet.js');
     }
 
     setupLanguageSelector() {
@@ -453,84 +358,17 @@ function createSimpleSupportModal() {
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 }
 
-/**
- * Função para conectar wallet (chamada pelo dropdown)
- */
-function handleConnect() {
-    if (window.headerManager) {
-        window.headerManager.connectWallet();
-    }
-}
-
-/**
- * Função para desconectar wallet (chamada pelo dropdown) 
- */
-function handleDisconnect() {
-    if (window.headerManager) {
-        // Encontrar o botão de desconectar e atualizar o texto
-        const disconnectBtn = document.querySelector('.dropdown-item.disconnect-item');
-        if (disconnectBtn) {
-            const originalText = disconnectBtn.innerHTML;
-            disconnectBtn.innerHTML = '<i class="fas fa-check me-2"></i>Sim, desconectar';
-            disconnectBtn.classList.add('confirming');
-            
-            // Aguardar um momento antes de executar a desconexão
-            setTimeout(() => {
-                window.headerManager.setDisconnected();
-                // Remove dados salvos
-                localStorage.removeItem('connectedWallet');
-                
-                // Restaurar texto original após a ação
-                disconnectBtn.innerHTML = originalText;
-                disconnectBtn.classList.remove('confirming');
-            }, 800);
-        } else {
-            // Fallback caso o botão não seja encontrado
-            window.headerManager.setDisconnected();
-            localStorage.removeItem('connectedWallet');
-        }
-    }
-}
-
-/**
- * Função para sair completamente do sistema (chamada pelo dropdown)
- */
-function handleLogout() {
-    if (window.headerManager) {
-        // Encontrar o botão de logout e atualizar o texto
-        const logoutBtn = document.querySelector('.dropdown-item.logout-item');
-        if (logoutBtn) {
-            const originalText = logoutBtn.innerHTML;
-            logoutBtn.innerHTML = '<i class="fas fa-check me-2"></i>Sim, sair do sistema';
-            logoutBtn.classList.add('confirming');
-            
-            // Aguardar um momento antes de executar o logout
-            setTimeout(() => {
-                window.headerManager.setDisconnected();
-                // Remove todos os dados salvos
-                localStorage.removeItem('connectedWallet');
-                localStorage.removeItem('xcafe-language');
-                localStorage.removeItem('xcafe-flag');
-                localStorage.removeItem('xcafe-language-name');
-                
-                // Reload da página para resetar completamente o estado
-                setTimeout(() => {
-                    window.location.reload();
-                }, 200);
-            }, 800);
-        } else {
-            // Fallback caso o botão não seja encontrado
-            window.headerManager.setDisconnected();
-            localStorage.removeItem('connectedWallet');
-            localStorage.removeItem('xcafe-language');
-            localStorage.removeItem('xcafe-flag');
-            localStorage.removeItem('xcafe-language-name');
-            
-            setTimeout(() => {
-                window.location.reload();
-            }, 500);
-        }
-    }
+// Inicializar quando DOM carregar
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        window.headerManager = new XCafeHeaderManager();
+        // Inicializar Google Translate
+        setTimeout(loadGoogleTranslateForced, 1000);
+    });
+} else {
+    window.headerManager = new XCafeHeaderManager();
+    // Inicializar Google Translate
+    setTimeout(loadGoogleTranslateForced, 1000);
 }
 
 /**

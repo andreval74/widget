@@ -18,6 +18,7 @@ class Web3Manager {
         this.connecting = false;
         this.chainId = null;
         this.currentNetwork = null;
+        this.intentionalDisconnect = false; // Flag para desconexão intencional
         
         // Contratos suportados
         this.contracts = {};
@@ -123,6 +124,39 @@ class Web3Manager {
     }
 
     // ========================================================================
+    // FUNÇÃO GLOBAL CENTRALIZADA PARA TODOS OS COMPONENTES
+    // ========================================================================
+    
+    /**
+     * Função global para conectar carteira - usado por header, support, etc.
+     * @param {boolean} redirectToDashboard - Se deve redirecionar após conectar
+     * @returns {Promise<string|null>} - Endereço da carteira ou null
+     */
+    async connectWalletGlobal(redirectToDashboard = false) {
+        try {
+            console.log(`🔌 Conectar global - redirect: ${redirectToDashboard}`);
+            
+            const result = await this.connect();
+            
+            if (result && result.account) {
+                console.log(`✅ Conectado globalmente: ${this.formatAddress(result.account)}`);
+                
+                // Redirecionar se solicitado
+                if (redirectToDashboard) {
+                    window.location.href = '/auth.html';
+                }
+                
+                return result.account;
+            }
+            
+            return null;
+        } catch (error) {
+            console.error('❌ Erro na conexão global:', error);
+            throw error;
+        }
+    }
+
+    // ========================================================================
     // CONEXÃO E DESCONEXÃO
     // ========================================================================
 
@@ -199,6 +233,7 @@ class Web3Manager {
 
     async disconnect() {
         try {
+            this.intentionalDisconnect = true; // Marcar como desconexão intencional
             this.currentAccount = null;
             this.account = null;
             this.isConnected = false;
@@ -207,6 +242,12 @@ class Web3Manager {
             
             console.log('🔌 Desconectado do MetaMask');
             this.notifyConnectionChange(false);
+            
+            // Limpar flag após notificação
+            setTimeout(() => {
+                this.intentionalDisconnect = false;
+            }, 1000);
+            
         } catch (error) {
             console.error('❌ Erro ao desconectar:', error);
         }
@@ -217,6 +258,12 @@ class Web3Manager {
     // ========================================================================
 
     handleAccountsChanged(accounts) {
+        // Ignorar mudanças durante desconexão intencional
+        if (this.intentionalDisconnect) {
+            console.log('🔌 Ignorando mudança de contas durante desconexão intencional');
+            return;
+        }
+        
         if (accounts.length === 0) {
             this.disconnect();
         } else if (accounts[0] !== this.currentAccount) {
@@ -372,8 +419,28 @@ class Web3Manager {
 }
 
 // ========================================================================
-// INSTÂNCIA GLOBAL
+// INSTÂNCIA GLOBAL E FUNÇÃO DE ACESSO SIMPLIFICADO
 // ========================================================================
 window.Web3Manager = Web3Manager;
+
+// Função global simplificada para conexão de carteira
+window.connectWalletGlobal = async function(redirectToDashboard = false) {
+    if (window.web3Manager && typeof window.web3Manager.connectWalletGlobal === 'function') {
+        return await window.web3Manager.connectWalletGlobal(redirectToDashboard);
+    } else {
+        console.error('❌ Web3Manager não disponível');
+        return null;
+    }
+};
+
+// Função global para verificar se está conectado
+window.isWalletConnected = function() {
+    return window.web3Manager && window.web3Manager.isConnected && window.web3Manager.currentAccount;
+};
+
+// Função global para obter conta atual
+window.getCurrentAccount = function() {
+    return window.web3Manager ? window.web3Manager.currentAccount : null;
+};
 
 console.log('🌐 Web3Manager Otimizado carregado com sucesso!');

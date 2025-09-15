@@ -1,15 +1,15 @@
 /*
 ================================================================================
-HEADER THEME CONTROLLER - CONTROLE SIMPLES DE TEMA NO HEADER
+HEADER THEME CONTROLLER - CONTROLE UNIFICADO DE TEMA NO HEADER
 ================================================================================
-Sistema simples para controle de tema diretamente no header
+Sistema único para controle de tema diretamente no header
 Integra com o theme-controller-unified.js
 ================================================================================
 */
 
 class HeaderThemeController {
     constructor() {
-        this.currentTheme = localStorage.getItem('xcafe-theme') || 'light';
+        this.currentTheme = localStorage.getItem('theme') || 'dark'; // Tema escuro como padrão
         this.init();
     }
 
@@ -21,6 +21,15 @@ class HeaderThemeController {
             });
         } else {
             this.setupThemeButton();
+        }
+
+        // Inicializar Header Controller se disponível
+        if (typeof HeaderController !== 'undefined') {
+            try {
+                window.headerController = new HeaderController();
+            } catch (error) {
+                console.warn('Header Controller não pôde ser inicializado:', error);
+            }
         }
     }
 
@@ -59,13 +68,13 @@ class HeaderThemeController {
 
     setTheme(theme) {
         this.currentTheme = theme;
-        localStorage.setItem('xcafe-theme', theme);
-        
+        localStorage.setItem('theme', theme); // Unificado com chave padrão
+
         this.applyTheme(theme);
         this.updateIcon(theme);
-        
+
         console.log(`🎨 Tema alterado para: ${theme}`);
-        
+
         // Notificar outros sistemas
         this.notifyThemeChange(theme);
     }
@@ -73,7 +82,7 @@ class HeaderThemeController {
     applyTheme(theme) {
         // Aplicar tema no documento
         document.documentElement.setAttribute('data-theme', theme);
-        
+
         // Aplicar classes no body
         if (theme === 'dark') {
             document.body.classList.add('dark-theme');
@@ -120,6 +129,20 @@ class HeaderThemeController {
     getCurrentTheme() {
         return this.currentTheme;
     }
+}
+
+// Inicialização automática
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        window.headerThemeController = new HeaderThemeController();
+    });
+} else {
+    window.headerThemeController = new HeaderThemeController();
+}
+
+// Compatibilidade com outros sistemas
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = HeaderThemeController;
 }
 
 // Inicializar automaticamente

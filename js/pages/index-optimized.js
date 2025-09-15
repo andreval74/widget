@@ -33,6 +33,7 @@ class IndexPage {
                 this.initWidgetDemo();
                 this.initStatsCounter();
                 this.initGetStartedButton();
+                this.initVerDemoButton();
                 this.setupScrollAnimations();
                 
                 // Funcionalidades Web3 se disponíveis
@@ -157,28 +158,24 @@ class IndexPage {
     }
 
     initGetStartedButton() {
-        const getStartedBtn = document.getElementById('get-started');
-        if (!getStartedBtn) return;
+        // Botão agora é gerenciado pelo wallet.js centralizado
+        console.log('✅ Botão Get Started gerenciado pelo wallet.js (index-optimized)');
+    }
 
-        getStartedBtn.addEventListener('click', async (e) => {
+    initVerDemoButton() {
+        const verDemoBtn = document.getElementById('ver-demo');
+        if (!verDemoBtn) return;
+
+        verDemoBtn.addEventListener('click', (e) => {
             e.preventDefault();
             
-            if (this.authManager) {
-                try {
-                    // Tentar conectar Web3
-                    const result = await this.authManager.connect();
-                    
-                    if (result.success) {
-                        // Redirecionar para dashboard
-                        this.redirectToDashboard();
-                    }
-                } catch (error) {
-                    console.error('❌ Erro ao conectar:', error);
-                    this.showConnectionError(error.message);
-                }
-            } else {
-                // Fallback: redirecionar direto para auth
-                window.location.href = './auth.html';
+            // Scroll suave até a seção #demo
+            const demoSection = document.getElementById('demo');
+            if (demoSection) {
+                demoSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             }
         });
     }
@@ -291,24 +288,8 @@ class IndexPage {
     // ========================================================================
 
     handleAuthStateChange(isAuthenticated, account) {
-        const getStartedBtn = document.getElementById('get-started');
-        
-        if (isAuthenticated && account) {
-            console.log(`✅ Usuário autenticado: ${this.formatAddress(account)}`);
-            
-            // Atualizar botão
-            if (getStartedBtn) {
-                getStartedBtn.innerHTML = '<i class="fas fa-tachometer-alt me-2"></i>Ir para Dashboard';
-                getStartedBtn.onclick = () => this.redirectToDashboard();
-            }
-        } else {
-            console.log('ℹ️ Usuário não autenticado');
-            
-            // Restaurar botão
-            if (getStartedBtn) {
-                getStartedBtn.innerHTML = '<i class="fas fa-rocket me-2"></i>Começar Agora';
-            }
-        }
+        // Estado de autenticação agora é gerenciado pelo wallet.js
+        console.log('ℹ️ Auth state gerenciado pelo wallet.js');
     }
 
     // ========================================================================
@@ -316,21 +297,8 @@ class IndexPage {
     // ========================================================================
 
     redirectToDashboard() {
-        console.log('🚀 Redirecionando para dashboard...');
-        
-        // Adicionar efeito de carregamento
-        const getStartedBtn = document.getElementById('get-started');
-        if (getStartedBtn) {
-            const originalText = getStartedBtn.innerHTML;
-            getStartedBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Carregando...';
-            getStartedBtn.disabled = true;
-            
-            setTimeout(() => {
-                window.location.href = './dashboard.html';
-            }, 1000);
-        } else {
-            window.location.href = './dashboard.html';
-        }
+        // Redirecionamento agora é gerenciado pelo wallet.js
+        console.log('ℹ️ Redirecionamento gerenciado pelo wallet.js');
     }
 
     showConnectionError(message) {
