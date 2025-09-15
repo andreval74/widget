@@ -7,40 +7,35 @@ Menu lateral condensado com navegação retrátil
 -->
 <nav class="sidebar">
     <!-- Cabeçalho do Dashboard -->
-    <div class="sidebar-header">
-        <div class="brand-info">
-            <h5 class="mb-0">
-                <i class="fas fa-cube text-primary me-0"></i>
-                Widget SaaS
-            </h5>
-            <small class="text-muted">Plataforma Web3</small>
+    <div class="d-flex align-items-center" style="margin:10px;">
+        <i class="fas fa-cube me-2 text-white fs-3"></i>
+        <div class="d-flex flex-column">
+            <a href="../dashboard.html" title="Home"><span class="fw-bold text-white fs-4 widget-saas-text">Widget
+                    SaaS</span></a>
+            <small class="text-muted" style="line-height: 1; margin-top: -2px;">Plataforma Web3</small>
         </div>
+    </div>
 
-        <!-- Informações da Carteira (condensado) -->
-        <div class="wallet-info mt-2 p-2 bg-light rounded">
+    <!-- Informações da Carteira (condensado) -->
+    <div class="wallet-info mt-2 p-2 bg-dark rounded border" style="border-color: rgba(255, 193, 7, 0.3) !important;">
+        <div class="text-center">
+            <small class="text-muted d-block mb-1">Carteira Conectada</small>
             <div id="wallet-info-display">
-                <code class="badge bg-success d-block text-center py-1" id="connected-wallet-address">
+                <code class="badge bg-warning d-block text-center py-1 text-dark" id="connected-wallet-address" title="Clique para copiar">
                     Conectando...
                 </code>
             </div>
         </div>
     </div>
 
+
     <!-- Menu de Navegação -->
     <div class="sidebar-body">
         <ul class="nav flex-column">
 
-            <!-- Dashboard Principal -->
-            <li class="nav-item">
-                <a class="nav-link text-success" href="#" onclick="location.reload(); return false;">
-                    <i class="fas fa-tachometer-alt me-2"></i>
-                    Dashboard
-                </a>
-            </li>
-
             <!-- Seção de Contratos (Retrátil) -->
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-toggle="collapse" href="#contractsMenu" role="button"
+                <a class="menu-item nav-link collapsed" data-bs-toggle="collapse" href="#contractsMenu" role="button"
                     aria-expanded="false">
                     <i class="fas fa-cube me-2"></i>
                     Contratos
@@ -48,13 +43,16 @@ Menu lateral condensado com navegação retrátil
                 </a>
                 <div class="collapse" id="contractsMenu">
                     <div class="nav-submenu">
-                        <a class="nav-link nav-sublink" href="#" data-section="contracts">
+                        <a class="menu-item nav-link nav-sublink" href="dashboard.html?section=contracts"
+                            data-section="contracts">
                             <i class="fas fa-list me-2"></i>Meus Contratos
                         </a>
-                        <a class="nav-link nav-sublink" href="#" data-section="new-contract">
+                        <a class="menu-item nav-link nav-sublink" href="dashboard.html?section=new-contract"
+                            data-section="new-contract">
                             <i class="fas fa-plus me-2"></i>Novo Contrato
                         </a>
-                        <a class="nav-link nav-sublink" href="#" data-section="templates">
+                        <a class="menu-item nav-link nav-sublink" href="dashboard.html?section=templates"
+                            data-section="templates">
                             <i class="fas fa-copy me-2"></i>Templates
                         </a>
                     </div>
@@ -63,7 +61,7 @@ Menu lateral condensado com navegação retrátil
 
             <!-- Seção de Analytics (Retrátil) -->
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-toggle="collapse" href="#analyticsMenu" role="button"
+                <a class="menu-item nav-link collapsed" data-bs-toggle="collapse" href="#analyticsMenu" role="button"
                     aria-expanded="false">
                     <i class="fas fa-chart-line me-2"></i>
                     Analytics
@@ -71,13 +69,16 @@ Menu lateral condensado com navegação retrátil
                 </a>
                 <div class="collapse" id="analyticsMenu">
                     <div class="nav-submenu">
-                        <a class="nav-link nav-sublink" href="#" data-section="transactions">
+                        <a class="menu-item nav-link nav-sublink" href="dashboard.html?section=transactions"
+                            data-section="transactions">
                             <i class="fas fa-exchange-alt me-2"></i>Transações
                         </a>
-                        <a class="nav-link nav-sublink" href="#" data-section="earnings">
+                        <a class="menu-item nav-link nav-sublink" href="dashboard.html?section=earnings"
+                            data-section="earnings">
                             <i class="fas fa-dollar-sign me-2"></i>Ganhos
                         </a>
-                        <a class="nav-link nav-sublink" href="#" data-section="reports">
+                        <a class="menu-item nav-link nav-sublink" href="dashboard.html?section=reports"
+                            data-section="reports">
                             <i class="fas fa-chart-bar me-2"></i>Relatórios
                         </a>
                     </div>
@@ -86,7 +87,7 @@ Menu lateral condensado com navegação retrátil
 
             <!-- Seção Financeiro (Retrátil) -->
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-toggle="collapse" href="#financialMenu" role="button"
+                <a class="menu-item nav-link collapsed" data-bs-toggle="collapse" href="#financialMenu" role="button"
                     aria-expanded="false">
                     <i class="fas fa-wallet me-2"></i>
                     Financeiro
@@ -94,16 +95,20 @@ Menu lateral condensado com navegação retrátil
                 </a>
                 <div class="collapse" id="financialMenu">
                     <div class="nav-submenu">
-                        <a class="nav-link nav-sublink" href="#" data-section="credits">
+                        <a class="menu-item nav-link nav-sublink" href="dashboard.html?section=credits"
+                            data-section="credits">
                             <i class="fas fa-coins me-2"></i>Créditos
                         </a>
-                        <a class="nav-link nav-sublink" href="#" data-section="buy-credits">
+                        <a class="menu-item nav-link nav-sublink" href="dashboard.html?section=buy-credits"
+                            data-section="buy-credits">
                             <i class="fas fa-shopping-cart me-2"></i>Comprar
                         </a>
-                        <a class="nav-link nav-sublink" href="#" data-section="billing">
+                        <a class="menu-item nav-link nav-sublink" href="dashboard.html?section=billing"
+                            data-section="billing">
                             <i class="fas fa-receipt me-2"></i>Faturamento
                         </a>
-                        <a class="nav-link nav-sublink" href="#" data-section="withdraw">
+                        <a class="menu-item nav-link nav-sublink" href="dashboard.html?section=withdraw"
+                            data-section="withdraw">
                             <i class="fas fa-money-bill-wave me-2"></i>Saques
                         </a>
                     </div>
@@ -112,7 +117,7 @@ Menu lateral condensado com navegação retrátil
 
             <!-- Seção do Sistema (Retrátil) -->
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-toggle="collapse" href="#systemMenu" role="button"
+                <a class="menu-item nav-link collapsed" data-bs-toggle="collapse" href="#systemMenu" role="button"
                     aria-expanded="false">
                     <i class="fas fa-cogs me-2"></i>
                     Sistema
@@ -120,13 +125,15 @@ Menu lateral condensado com navegação retrátil
                 </a>
                 <div class="collapse" id="systemMenu">
                     <div class="nav-submenu">
-                        <a class="nav-link nav-sublink" href="#" data-section="settings">
+                        <a class="menu-item nav-link nav-sublink" href="dashboard.html?section=settings"
+                            data-section="settings">
                             <i class="fas fa-cog me-2"></i>Configurações
                         </a>
-                        <a class="nav-link nav-sublink" href="#" data-section="support">
+                        <a class="menu-item nav-link nav-sublink" href="dashboard.html?section=support"
+                            data-section="support">
                             <i class="fas fa-question-circle me-2"></i>Suporte
                         </a>
-                        <a class="nav-link nav-sublink" href="../admin-panel.html" id="admin-menu-item">
+                        <a class="menu-item nav-link nav-sublink" href="admin-panel.html" id="admin-menu-item">
                             <i class="fas fa-shield-alt me-2"></i>Admin Panel
                         </a>
                     </div>
@@ -137,12 +144,72 @@ Menu lateral condensado com navegação retrátil
 
     <!-- Dashboard Rodapé -->
     <li class="nav-item">
-        <a class="nav-link text-danger" href="#" onclick="logout()">
+        <a class="menu-item nav-link text-danger" href="auth.html" onclick="logout()">
             <i class="fas fa-sign-out-alt me-2"></i>Sair do Sistema
         </a>
     </li>
 </nav>
 
 <!-- Scripts do Dashboard Menu -->
-<script src="../js/shared/wallet-menu-manager.js"></script>
+<script src="../js/shared/wallet.js"></script>
+<script>
+// Função para atualizar informações da carteira no menu
+function updateWalletInfo() {
+    const walletInfoElement = document.getElementById('connected-wallet-address');
+    
+    if (window.walletManager && window.walletManager.isConnected && window.walletManager.currentAccount) {
+        const address = window.walletManager.currentAccount;
+        const shortAddress = `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
+        
+        walletInfoElement.textContent = shortAddress;
+        walletInfoElement.className = 'badge bg-success d-block text-center py-1';
+        walletInfoElement.title = `${address} - Clique para copiar`;
+        walletInfoElement.style.cursor = 'pointer';
+        
+        // Função para copiar endereço
+        walletInfoElement.onclick = function() {
+            navigator.clipboard.writeText(address).then(function() {
+                const originalText = walletInfoElement.textContent;
+                walletInfoElement.textContent = 'Copiado!';
+                walletInfoElement.className = 'badge bg-info d-block text-center py-1';
+                
+                setTimeout(() => {
+                    walletInfoElement.textContent = originalText;
+                    walletInfoElement.className = 'badge bg-success d-block text-center py-1';
+                }, 1500);
+            }).catch(function(err) {
+                console.error('Erro ao copiar: ', err);
+            });
+        };
+    } else {
+        walletInfoElement.textContent = 'Conectando...';
+        walletInfoElement.className = 'badge bg-warning d-block text-center py-1 text-dark';
+        walletInfoElement.style.cursor = 'default';
+        walletInfoElement.onclick = null;
+        walletInfoElement.title = 'Aguardando conexão...';
+    }
+}
+
+// Aguardar carregamento e inicializar
+document.addEventListener('DOMContentLoaded', function() {
+    // Aguardar wallet manager carregar
+    setTimeout(() => {
+        updateWalletInfo();
+        
+        // Escutar eventos de carteira
+        if (window.walletManager) {
+            window.addEventListener('wallet:connected', updateWalletInfo);
+            window.addEventListener('wallet:accountChanged', updateWalletInfo);
+            window.addEventListener('wallet:disconnected', () => {
+                const walletInfoElement = document.getElementById('connected-wallet-address');
+                walletInfoElement.textContent = 'Desconectado';
+                walletInfoElement.className = 'badge bg-danger d-block text-center py-1';
+                walletInfoElement.style.cursor = 'default';
+                walletInfoElement.onclick = null;
+                walletInfoElement.title = 'Carteira desconectada';
+            });
+        }
+    }, 500);
+});
+</script>
 <script src="../js/modules/dashboard-menu-manager.js"></script>

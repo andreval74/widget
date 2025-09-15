@@ -25,8 +25,12 @@ Sistema oficial de dashboard da aplicação.
     <script src="js/modules/web3.js"></script>
     <script src="js/shared/template-loader.js"></script>
     <script src="js/modules/dashboard.js"></script>
+    
+    <!-- Theme Controller para tema escuro padrão -->
+    <script src="js/theme-controller-unified.js"></script>
+    <script src="js/shared/header-theme-controller.js"></script>
 </head>
-<body>
+<body data-theme="dark" class="theme-dark">
     <!-- Menu Lateral Dinâmico -->
     <div data-component="dashboard-menu"></div>
 
@@ -62,10 +66,10 @@ Sistema oficial de dashboard da aplicação.
             <!-- Estatísticas Principais -->
             <div class="row mb-4">
                 <div class="col-lg-3 col-md-6 mb-3">
-                    <div class="card h-100 stats-card">
+                    <div class="card h-100 stats-card card-neon">
                         <div class="card-body text-center">
-                            <i class="fas fa-wallet fa-2x text-success mb-3"></i>
-                            <h4 class="text-success" id="total-earnings">$0.00</h4>
+                            <i class="fas fa-wallet fa-2x text-success mb-3 neon-icon"></i>
+                            <h4 class="text-success neon-text" id="total-earnings">$0.00</h4>
                             <h6 class="text-muted mb-0">Total de Ganhos</h6>
                             <small class="text-success" id="earnings-change">
                                 <i class="fas fa-arrow-up me-1"></i>Carregando...
@@ -74,10 +78,10 @@ Sistema oficial de dashboard da aplicação.
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-3">
-                    <div class="card h-100 stats-card">
+                    <div class="card h-100 stats-card card-neon">
                         <div class="card-body text-center">
-                            <i class="fas fa-file-contract fa-2x text-primary mb-3"></i>
-                            <h4 class="text-primary" id="active-contracts">0</h4>
+                            <i class="fas fa-file-contract fa-2x text-primary mb-3 neon-icon"></i>
+                            <h4 class="text-primary neon-text" id="active-contracts">0</h4>
                             <h6 class="text-muted mb-0">Contratos Ativos</h6>
                             <small class="text-primary" id="contracts-change">
                                 <i class="fas fa-plus me-1"></i>Carregando...
@@ -86,10 +90,10 @@ Sistema oficial de dashboard da aplicação.
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-3">
-                    <div class="card h-100 stats-card">
+                    <div class="card h-100 stats-card card-neon">
                         <div class="card-body text-center">
-                            <i class="fas fa-chart-line fa-2x text-info mb-3"></i>
-                            <h4 class="text-info" id="total-sales">0</h4>
+                            <i class="fas fa-chart-line fa-2x text-info mb-3 neon-icon"></i>
+                            <h4 class="text-info neon-text" id="total-sales">0</h4>
                             <h6 class="text-muted mb-0">Vendas Totais</h6>
                             <small class="text-info" id="sales-change">
                                 <i class="fas fa-arrow-up me-1"></i>Carregando...
@@ -98,13 +102,13 @@ Sistema oficial de dashboard da aplicação.
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-3">
-                    <div class="card h-100 stats-card">
+                    <div class="card h-100 stats-card card-neon">
                         <div class="card-body text-center">
-                            <i class="fas fa-coins fa-2x text-warning mb-3"></i>
-                            <h4 class="text-warning" id="available-credits">0</h4>
+                            <i class="fas fa-coins fa-2x text-warning mb-3 neon-icon"></i>
+                            <h4 class="text-warning neon-text" id="available-credits">0</h4>
                             <h6 class="text-muted mb-0">Créditos</h6>
                             <small class="text-muted">
-                                <a href="#" onclick="navigateToSection('buy-credits')" class="text-decoration-none">
+                                <a href="dashboard.html?section=buy-credits" class="text-decoration-none menu-item">
                                     <i class="fas fa-shopping-cart me-1"></i>Comprar mais
                                 </a>
                             </small>
@@ -117,9 +121,9 @@ Sistema oficial de dashboard da aplicação.
             <div class="row">
                 <!-- Gráfico de Vendas -->
                 <div class="col-lg-8 mb-4">
-                    <div class="card">
+                    <div class="card card-neon">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="card-title mb-0">
+                            <h5 class="card-title mb-0 neon-text">
                                 <i class="fas fa-chart-area me-2"></i>
                                 Vendas dos Últimos 30 Dias
                             </h5>
@@ -128,9 +132,9 @@ Sistema oficial de dashboard da aplicação.
                                     <i class="fas fa-filter me-2"></i>Filtros
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#" onclick="updateChart(7)">7 dias</a></li>
-                                    <li><a class="dropdown-item" href="#" onclick="updateChart(30)">30 dias</a></li>
-                                    <li><a class="dropdown-item" href="#" onclick="updateChart(90)">90 dias</a></li>
+                                    <li><a class="dropdown-item menu-item" href="#" onclick="updateChart(7)">7 dias</a></li>
+                                    <li><a class="dropdown-item menu-item" href="#" onclick="updateChart(30)">30 dias</a></li>
+                                    <li><a class="dropdown-item menu-item" href="#" onclick="updateChart(90)">90 dias</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -159,13 +163,13 @@ Sistema oficial de dashboard da aplicação.
 
                 <!-- Atividade Recente -->
                 <div class="col-lg-4 mb-4">
-                    <div class="card">
+                    <div class="card card-neon">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="card-title mb-0">
+                            <h5 class="card-title mb-0 neon-text">
                                 <i class="fas fa-clock me-2"></i>
                                 Atividade Recente
                             </h5>
-                            <a href="#" onclick="navigateToSection('transactions')" class="btn btn-outline-primary btn-sm">
+                            <a href="dashboard.html?section=transactions" class="btn btn-outline-primary btn-sm">
                                 <i class="fas fa-external-link-alt"></i>
                             </a>
                         </div>
@@ -230,17 +234,17 @@ Sistema oficial de dashboard da aplicação.
             <!-- Contratos em Destaque -->
             <div class="row mb-4">
                 <div class="col-12">
-                    <div class="card">
+                    <div class="card card-neon">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="card-title mb-0">
+                            <h5 class="card-title mb-0 neon-text">
                                 <i class="fas fa-star me-2"></i>
                                 Contratos em Destaque
                             </h5>
                             <div class="btn-group" role="group">
-                                <a href="#" onclick="navigateToSection('contracts')" class="btn btn-outline-primary btn-sm">
+                                <a href="#" onclick="navigateToSection('contracts')" class="btn btn-outline-primary btn-sm menu-item">
                                     <i class="fas fa-list me-1"></i>Ver Todos
                                 </a>
-                                <a href="#" onclick="navigateToSection('new-contract')" class="btn btn-primary btn-sm">
+                                <a href="#" onclick="navigateToSection('new-contract')" class="btn btn-primary btn-sm menu-item">
                                     <i class="fas fa-plus me-1"></i>Novo
                                 </a>
                             </div>
@@ -249,10 +253,10 @@ Sistema oficial de dashboard da aplicação.
                             <div class="row">
                                 <!-- Contrato 1 -->
                                 <div class="col-md-4 mb-3">
-                                    <div class="card contract-card h-100">
+                                    <div class="card contract-card h-100 card-neon">
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between align-items-start mb-2">
-                                                <h6 class="card-title mb-0">MeuToken (MTK)</h6>
+                                                <h6 class="card-title mb-0 neon-text">MeuToken (MTK)</h6>
                                                 <span class="badge bg-success">Ativo</span>
                                             </div>
                                             <p class="card-text small text-muted mb-2">
@@ -260,11 +264,11 @@ Sistema oficial de dashboard da aplicação.
                                             </p>
                                             <div class="d-flex justify-content-between align-items-center mb-2">
                                                 <span class="small text-muted">Preço:</span>
-                                                <strong class="text-success">$0.15 USDT</strong>
+                                                <strong class="text-success neon-text">$0.15 USDT</strong>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-center mb-3">
                                                 <span class="small text-muted">Vendas:</span>
-                                                <span class="badge bg-primary">87</span>
+                                                <span class="badge bg-primary neon-badge">87</span>
                                             </div>
                                             <div class="d-grid">
                                                 <button class="btn btn-outline-primary btn-sm" onclick="viewContractDetails('mtk')">
@@ -277,10 +281,10 @@ Sistema oficial de dashboard da aplicação.
 
                                 <!-- Contrato 2 -->
                                 <div class="col-md-4 mb-3">
-                                    <div class="card contract-card h-100">
+                                    <div class="card contract-card h-100 card-neon">
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between align-items-start mb-2">
-                                                <h6 class="card-title mb-0">SafeToken (SAFE)</h6>
+                                                <h6 class="card-title mb-0 neon-text">SafeToken (SAFE)</h6>
                                                 <span class="badge bg-warning">Pausado</span>
                                             </div>
                                             <p class="card-text small text-muted mb-2">
@@ -288,11 +292,11 @@ Sistema oficial de dashboard da aplicação.
                                             </p>
                                             <div class="d-flex justify-content-between align-items-center mb-2">
                                                 <span class="small text-muted">Preço:</span>
-                                                <strong class="text-success">$0.25 USDT</strong>
+                                                <strong class="text-success neon-text">$0.25 USDT</strong>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-center mb-3">
                                                 <span class="small text-muted">Vendas:</span>
-                                                <span class="badge bg-primary">45</span>
+                                                <span class="badge bg-primary neon-badge">45</span>
                                             </div>
                                             <div class="d-grid">
                                                 <button class="btn btn-outline-warning btn-sm" onclick="resumeContract('safe')">
@@ -305,10 +309,10 @@ Sistema oficial de dashboard da aplicação.
 
                                 <!-- Contrato 3 -->
                                 <div class="col-md-4 mb-3">
-                                    <div class="card contract-card h-100">
+                                    <div class="card contract-card h-100 card-neon">
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between align-items-start mb-2">
-                                                <h6 class="card-title mb-0">CryptoGold (CGLD)</h6>
+                                                <h6 class="card-title mb-0 neon-text">CryptoGold (CGLD)</h6>
                                                 <span class="badge bg-success">Ativo</span>
                                             </div>
                                             <p class="card-text small text-muted mb-2">
@@ -316,11 +320,11 @@ Sistema oficial de dashboard da aplicação.
                                             </p>
                                             <div class="d-flex justify-content-between align-items-center mb-2">
                                                 <span class="small text-muted">Preço:</span>
-                                                <strong class="text-success">$1.50 USDT</strong>
+                                                <strong class="text-success neon-text">$1.50 USDT</strong>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-center mb-3">
                                                 <span class="small text-muted">Vendas:</span>
-                                                <span class="badge bg-primary">24</span>
+                                                <span class="badge bg-primary neon-badge">24</span>
                                             </div>
                                             <div class="d-grid">
                                                 <button class="btn btn-outline-primary btn-sm" onclick="viewContractDetails('cgld')">
@@ -339,9 +343,9 @@ Sistema oficial de dashboard da aplicação.
             <!-- Ações Rápidas -->
             <div class="row">
                 <div class="col-12">
-                    <div class="card">
+                    <div class="card card-neon">
                         <div class="card-header">
-                            <h5 class="card-title mb-0">
+                            <h5 class="card-title mb-0 neon-text">
                                 <i class="fas fa-bolt me-2"></i>
                                 Ações Rápidas
                             </h5>
