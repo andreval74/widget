@@ -1,67 +1,64 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
     <div class="container">
-        <!-- Logo sozinha à esquerda -->
-        <div class="d-flex align-items-center mb-3">
-            <i class="fas fa-cube me-2 text-white fs-3"></i>
-            <div class="d-flex flex-column">
-                <a href="index.html" title="Home"><span class="fw-bold text-white fs-4 widget-saas-text">Widget
-                        SaaS</span></a>
-                <small class="text-muted" style="line-height: 1; margin-top: -2px;">Plataforma Web3</small>
+        <!-- Brand -->
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+            <i class="fas fa-cube me-2 fs-3"></i>
+            <div>
+                <span class="fw-bold fs-4 widget-saas-text">Widget SaaS</span>
+                <small class="d-block text-light opacity-75" style="line-height: 1; margin-top: -2px;">
+                    Plataforma Web3
+                </small>
             </div>
-        </div>
+        </a>
 
         <!-- Mobile Toggle -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Navigation - Tudo alinhado à direita -->
+        <!-- Navigation -->
         <div class="collapse navbar-collapse" id="navbarNav">
-
-            <!-- Menu Items - Alinhado à direita -->
+            <!-- Menu Items -->
             <ul class="navbar-nav ms-auto me-3">
                 <li class="nav-item">
-                    <a class="menu-item header-link" href="#features">
+                    <a class="nav-link" href="#features">
                         <i class="fas fa-puzzle-piece me-1"></i>Widgets
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="menu-item header-link" href="#how-it-works">
+                    <a class="nav-link" href="#how-it-works">
                         <i class="fas fa-cogs me-1"></i>4 Passos
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="menu-item header-link" href="#demo">
-                        <i class="fas fa-play me-1"></i>Demonstração
+                    <a class="nav-link" href="#demo">
+                        <i class="fas fa-play me-1"></i>Demo
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="menu-item header-link" href="#pricing">
-                        <i class="fas fa-dollar-sign me-1"></i>Preço
+                    <a class="nav-link" href="#pricing">
+                        <i class="fas fa-dollar-sign me-1"></i>Preços
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="menu-item header-link" href="#support">
-                        <i class="fas fa-headset me-1"></i>Contato
+                    <a class="nav-link" href="#support">
+                        <i class="fas fa-headset me-1"></i>Suporte
                     </a>
                 </li>
             </ul>
 
-            <!-- Área de Controles - Tema + Carteira -->
-            <div class="d-flex align-items-center gap-2" style="margin: 5px 0; padding: 3px 0;">
-                <!-- Botão de Conectar Carteira - Sempre mostarda -->
+            <!-- Controls -->
+            <div class="d-flex align-items-center gap-2">
                 <button id="get-started" class="btn btn-warning btn-lg btn-custom">
                     <i class="fas fa-rocket me-1"></i>
                     Começar Agora
                 </button>
-                <!-- Botão de Tema - Apenas ícone -->
-                <button id="theme-toggle-btn" class="btn p-1" type="button" title="Alternar Tema"
-                    style="background: none; border: none; color: inherit; font-size: 1.2rem;">
+                
+                <button id="theme-toggle-btn" class="btn btn-outline-light btn-sm" type="button" title="Alternar Tema">
                     <i class="fas fa-sun" id="theme-icon"></i>
                 </button>
-                <!-- Botão de Mudar Idioma - Apenas ícone -->
-                <button id="language-toggle-btn" class="btn p-1" type="button" title="Mudar Idioma"
-                    style="background: none; border: none; color: inherit; font-size: 1.2rem;">
+                
+                <button id="language-toggle-btn" class="btn btn-outline-light btn-sm" type="button" title="Mudar Idioma">
                     <i class="fas fa-globe" id="language-icon"></i>
                 </button>
             </div>

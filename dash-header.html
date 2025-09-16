@@ -1,0 +1,142 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <div class="container">
+        <!-- Brand -->
+        <a class="navbar-brand d-flex align-items-center" href="#" onclick="window.navigateToSection('overview'); return false;">
+            <i class="fas fa-cube me-2 fs-3"></i>
+            <div>
+                <span class="fw-bold fs-4 widget-saas-text">Widget SaaS</span>
+                <small class="d-block text-light opacity-75" style="line-height: 1; margin-top: -2px;">
+                    Dashboard
+                </small>
+            </div>
+        </a>
+
+        <!-- Mobile Toggle -->
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navigation -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- Menu Items -->
+            <ul class="navbar-nav ms-auto me-3">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="widgetsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-puzzle-piece me-1"></i> Meus Widgets
+                    </a>
+                    <ul class="dropdown-menu bg-white shadow" aria-labelledby="widgetsDropdown">
+                        <li><a class="dropdown-item menu-item" href="#" data-section="new-widget" onclick="window.navigateToSection('new-widget'); return false;">
+                            <i class="fas fa-plus me-2"></i>Criar Widget
+                        </a></li>
+                        <li><a class="dropdown-item menu-item" href="#" data-section="widgets" onclick="window.navigateToSection('widgets'); return false;">
+                            <i class="fas fa-list me-2"></i>Gerenciar Widgets
+                        </a></li>
+                        <li><a class="dropdown-item menu-item" href="#" data-section="templates" onclick="window.navigateToSection('templates'); return false;">
+                            <i class="fas fa-copy me-2"></i>Templates
+                        </a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="salesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-chart-line me-1"></i> Vendas & Analytics
+                    </a>
+                    <ul class="dropdown-menu bg-white shadow" aria-labelledby="salesDropdown">
+                        <li><a class="dropdown-item menu-item" href="#" data-section="transactions" onclick="window.navigateToSection('transactions'); return false;">
+                            <i class="fas fa-exchange-alt me-2"></i>Transações
+                        </a></li>
+                        <li><a class="dropdown-item menu-item" href="#" data-section="earnings" onclick="window.navigateToSection('earnings'); return false;">
+                            <i class="fas fa-dollar-sign me-2"></i>Meus Ganhos
+                        </a></li>
+                        <li><a class="dropdown-item menu-item" href="#" data-section="reports" onclick="window.navigateToSection('reports'); return false;">
+                            <i class="fas fa-chart-bar me-2"></i>Relatórios
+                        </a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="financialDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-wallet me-1"></i> Financeiro
+                    </a>
+                    <ul class="dropdown-menu bg-white shadow" aria-labelledby="financialDropdown">
+                        <li><a class="dropdown-item menu-item" href="#" data-section="credits" onclick="window.navigateToSection('credits'); return false;">
+                            <i class="fas fa-coins me-2"></i>Meus Créditos
+                        </a></li>
+                        <li><a class="dropdown-item menu-item" href="#" data-section="buy-credits" onclick="window.navigateToSection('buy-credits'); return false;">
+                            <i class="fas fa-shopping-cart me-2"></i>Comprar Créditos
+                        </a></li>
+                        <li><a class="dropdown-item menu-item" href="#" data-section="billing" onclick="window.navigateToSection('billing'); return false;">
+                            <i class="fas fa-receipt me-2"></i>Faturamento
+                        </a></li>
+                        <li><a class="dropdown-item menu-item" href="#" data-section="withdraw" onclick="window.navigateToSection('withdraw'); return false;">
+                            <i class="fas fa-money-bill-wave me-2"></i>Sacar Ganhos
+                        </a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="systemDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-cogs me-1"></i> Sistema
+                    </a>
+                    <ul class="dropdown-menu bg-white shadow" aria-labelledby="systemDropdown">
+                        <li><a class="dropdown-item menu-item" href="#" data-section="settings" onclick="window.navigateToSection('settings'); return false;">
+                            <i class="fas fa-cog me-2"></i>Configurações
+                        </a></li>
+                        <li><a class="dropdown-item menu-item" href="#" data-section="support" onclick="window.navigateToSection('support'); return false;">
+                            <i class="fas fa-question-circle me-2"></i>Suporte
+                        </a></li>
+                        <li><a class="dropdown-item menu-item" href="admin-panel.html">
+                            <i class="fas fa-shield-alt me-2"></i>Admin Panel
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item menu-item" href="#" id="theme-toggle-menu" onclick="toggleTheme(); return false;">
+                            <i class="fas fa-sun me-2" id="theme-icon-menu"></i>Alternar Tema
+                        </a></li>
+                        <li><a class="dropdown-item menu-item" href="#" id="language-toggle-menu" onclick="showLanguageOptions(); return false;">
+                            <i class="fas fa-globe me-2"></i>Idioma
+                        </a></li>
+                        <li><a class="dropdown-item menu-item" href="#" onclick="showWalletInfo(); return false;">
+                            <i class="fas fa-wallet me-2"></i>Info da Carteira
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item menu-item text-danger" href="#" onclick="logout(); return false;">
+                            <i class="fas fa-sign-out-alt me-2"></i>Sair do Sistema
+                        </a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- User Info Bar -->
+<div class="bg-light border-bottom py-2">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-wallet text-primary me-2"></i>
+                    <span class="text-muted small me-2">Carteira:</span>
+                    <code class="badge bg-secondary text-white" id="user-wallet-address" title="Clique para copiar" style="cursor: pointer;">
+                        Conectando...
+                    </code>
+                </div>
+            </div>
+            <div class="col-md-6 text-end">
+                <div class="d-flex align-items-center justify-content-end">
+                    <i class="fas fa-user-tag text-success me-2"></i>
+                    <span class="text-muted small me-2">Tipo:</span>
+                    <span class="badge bg-success" id="user-type-badge">
+                        Carregando...
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="js/shared/wallet.js"></script>
+<script src="js/shared/template-loader.js"></script>
+<script src="js/shared/header-theme-controller.js"></script>
+<script src="js/shared/language-controller.js"></script>
+<script src="js/dash-header.js"></script>
+<script src="js/shared/support-modal.js"></script>
+<script src="js/modules/dashboard-menu-logout.js"></script>

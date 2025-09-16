@@ -94,6 +94,43 @@ class DashboardMenuManager {
             }
         });
     }
+
+    // ================================================================================
+    // FUNÇÕES DE TESTE
+    // ================================================================================
+
+    /**
+     * Configura funções de teste para navegação
+     */
+    setupTestFunctions() {
+        console.log('📋 Dashboard Menu carregado - funções de teste disponíveis');
+        this.makeTestFunctionGlobal();
+    }
+
+    /**
+     * Função de teste para verificar se os links de navegação funcionam
+     * @param {string} section - Nome da seção para navegar
+     */
+    testNavigateToSection(section) {
+        console.log('🔍 Testando navegação para:', section);
+        
+        if (typeof window.navigateToSection === 'function') {
+            console.log('✅ Função navigateToSection encontrada');
+            window.navigateToSection(section);
+        } else {
+            console.log('❌ Função navigateToSection não encontrada');
+            console.log('Aguardando dashboard manager...');
+            setTimeout(() => this.testNavigateToSection(section), 1000);
+        }
+    }
+
+    /**
+     * Torna a função de teste disponível globalmente
+     */
+    makeTestFunctionGlobal() {
+        window.testNavigateToSection = (section) => this.testNavigateToSection(section);
+    }
+
 }
 
 // ================================================================================
@@ -134,75 +171,15 @@ function logout() {
             window.web3Manager.disconnectWallet();
         }
         
-        // Parar atualizações periódicas da carteira
-        if (window.walletMenuManager && typeof window.walletMenuManager.stopPeriodicUpdate === 'function') {
-            window.walletMenuManager.stopPeriodicUpdate();
-        }
+        // Limpar dados locais
+        localStorage.clear();
+        sessionStorage.clear();
         
-        // Limpar dados locais (preservando configurações essenciais)
-        try {
-            // Limpar dados de carteira
-            localStorage.removeItem('walletconnect');
-            localStorage.removeItem('WALLETCONNECT_DEEPLINK_CHOICE');
-            localStorage.removeItem('web3_connection_state');
-            sessionStorage.clear();
-            
-            // Manter apenas configurações do usuário
-            const lang = localStorage.getItem('xcafe-language');
-            const flag = localStorage.getItem('xcafe-flag');
-            
-            // Limpar tudo e restaurar configurações essenciais
-            localStorage.clear();
-            if (lang) localStorage.setItem('xcafe-language', lang);
-            if (flag) localStorage.setItem('xcafe-flag', flag);
-            
-            console.log('🧹 Dados locais limpos, configurações preservadas');
-        } catch (error) {
-            console.error('⚠️ Erro ao limpar dados locais:', error);
-        }
-        
-        // Redirecionar para página inicial
-        console.log('👋 Redirecionando para página inicial...');
-        window.location.href = '../index.html';
+        // Redirecionar para página de autenticação
+        window.location.href = '/auth.html';
     }
 }
 
-    // ================================================================================
-    // FUNÇÕES DE TESTE
-    // ================================================================================
-
-    /**
-     * Configura funções de teste para navegação
-     */
-    setupTestFunctions() {
-        console.log('📋 Dashboard Menu carregado - funções de teste disponíveis');
-        this.makeTestFunctionGlobal();
-    }
-
-    /**
-     * Função de teste para verificar se os links de navegação funcionam
-     * @param {string} section - Nome da seção para navegar
-     */
-    testNavigateToSection(section) {
-        console.log('🔍 Testando navegação para:', section);
-        
-        if (typeof window.navigateToSection === 'function') {
-            console.log('✅ Função navigateToSection encontrada');
-            window.navigateToSection(section);
-        } else {
-            console.log('❌ Função navigateToSection não encontrada');
-            console.log('Aguardando dashboard manager...');
-            setTimeout(() => this.testNavigateToSection(section), 1000);
-        }
-    }
-
-    /**
-     * Torna a função de teste disponível globalmente
-     */
-    makeTestFunctionGlobal() {
-        window.testNavigateToSection = (section) => this.testNavigateToSection(section);
-    }
-}
 
 // ================================================================================
 // INICIALIZAÇÃO

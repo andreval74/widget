@@ -122,6 +122,22 @@ class TemplateLoader {
             promises.push(this.loadTemplate('support.html', containerId));
         });
 
+        // Carregar dash-header se existir container
+        const dashHeaderElements = document.querySelectorAll('[data-component="dash-header"]');
+        dashHeaderElements.forEach(element => {
+            const containerId = element.id || `dash-header-container-${Math.random().toString(36).substr(2, 9)}`;
+            element.id = containerId;
+            promises.push(this.loadTemplate('dash-header.html', containerId));
+        });
+
+        // Carregar dash-footer se existir container
+        const dashFooterElements = document.querySelectorAll('[data-component="dash-footer"]');
+        dashFooterElements.forEach(element => {
+            const containerId = element.id || `dash-footer-container-${Math.random().toString(36).substr(2, 9)}`;
+            element.id = containerId;
+            promises.push(this.loadTemplate('dash-footer.html', containerId));
+        });
+
         // Aguardar todos os carregamentos
         const results = await Promise.allSettled(promises);
         
