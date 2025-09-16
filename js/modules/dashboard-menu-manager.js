@@ -16,6 +16,7 @@ class DashboardMenuManager {
         console.log('📋 Inicializando DashboardMenuManager Otimizado...');
         this.setupNavigationEvents();
         this.setupActionButtons();
+        this.setupTestFunctions();
     }
 
     setupNavigationEvents() {
@@ -166,6 +167,43 @@ function logout() {
     }
 }
 
+    // ================================================================================
+    // FUNÇÕES DE TESTE
+    // ================================================================================
+
+    /**
+     * Configura funções de teste para navegação
+     */
+    setupTestFunctions() {
+        console.log('📋 Dashboard Menu carregado - funções de teste disponíveis');
+        this.makeTestFunctionGlobal();
+    }
+
+    /**
+     * Função de teste para verificar se os links de navegação funcionam
+     * @param {string} section - Nome da seção para navegar
+     */
+    testNavigateToSection(section) {
+        console.log('🔍 Testando navegação para:', section);
+        
+        if (typeof window.navigateToSection === 'function') {
+            console.log('✅ Função navigateToSection encontrada');
+            window.navigateToSection(section);
+        } else {
+            console.log('❌ Função navigateToSection não encontrada');
+            console.log('Aguardando dashboard manager...');
+            setTimeout(() => this.testNavigateToSection(section), 1000);
+        }
+    }
+
+    /**
+     * Torna a função de teste disponível globalmente
+     */
+    makeTestFunctionGlobal() {
+        window.testNavigateToSection = (section) => this.testNavigateToSection(section);
+    }
+}
+
 // ================================================================================
 // INICIALIZAÇÃO
 // ================================================================================
@@ -177,5 +215,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Criar instância global do manager
         window.dashboardMenuManager = new DashboardMenuManager();
         console.log('✅ DashboardMenuManager Otimizado inicializado');
+        
+        // Disponibilizar função logout globalmente
+        window.logout = logout;
+        console.log('🚪 Função logout disponível globalmente');
     }, 100);
 });

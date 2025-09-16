@@ -692,6 +692,42 @@ a:hover {
     flex-shrink: 0;
 }
 
+/* ===== SUBMENU ESTILOS ===== */
+.nav-submenu {
+    background: rgba(0, 0, 0, 0.1);
+    border-left: 3px solid var(--primary-color);
+    margin-left: var(--spacing-sm);
+}
+
+.nav-sublink {
+    padding-left: calc(var(--spacing-md) + var(--spacing-lg)) !important;
+    font-size: var(--font-sm);
+    color: var(--text-secondary);
+    border-left: 2px solid transparent;
+    transition: var(--transition-normal);
+}
+
+.nav-sublink:hover {
+    background: rgba(0, 123, 255, 0.1);
+    color: var(--primary-color);
+    border-left-color: var(--primary-color);
+}
+
+.nav-sublink.active {
+    background: rgba(0, 123, 255, 0.15);
+    color: var(--primary-color);
+    border-left-color: var(--primary-color);
+    font-weight: var(--font-weight-medium);
+}
+
+.menu-arrow {
+    transition: var(--transition-normal);
+}
+
+.nav-link[aria-expanded="true"] .menu-arrow {
+    transform: rotate(180deg);
+}
+
 .main-content {
     flex: 1;
     margin-left: var(--sidebar-width);
@@ -1186,7 +1222,7 @@ a:hover {
 }
 
 .text-success {
-    color: var(--success-color) !important;
+    color: var(--text-color) !important;
 }
 
 .text-danger {

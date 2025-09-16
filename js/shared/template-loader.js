@@ -307,6 +307,14 @@ class TemplateLoader {
             }
         }
 
+        // Inicializar informações da carteira usando o WalletManager
+        if (window.walletManager) {
+            // Aguardar um pouco para garantir que o DOM do menu esteja totalmente carregado
+            setTimeout(() => {
+                window.walletManager.updateWalletMenuInfo();
+            }, 500);
+        }
+
         console.log('✅ Dashboard menu inicializado com sucesso');
     }
 

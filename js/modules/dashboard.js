@@ -10,6 +10,26 @@ Sistema completo de gerenciamento do dashboard com:
 ================================================================================
 */
 
+// Definir função de navegação global imediatamente
+window.navigateToSection = function(section) {
+    console.log(`🧭 Navegação solicitada para: ${section}`);
+    if (window.dashboardManager && window.dashboardManager.showSection) {
+        window.dashboardManager.showSection(section);
+    } else {
+        console.log('⏳ Dashboard Manager não pronto, aguardando...');
+        // Aguardar o dashboard manager estar disponível
+        const checkManager = () => {
+            if (window.dashboardManager && window.dashboardManager.showSection) {
+                console.log('✅ Dashboard Manager pronto, executando navegação');
+                window.dashboardManager.showSection(section);
+            } else {
+                setTimeout(checkManager, 100);
+            }
+        };
+        checkManager();
+    }
+};
+
 class DashboardManager {
     constructor() {
         // Configurações principais
@@ -216,10 +236,10 @@ class DashboardManager {
             this.showSection(section);
         });
         
-        // Função global de navegação
-        window.navigateToSection = (section) => {
-            this.showSection(section);
-        };
+        // Conectar função global ao dashboard manager
+        if (window.navigateToSection) {
+            console.log('🔗 Conectando navegação global ao dashboard manager');
+        }
     }
 
     async showSection(sectionName) {
@@ -230,12 +250,24 @@ class DashboardManager {
             
             // Carregar template da seção
             const templatePath = this.getTemplatePath(sectionName);
-            const content = await this.templateLoader.loadTemplate(templatePath);
+            
+            // Usar fetch para carregar o conteúdo diretamente
+            const response = await fetch(templatePath);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const content = await response.text();
             
             // Atualizar conteúdo
             const mainContent = document.getElementById('main-content');
-            if (mainContent && sectionName !== 'overview') {
-                mainContent.innerHTML = content;
+            if (mainContent) {
+                if (sectionName === 'overview') {
+                    // Para overview, manter conteúdo atual e adicionar dados dinâmicos
+                    this.loadOverviewData();
+                } else {
+                    // Para outras seções, substituir conteúdo
+                    mainContent.innerHTML = content;
+                }
             }
             
             // Atualizar navegação ativa
@@ -246,15 +278,15 @@ class DashboardManager {
             
         } catch (error) {
             console.error(`❌ Erro ao carregar seção ${sectionName}:`, error);
-            this.showError(`Erro ao carregar a seção ${sectionName}`);
+            this.showError(`Erro ao carregar a seção ${sectionName}. Verifique se o arquivo existe: ${this.getTemplatePath(sectionName)}`);
         }
     }
 
     getTemplatePath(sectionName) {
         const templateMap = {
             'overview': 'dashboard/pages/overview.html',
-            'contracts': 'dashboard/pages/contracts.html',
-            'new-contract': 'dashboard/pages/new-contract.html',
+            'widgets': 'dashboard/pages/widgets.html',
+            'new-widget': 'dashboard/pages/new-widget.html',
             'templates': 'dashboard/pages/templates.html',
             'transactions': 'dashboard/pages/transactions.html',
             'earnings': 'dashboard/pages/earnings.html',
@@ -264,7 +296,10 @@ class DashboardManager {
             'billing': 'dashboard/pages/billing.html',
             'withdraw': 'dashboard/pages/withdraw.html',
             'settings': 'dashboard/pages/settings.html',
-            'support': 'dashboard/pages/support.html'
+            'support': 'dashboard/pages/support.html',
+            // Manter compatibilidade com nomes antigos
+            'contracts': 'dashboard/pages/widgets.html',
+            'new-contract': 'dashboard/pages/new-widget.html'
         };
         
         return templateMap[sectionName] || 'dashboard/pages/overview.html';
@@ -732,8 +767,8 @@ class DashboardManager {
                 // Habilitar botão
                 document.getElementById('buyCreditsBtn').disabled = false;
                 // Configurar ação do botão
-                const package = card.dataset.package;
-                document.getElementById('buyCreditsBtn').onclick = () => this.purchaseCredits(package);
+                const packageType = card.dataset.package;
+                document.getElementById('buyCreditsBtn').onclick = () => this.purchaseCredits(packageType);
             });
         });
         
@@ -903,6 +938,8 @@ function copyApiKey(apiKey) {
         window.dashboardManager.copyApiKey(apiKey);
     }
 }
+
+function resumeContract(contractId) {
     console.log(`▶️ Reativando contrato: ${contractId}`);
     
     if (confirm('Tem certeza que deseja reativar este contrato?')) {
@@ -923,6 +960,10 @@ function copyApiKey(apiKey) {
         }
     }
 }
+
+// ================================================================================
+// INICIALIZAÇÃO AUTOMÁTICA
+// ================================================================================
 
 // ================================================================================
 // INICIALIZAÇÃO AUTOMÁTICA

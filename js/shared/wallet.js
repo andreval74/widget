@@ -139,6 +139,21 @@ class WalletManager {
         
         // Emitir evento
         this.emitEvent(this.events.disconnected, {});
+        
+        // Atualizar menu imediatamente
+        this.updateWalletMenuDisconnected();
+    }
+
+    // Atualizar menu quando carteira é desconectada
+    updateWalletMenuDisconnected() {
+        const walletInfoElement = document.getElementById('connected-wallet-address');
+        if (!walletInfoElement) return;
+        
+        walletInfoElement.textContent = 'Desconectado';
+        walletInfoElement.className = 'badge bg-danger d-block text-center py-1';
+        walletInfoElement.style.cursor = 'default';
+        walletInfoElement.onclick = null;
+        walletInfoElement.title = 'Carteira desconectada';
     }
 
     // Obter conta atual
@@ -215,6 +230,7 @@ class WalletManager {
 
     // Atualizar interface dos botões
     updateButtonsUI() {
+        // Atualizar botões de conexão
         const buttons = document.querySelectorAll('#get-started');
         
         buttons.forEach(button => {
@@ -248,7 +264,6 @@ class WalletManager {
                         ${this.formatAddress(this.currentAccount)}
                     `;
                 };
-                
                 // Ação: ir para dashboard
                 button.onclick = () => window.location.href = 'dashboard.html';
             } else {
@@ -271,15 +286,50 @@ class WalletManager {
                 };
             }
         });
+
+        // Atualizar informações da carteira no menu lateral (dashboard)
+        this.updateWalletMenuInfo();
+    }
+
+    // Atualizar informações da carteira no menu lateral
+    updateWalletMenuInfo() {
+        const walletInfoElement = document.getElementById('connected-wallet-address');
+        if (!walletInfoElement) return;
+
+        if (this.isConnected && this.currentAccount) {
+            const address = this.currentAccount;
+            const shortAddress = this.formatAddress(address);
+            
+            walletInfoElement.textContent = shortAddress;
+            walletInfoElement.className = 'badge bg-success d-block text-center py-1';
+            walletInfoElement.title = `${address} - Clique para copiar`;
+            walletInfoElement.style.cursor = 'pointer';
+            
+            // Função para copiar endereço
+            walletInfoElement.onclick = () => {
+                navigator.clipboard.writeText(address).then(() => {
+                    const originalText = walletInfoElement.textContent;
+                    walletInfoElement.textContent = 'Copiado!';
+                    walletInfoElement.className = 'badge bg-info d-block text-center py-1';
+                    
+                    setTimeout(() => {
+                        walletInfoElement.textContent = originalText;
+                        walletInfoElement.className = 'badge bg-success d-block text-center py-1';
+                    }, 1500);
+                }).catch((err) => {
+                    console.error('Erro ao copiar: ', err);
+                });
+            };
+        } else {
+            walletInfoElement.textContent = 'Conectando...';
+            walletInfoElement.className = 'badge bg-warning d-block text-center py-1 text-dark';
+            walletInfoElement.style.cursor = 'default';
+            walletInfoElement.onclick = null;
+            walletInfoElement.title = 'Aguardando conexão...';
+        }
     }
 
     // Formatar endereço da carteira
-    formatAddress(address) {
-        if (!address) return '';
-        return `${address.slice(0, 6)}...${address.slice(-4)}`;
-    }
-
-    // Formatar endereço para exibição
     formatAddress(address) {
         if (!address) return '';
         return `${address.slice(0, 6)}...${address.slice(-4)}`;
@@ -337,5 +387,33 @@ window.formatWalletAddress = function(address) {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { WalletManager };
 }
+
+// Adicionar event listeners globais para atualizar o menu da carteira
+document.addEventListener('wallet:connected', function() {
+    if (window.walletManager) {
+        window.walletManager.updateWalletMenuInfo();
+    }
+});
+
+document.addEventListener('wallet:accountChanged', function() {
+    if (window.walletManager) {
+        window.walletManager.updateWalletMenuInfo();
+    }
+});
+
+document.addEventListener('wallet:disconnected', function() {
+    if (window.walletManager) {
+        window.walletManager.updateWalletMenuDisconnected();
+    }
+});
+
+// Aguardar carregamento do DOM para inicializar menu da carteira
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+        if (window.walletManager) {
+            window.walletManager.updateWalletMenuInfo();
+        }
+    }, 1000);
+});
 
 console.log('💼 Wallet Manager carregado e disponível globalmente');

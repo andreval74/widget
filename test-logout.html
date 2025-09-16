@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Logout - Widget SaaS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-vials me-2"></i>Teste de Logout</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Use os botões abaixo para testar a funcionalidade de logout:</p>
+                        
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-danger" onclick="logout()">
+                                <i class="fas fa-sign-out-alt me-2"></i>Testar Logout
+                            </button>
+                            
+                            <button class="btn btn-info" onclick="testNavigateToSection('overview')">
+                                <i class="fas fa-flask me-2"></i>Testar Navegação (Overview)
+                            </button>
+                            
+                            <button class="btn btn-secondary" onclick="console.log('Functions available:', {logout: typeof window.logout, testNavigateToSection: typeof window.testNavigateToSection})">
+                                <i class="fas fa-bug me-2"></i>Debug: Verificar Funções
+                            </button>
+                        </div>
+
+                        <div class="mt-4">
+                            <h6>Resultados esperados:</h6>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">✅ Logout deve mostrar confirmação</li>
+                                <li class="list-group-item">✅ Se confirmado, limpa dados e redireciona para index.html</li>
+                                <li class="list-group-item">✅ Se cancelado, permanece na página</li>
+                                <li class="list-group-item">✅ Função de teste deve estar disponível</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts necessários -->
+    <script src="js/modules/dashboard-menu-logout.js"></script>
+    <script>
+        // Log para verificar se as funções estão carregadas
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                console.log('🧪 Teste de logout carregado');
+                console.log('📋 Funções disponíveis:');
+                console.log('   - logout:', typeof window.logout);
+                console.log('   - testNavigateToSection:', typeof window.testNavigateToSection);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
