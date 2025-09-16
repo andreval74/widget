@@ -60,7 +60,57 @@ Você é um arquiteto de software sênior. Seu papel é revisar e entregar um si
 - **Responsividade**: Sempre teste em mobile (`col-md-6`, `d-flex flex-wrap`)
 - **Acessibilidade**: Use `aria-labelledby`, `title`, `alt` adequadamente
 - **Performance**: Carregue scripts na ordem correta, use `setTimeout` para inicialização
-- **Consistência**: Mantenha padrões de nomenclatura e estrutura entre páginas similares  
+- **Consistência**: Mantenha padrões de nomenclatura e estrutura entre páginas similares
+
+## Arquitetura do Ecossistema
+
+### Princípios Fundamentais
+- **Modular Unificada**: Um ecossistema com módulos independentes mas interconectados
+- **Coordenador Central**: `xcafe-app.js` gerencia inicialização e comunicação entre módulos
+- **Event-Driven**: Comunicação via eventos customizados (`CustomEvent`)
+- **Dependency Injection**: Módulos recebem dependências via construtor
+- **Single Responsibility**: Cada módulo tem uma responsabilidade específica
+
+### Estrutura de Módulos
+```javascript
+// Padrão de módulo
+class ModuleName {
+    constructor(dependencies = {}) {
+        this.eventBus = dependencies.eventBus;
+        this.apiClient = dependencies.apiClient;
+        this.init();
+    }
+    
+    init() {
+        this.setupEventListeners();
+        this.loadInitialData();
+    }
+    
+    // Métodos públicos
+    // Métodos privados
+}
+
+// Registro no coordenador
+window.xcafeApp.registerModule('moduleName', ModuleName);
+```
+
+### Comunicação Entre Módulos
+- **Eventos**: `document.dispatchEvent(new CustomEvent('eventName', {detail: data}))`
+- **Event Bus**: Sistema centralizado de eventos para módulos
+- **Shared State**: Estado compartilhado via `window.xcafeApp.state`
+- **API Unificada**: Cliente API único para todas as requisições
+
+### Padrões de Carregamento
+1. **Core** → **Utils** → **Modules** → **UI** → **Pages**
+2. **Lazy Loading**: Módulos carregados sob demanda
+3. **Dependency Resolution**: Aguardar dependências antes de inicializar
+4. **Error Handling**: Fallbacks para módulos que falharem
+
+### Extensibilidade
+- **Plugin System**: Novos módulos podem ser adicionados sem modificar o core
+- **Hook System**: Pontos de extensão em módulos existentes
+- **Configuration**: Configuração centralizada e extensível
+- **Theming**: Sistema de temas aplicável a todos os módulos  
 
 ## Caça-Bugs
 - Liste causas prováveis (5 → 2 principais).  
