@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Widget - Token Detection</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Ethers.js via UNPKG -->
+    <script src="https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        
+        .debug-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="debug-container">
+    <div class="new-widget-section">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>🧩 Debug - Criar Novo Widget</h2>
+        <div class="d-flex gap-2">
+            <button class="btn btn-outline-secondary" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </button>
+            <button class="btn btn-info" onclick="debugInfo()">
+                <i class="fas fa-bug"></i> Debug
+            </button>
+        </div>
+    </div>
+
+    <!-- Debug Info -->
+    <div class="card mb-4">
+        <div class="card-header bg-info text-white">
+            <h6 class="mb-0">Informações de Debug</h6>
+        </div>
+        <div class="card-body">
+            <div id="debug-output" style="background: #f8f9fa; padding: 10px; border-radius: 5px; font-family: monospace; font-size: 12px;">
+                Aguardando debug...
+            </div>
+        </div>
+    </div>
+
+    <!-- Teste Simples -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h6 class="mb-0">Teste de Funcionalidade</h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="testNetwork" class="form-label">Rede</label>
+                    <select id="testNetwork" class="form-select" onchange="testNetworkChange()">
+                        <option value="">Escolha uma rede...</option>
+                        <option value="97">BSC Testnet</option>
+                        <option value="56">BNB Smart Chain</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="testAddress" class="form-label">Endereço</label>
+                    <input type="text" id="testAddress" class="form-control" placeholder="0x...">
+                </div>
+            </div>
+            <div class="mt-3">
+                <button class="btn btn-primary" onclick="testDetection()">
+                    <i class="fas fa-play"></i> Testar Detecção
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resultado do Teste -->
+    <div id="test-results" class="card" style="display: none;">
+        <div class="card-header bg-success text-white">
+            <h6 class="mb-0">Resultado do Teste</h6>
+        </div>
+        <div class="card-body">
+            <div id="test-output"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+console.log('📋 Debug Widget Page carregado');
+
+function goBack() {
+    console.log('🔙 Voltando para contracts');
+    if (typeof dashboardManager !== 'undefined' && dashboardManager.showSection) {
+        dashboardManager.showSection('contracts');
+    } else {
+        console.log('⚠️ dashboardManager não disponível');
+    }
+}
+
+function debugInfo() {
+    const debugOutput = document.getElementById('debug-output');
+    
+    const info = {
+        timestamp: new Date().toISOString(),
+        ethers: typeof ethers !== 'undefined' ? '✅ Carregado' : '❌ Não encontrado',
+        window_ethereum: typeof window.ethereum !== 'undefined' ? '✅ MetaMask disponível' : '❌ MetaMask não encontrado',
+        dashboardManager: typeof dashboardManager !== 'undefined' ? '✅ Disponível' : '❌ Não encontrado',
+        bootstrap: typeof bootstrap !== 'undefined' ? '✅ Carregado' : '❌ Não encontrado',
+        location: window.location.href,
+        userAgent: navigator.userAgent.split('(')[0]
+    };
+    
+    debugOutput.innerHTML = Object.entries(info)
+        .map(([key, value]) => `${key}: ${value}`)
+        .join('<br>');
+    
+    console.log('🐛 Debug Info:', info);
+}
+
+let selectedTestNetwork = null;
+
+function testNetworkChange() {
+    const select = document.getElementById('testNetwork');
+    const chainId = select.value;
+    
+    if (chainId) {
+        const networks = {
+            '97': { 
+                name: 'BSC Testnet', 
+                rpc: 'https://data-seed-prebsc-1-s1.binance.org:8545/'
+            },
+            '56': { 
+                name: 'BNB Smart Chain', 
+                rpc: 'https://bsc-dataseed.binance.org/'
+            }
+        };
+        
+        selectedTestNetwork = {
+            chainId: parseInt(chainId),
+            ...networks[chainId]
+        };
+        
+        console.log('🌐 Rede de teste selecionada:', selectedTestNetwork);
+    }
+}
+
+async function testDetection() {
+    const address = document.getElementById('testAddress').value.trim();
+    const resultsCard = document.getElementById('test-results');
+    const output = document.getElementById('test-output');
+    
+    console.log('🧪 Iniciando teste de detecção');
+    
+    // Verificar dependências
+    if (typeof ethers === 'undefined') {
+        output.innerHTML = '<p class="text-danger">❌ Ethers.js não carregado</p>';
+        resultsCard.style.display = 'block';
+        return;
+    }
+    
+    if (!selectedTestNetwork) {
+        output.innerHTML = '<p class="text-warning">⚠️ Selecione uma rede</p>';
+        resultsCard.style.display = 'block';
+        return;
+    }
+    
+    if (!address || !/^0x[a-fA-F0-9]{40}$/i.test(address)) {
+        output.innerHTML = '<p class="text-warning">⚠️ Endereço inválido</p>';
+        resultsCard.style.display = 'block';
+        return;
+    }
+    
+    try {
+        console.log('🔍 Testando endereço:', address);
+        console.log('🌐 Rede:', selectedTestNetwork);
+        
+        output.innerHTML = '<p class="text-info">🔍 Detectando...</p>';
+        resultsCard.style.display = 'block';
+        
+        // Criar provider
+        const provider = new ethers.providers.JsonRpcProvider(selectedTestNetwork.rpc);
+        console.log('✅ Provider criado');
+        
+        // Verificar código do contrato
+        const code = await provider.getCode(address);
+        console.log('📋 Código do contrato:', code.length > 10 ? '✅ Contrato válido' : '❌ Não é contrato');
+        
+        if (code === '0x') {
+            throw new Error('Endereço não é um contrato inteligente');
+        }
+        
+        // ABI básica
+        const abi = [
+            "function name() view returns (string)",
+            "function symbol() view returns (string)",
+            "function decimals() view returns (uint8)",
+            "function totalSupply() view returns (uint256)"
+        ];
+        
+        const contract = new ethers.Contract(address, abi, provider);
+        console.log('📄 Contrato criado');
+        
+        // Buscar dados
+        const [name, symbol, decimals, totalSupply] = await Promise.all([
+            contract.name().catch(e => { console.log('⚠️ Erro no name():', e.message); return 'N/A'; }),
+            contract.symbol().catch(e => { console.log('⚠️ Erro no symbol():', e.message); return 'N/A'; }),
+            contract.decimals().catch(e => { console.log('⚠️ Erro no decimals():', e.message); return 18; }),
+            contract.totalSupply().catch(e => { console.log('⚠️ Erro no totalSupply():', e.message); return '0'; })
+        ]);
+        
+        console.log('🎉 Dados obtidos:', { name, symbol, decimals, totalSupply: totalSupply.toString() });
+        
+        output.innerHTML = `
+            <div class="alert alert-success">
+                <h6>✅ Token Detectado com Sucesso!</h6>
+                <p><strong>Nome:</strong> ${name}</p>
+                <p><strong>Símbolo:</strong> ${symbol}</p>
+                <p><strong>Decimais:</strong> ${decimals}</p>
+                <p><strong>Supply Total:</strong> ${totalSupply.toString()}</p>
+                <p><strong>Rede:</strong> ${selectedTestNetwork.name}</p>
+                <p><strong>Endereço:</strong> ${address}</p>
+            </div>
+        `;
+        
+    } catch (error) {
+        console.error('❌ Erro no teste:', error);
+        output.innerHTML = `
+            <div class="alert alert-danger">
+                <h6>❌ Erro na Detecção</h6>
+                <p><strong>Erro:</strong> ${error.message}</p>
+                <p><strong>Verificação:</strong></p>
+                <ul>
+                    <li>Ethers.js: ${typeof ethers !== 'undefined' ? '✅' : '❌'}</li>
+                    <li>Rede: ${selectedTestNetwork ? '✅' : '❌'}</li>
+                    <li>Endereço: ${/^0x[a-fA-F0-9]{40}$/i.test(address) ? '✅' : '❌'}</li>
+                </ul>
+            </div>
+        `;
+    }
+}
+
+// Debug automático quando carregar
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('📋 Debug Widget - DOM carregado');
+    setTimeout(debugInfo, 1000);
+});
+</script>
+
+    </div>
+</div>
+
+</body>
+</html>

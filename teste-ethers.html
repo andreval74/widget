@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Ethers.js</title>
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
+</head>
+<body>
+    <h1>Teste de Detecção de Token</h1>
+    
+    <div>
+        <label>Rede:</label>
+        <select id="networkSelect" onchange="selectNetwork()">
+            <option value="">Escolha uma rede...</option>
+            <option value="1">Ethereum Mainnet</option>
+            <option value="56">BNB Smart Chain</option>
+            <option value="97">BSC Testnet</option>
+        </select>
+    </div>
+    
+    <div>
+        <label>Endereço do Contrato:</label>
+        <input type="text" id="contractAddress" placeholder="0x..." style="width: 400px">
+        <button onclick="detectContract()" id="detectBtn">Detectar</button>
+    </div>
+    
+    <div id="results" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;"></div>
+
+    <script>
+        let selectedNetwork = null;
+        
+        const networkConfigs = {
+            '1': { 
+                name: 'Ethereum Mainnet', 
+                currency: 'ETH',
+                rpc: ['https://eth.llamarpc.com']
+            },
+            '56': { 
+                name: 'BNB Smart Chain', 
+                currency: 'BNB',
+                rpc: ['https://bsc-dataseed.binance.org/']
+            },
+            '97': { 
+                name: 'BSC Testnet', 
+                currency: 'tBNB',
+                rpc: ['https://data-seed-prebsc-1-s1.binance.org:8545/']
+            }
+        };
+
+        function selectNetwork() {
+            const select = document.getElementById('networkSelect');
+            const chainId = select.value;
+            
+            if (chainId) {
+                selectedNetwork = {
+                    chainId: parseInt(chainId),
+                    ...networkConfigs[chainId]
+                };
+                
+                console.log('🌐 Rede selecionada:', selectedNetwork);
+                document.getElementById('results').innerHTML = `<p>Rede selecionada: ${selectedNetwork.name}</p>`;
+            }
+        }
+
+        async function detectContract() {
+            const address = document.getElementById('contractAddress').value.trim();
+            const resultsDiv = document.getElementById('results');
+            
+            if (!selectedNetwork) {
+                resultsDiv.innerHTML = '<p style="color: red;">Por favor, selecione uma rede primeiro</p>';
+                return;
+            }
+            
+            if (!address || !/^0x[a-fA-F0-9]{40}$/i.test(address)) {
+                resultsDiv.innerHTML = '<p style="color: red;">Endereço inválido</p>';
+                return;
+            }
+            
+            const detectBtn = document.getElementById('detectBtn');
+            detectBtn.innerHTML = 'Detectando...';
+            detectBtn.disabled = true;
+            
+            try {
+                console.log('🔍 Iniciando detecção do token:', address);
+                console.log('🌐 Rede:', selectedNetwork.name);
+                
+                resultsDiv.innerHTML = '<p>Detectando token...</p>';
+                
+                // Criar provider
+                const provider = new ethers.providers.JsonRpcProvider(selectedNetwork.rpc[0]);
+                
+                // Verificar se é um contrato
+                const code = await provider.getCode(address);
+                if (code === '0x') {
+                    throw new Error('Endereço não é um contrato inteligente');
+                }
+                
+                console.log('✅ Contrato detectado, buscando dados...');
+                
+                // ABI básica de token ERC20
+                const abi = [
+                    "function name() view returns (string)",
+                    "function symbol() view returns (string)",
+                    "function decimals() view returns (uint8)",
+                    "function totalSupply() view returns (uint256)"
+                ];
+                
+                const contract = new ethers.Contract(address, abi, provider);
+                
+                const [name, symbol, decimals, totalSupply] = await Promise.all([
+                    contract.name().catch(() => "N/A"),
+                    contract.symbol().catch(() => "N/A"),
+                    contract.decimals().catch(() => 18),
+                    contract.totalSupply().catch(() => "0")
+                ]);
+                
+                console.log('🎉 Token detectado:', { name, symbol, decimals, totalSupply });
+                
+                resultsDiv.innerHTML = `
+                    <h3>Token Detectado!</h3>
+                    <p><strong>Nome:</strong> ${name}</p>
+                    <p><strong>Símbolo:</strong> ${symbol}</p>
+                    <p><strong>Decimais:</strong> ${decimals}</p>
+                    <p><strong>Supply Total:</strong> ${totalSupply.toString()}</p>
+                    <p><strong>Endereço:</strong> ${address}</p>
+                    <p><strong>Rede:</strong> ${selectedNetwork.name}</p>
+                `;
+                
+                detectBtn.innerHTML = 'Sucesso!';
+                
+            } catch (error) {
+                console.error('❌ Erro ao detectar token:', error);
+                resultsDiv.innerHTML = `<p style="color: red;">Erro: ${error.message}</p>`;
+                detectBtn.innerHTML = 'Erro';
+            }
+            
+            setTimeout(() => {
+                detectBtn.innerHTML = 'Detectar';
+                detectBtn.disabled = false;
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

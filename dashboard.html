@@ -18,23 +18,15 @@ Sistema oficial de dashboard da aplicação.
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
+    <!-- Ethers.js via UNPKG -->
+    <script src="https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    
     <!-- CSS UNIFICADO - Substitui main.css + menu.css + dashboard.css -->
     <link href="css/styles.css" rel="stylesheet">
-    
-    <!-- JavaScript Modular -->
-    <script src="js/shared/wallet.js"></script>
-    <script src="js/modules/web3.js"></script>
-    <script src="js/shared/template-loader.js"></script>
-    <script src="js/modules/dashboard.js"></script>
-    <script src="js/modules/dashboard-menu-logout.js"></script>
-    
-    <!-- Theme Controller para tema escuro padrão -->
-    <script src="js/theme-controller-unified.js"></script>
-    <script src="js/shared/header-theme-controller.js"></script>
 </head>
 <body data-theme="dark" class="theme-dark">
     <!-- Menu Lateral Dinâmico -->
-    <div data-component="dashboard-menu"></div>
+    <div id="dashboard-menu-container" data-component="dashboard-menu"></div>
 
     <!-- Conteúdo Principal -->
     <main class="main-content">
@@ -386,7 +378,45 @@ Sistema oficial de dashboard da aplicação.
         </div>
     </main>
 
-    <!-- Scripts -->
+    <!-- Scripts Essenciais -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Scripts do Sistema (ordem correta) -->
+    <script src="js/shared/wallet.js"></script>
+    <script src="js/modules/web3.js"></script>
+    <script src="js/shared/template-loader.js"></script>
+    <script src="js/shared/api.js"></script>
+    <script src="js/modules/dashboard.js"></script>
+    <script src="js/modules/dashboard-menu-logout.js"></script>
+    <script src="js/modules/user-level-manager.js"></script>
+    <script src="js/theme-controller-unified.js"></script>
+    
+    <!-- Inicialização do Dashboard -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🎯 Inicializando Dashboard...');
+            
+            // Aguarda um momento para todos os scripts carregarem
+            setTimeout(() => {
+                // Carrega o menu lateral
+                if (typeof TemplateLoader !== 'undefined') {
+                    const loader = new TemplateLoader();
+                    loader.loadTemplate('dashboard/dashboard-menu.html', 'dashboard-menu-container')
+                        .then(() => {
+                            console.log('✅ Menu lateral carregado');
+                            
+                            // Inicializa o dashboard manager se disponível
+                            if (typeof dashboardManager !== 'undefined' && dashboardManager.init) {
+                                dashboardManager.init();
+                                console.log('✅ Dashboard Manager inicializado');
+                            }
+                        })
+                        .catch(e => console.error('❌ Erro ao carregar menu:', e));
+                } else {
+                    console.error('❌ TemplateLoader não disponível');
+                }
+            }, 1000);
+        });
+    </script>
 </body>
 </html>

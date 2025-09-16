@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Widget SaaS - Design System Bootstrap</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ===== DESIGN SYSTEM CUSTOMIZADO BASEADO EM BOOTSTRAP ===== */
+        
+        /* 1. TIPOGRAFIA */
+        :root {
+            --bs-font-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        body {
+            font-family: var(--bs-font-sans-serif);
+            font-weight: 400;
+            line-height: 1.6;
+        }
+        
+        /* 2. PALETA DE CORES CUSTOMIZADA */
+        :root {
+            /* Cores Principais - Baseadas em Bootstrap */
+            --bs-primary: #007bff;
+            --bs-primary-rgb: 0, 123, 255;
+            --bs-secondary: #6c757d;
+            --bs-secondary-rgb: 108, 117, 125;
+            --bs-success: #28a745;
+            --bs-success-rgb: 40, 167, 69;
+            --bs-info: #17a2b8;
+            --bs-info-rgb: 23, 162, 184;
+            --bs-warning: #ffc107;
+            --bs-warning-rgb: 255, 193, 7;
+            --bs-danger: #dc3545;
+            --bs-danger-rgb: 220, 53, 69;
+            --bs-light: #f8f9fa;
+            --bs-light-rgb: 248, 249, 250;
+            --bs-dark: #212529;
+            --bs-dark-rgb: 33, 37, 41;
+            
+            /* Cores Específicas do Projeto */
+            --widget-primary: #007bff;
+            --widget-accent: #ffc107;
+            --widget-neon: #4facfe;
+            --widget-success: #28a745;
+            
+            /* Efeitos Neon */
+            --neon-glow-light: 0 0 10px rgba(79, 172, 254, 0.3);
+            --neon-glow: 0 0 20px rgba(79, 172, 254, 0.5);
+            --neon-glow-strong: 0 0 30px rgba(79, 172, 254, 0.7);
+            
+            /* Gradientes */
+            --gradient-primary: linear-gradient(135deg, var(--bs-primary) 0%, #0056b3 100%);
+            --gradient-warning: linear-gradient(135deg, var(--bs-warning) 0%, #e0a800 100%);
+            --gradient-success: linear-gradient(135deg, var(--bs-success) 0%, #218838 100%);
+        }
+        
+        /* 3. TEMA ESCURO */
+        [data-bs-theme="dark"] {
+            --bs-primary: #4facfe;
+            --bs-primary-rgb: 79, 172, 254;
+            --bs-warning: #ffd43b;
+            --bs-warning-rgb: 255, 212, 59;
+            --bs-success: #51cf66;
+            --bs-success-rgb: 81, 207, 102;
+            --bs-body-bg: #1a1a1a;
+            --bs-body-color: #ffffff;
+            --bs-secondary-bg: #2d2d2d;
+            --bs-tertiary-bg: #3d3d3d;
+        }
+        
+        /* 4. COMPONENTES CUSTOMIZADOS */
+        
+        /* Botões com Efeito Neon */
+        .btn-neon {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-neon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn-neon:hover::before {
+            left: 100%;
+        }
+        
+        .btn-neon:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--neon-glow);
+        }
+        
+        /* Cards com Hover Effect */
+        .card-hover {
+            transition: all 0.3s ease;
+            border: 1px solid var(--bs-border-color);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border-color: var(--bs-primary);
+        }
+        
+        /* Formulários Aprimorados */
+        .form-control-enhanced {
+            border: 2px solid var(--bs-border-color);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control-enhanced:focus {
+            border-color: var(--bs-primary);
+            box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+        }
+        
+        /* Badges Customizados */
+        .badge-neon {
+            background: var(--gradient-primary);
+            box-shadow: var(--neon-glow-light);
+        }
+        
+        /* Seções com Background Alternado */
+        .section-alt {
+            background: var(--bs-light);
+        }
+        
+        [data-bs-theme="dark"] .section-alt {
+            background: var(--bs-secondary-bg);
+        }
+        
+        /* Navegação Sidebar */
+        .sidebar-nav .nav-link {
+            border-radius: 8px;
+            margin-bottom: 0.25rem;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-nav .nav-link:hover {
+            background-color: var(--bs-primary);
+            color: white;
+        }
+        
+        .sidebar-nav .nav-link.active {
+            background-color: var(--bs-primary);
+            color: white;
+        }
+        
+        /* Utilitários Customizados */
+        .text-gradient {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .shadow-neon {
+            box-shadow: var(--neon-glow);
+        }
+        
+        /* Animações */
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsividade Específica */
+        @media (max-width: 768px) {
+            .btn-lg {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+        
+        /* Demo Styles */
+        .demo-section {
+            border: 2px dashed var(--bs-border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 1rem 0;
+            background: var(--bs-light);
+        }
+        
+        [data-bs-theme="dark"] .demo-section {
+            background: var(--bs-secondary-bg);
+        }
+        
+        .color-swatch {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            border: 2px solid var(--bs-border-color);
+            display: inline-block;
+            margin: 0.25rem;
+        }
+        
+        .font-demo {
+            padding: 1rem;
+            border: 1px solid var(--bs-border-color);
+            border-radius: 8px;
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="fas fa-cube me-2"></i>Widget SaaS - Design System
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#typography">Tipografia</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#colors">Cores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#components">Componentes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#forms">Formulários</a>
+                    </li>
+                </ul>
+                <button class="btn btn-outline-light" onclick="toggleTheme()">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 bg-light border-end">
+                <div class="p-3">
+                    <h6 class="text-muted text-uppercase fw-bold mb-3">Navegação</h6>
+                    <nav class="sidebar-nav">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#overview">
+                                    <i class="fas fa-home me-2"></i>Overview
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#typography">
+                                    <i class="fas fa-font me-2"></i>Tipografia
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#colors">
+                                    <i class="fas fa-palette me-2"></i>Cores
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#components">
+                                    <i class="fas fa-puzzle-piece me-2"></i>Componentes
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#forms">
+                                    <i class="fas fa-wpforms me-2"></i>Formulários
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10">
+                <div class="p-4">
+                    
+                    <!-- Overview -->
+                    <section id="overview" class="mb-5">
+                        <div class="row">
+                            <div class="col-12">
+                                <h1 class="display-4 fw-bold text-gradient mb-4">
+                                    🎨 Design System Bootstrap
+                                </h1>
+                                <p class="lead text-muted mb-4">
+                                    Sistema de design padronizado para Widget SaaS baseado em Bootstrap 5.3
+                                </p>
+                                
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    <strong>Objetivo:</strong> Padronizar todos os componentes usando Bootstrap como base, 
+                                    mantendo a identidade visual única do projeto com efeitos neon e gradientes.
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Tipografia -->
+                    <section id="typography" class="mb-5">
+                        <h2 class="h1 fw-bold mb-4">
+                            <i class="fas fa-font text-primary me-3"></i>Tipografia
+                        </h2>
+                        
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h3 class="h4 mb-3">Fonte Principal</h3>
+                                <div class="font-demo">
+                                    <h5 class="mb-2">Inter (Google Fonts)</h5>
+                                    <p class="mb-1"><code>font-family: 'Inter', sans-serif;</code></p>
+                                    <p class="text-muted small">Fonte moderna, legível e otimizada para interfaces</p>
+                                </div>
+                                
+                                <h3 class="h4 mb-3 mt-4">Pesos de Fonte</h3>
+                                <div class="font-demo">
+                                    <p class="fw-light">Light (300) - Textos secundários</p>
+                                    <p class="fw-normal">Regular (400) - Texto padrão</p>
+                                    <p style="font-weight: 500;">Medium (500) - Labels e navegação</p>
+                                    <p style="font-weight: 600;">Semibold (600) - Subtítulos</p>
+                                    <p class="fw-bold">Bold (700) - Títulos importantes</p>
+                                    <p style="font-weight: 800;">Extrabold (800) - Destaques</p>
+                                    <p style="font-weight: 900;">Black (900) - Títulos principais</p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h3 class="h4 mb-3">Hierarquia de Títulos</h3>
+                                <div class="font-demo">
+                                    <h1 class="display-1">Display 1</h1>
+                                    <h1 class="display-2">Display 2</h1>
+                                    <h1 class="display-3">Display 3</h1>
+                                    <h1 class="display-4">Display 4</h1>
+                                    <h1>Heading 1</h1>
+                                    <h2>Heading 2</h2>
+                                    <h3>Heading 3</h3>
+                                    <h4>Heading 4</h4>
+                                    <h5>Heading 5</h5>
+                                    <h6>Heading 6</h6>
+                                    <p class="lead">Lead paragraph</p>
+                                    <p>Parágrafo normal</p>
+                                    <p class="small">Texto pequeno</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Cores -->
+                    <section id="colors" class="mb-5 section-alt p-4 rounded">
+                        <h2 class="h1 fw-bold mb-4">
+                            <i class="fas fa-palette text-warning me-3"></i>Paleta de Cores
+                        </h2>
+                        
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h3 class="h4 mb-3">Cores Principais (Bootstrap)</h3>
+                                <div class="d-flex flex-wrap mb-4">
+                                    <div class="text-center me-3 mb-3">
+                                        <div class="color-swatch bg-primary"></div>
+                                        <small class="d-block mt-1">Primary<br><code>#007bff</code></small>
+                                    </div>
+                                    <div class="text-center me-3 mb-3">
+                                        <div class="color-swatch bg-secondary"></div>
+                                        <small class="d-block mt-1">Secondary<br><code>#6c757d</code></small>
+                                    </div>
+                                    <div class="text-center me-3 mb-3">
+                                        <div class="color-swatch bg-success"></div>
+                                        <small class="d-block mt-1">Success<br><code>#28a745</code></small>
+                                    </div>
+                                    <div class="text-center me-3 mb-3">
+                                        <div class="color-swatch bg-info"></div>
+                                        <small class="d-block mt-1">Info<br><code>#17a2b8</code></small>
+                                    </div>
+                                    <div class="text-center me-3 mb-3">
+                                        <div class="color-swatch bg-warning"></div>
+                                        <small class="d-block mt-1">Warning<br><code>#ffc107</code></small>
+                                    </div>
+                                    <div class="text-center me-3 mb-3">
+                                        <div class="color-swatch bg-danger"></div>
+                                        <small class="d-block mt-1">Danger<br><code>#dc3545</code></small>
+                                    </div>
+                                </div>
+                                
+                                <h3 class="h4 mb-3">Cores Neutras</h3>
+                                <div class="d-flex flex-wrap mb-4">
+                                    <div class="text-center me-3 mb-3">
+                                        <div class="color-swatch bg-light border"></div>
+                                        <small class="d-block mt-1">Light<br><code>#f8f9fa</code></small>
+                                    </div>
+                                    <div class="text-center me-3 mb-3">
+                                        <div class="color-swatch bg-dark"></div>
+                                        <small class="d-block mt-1">Dark<br><code>#212529</code></small>
+                                    </div>
+                                    <div class="text-center me-3 mb-3">
+                                        <div class="color-swatch" style="background: #e9ecef;"></div>
+                                        <small class="d-block mt-1">Gray 200<br><code>#e9ecef</code></small>
+                                    </div>
+                                    <div class="text-center me-3 mb-3">
+                                        <div class="color-swatch" style="background: #adb5bd;"></div>
+                                        <small class="d-block mt-1">Gray 500<br><code>#adb5bd</code></small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h3 class="h4 mb-3">Cores Específicas do Projeto</h3>
+                                <div class="d-flex flex-wrap mb-4">
+                                    <div class="text-center me-3 mb-3">
+                                        <div class="color-swatch" style="background: #4facfe;"></div>
+                                        <small class="d-block mt-1">Neon Blue<br><code>#4facfe</code></small>
+                                    </div>
+                                    <div class="text-center me-3 mb-3">
+                                        <div class="color-swatch" style="background: linear-gradient(135deg, #007bff, #0056b3);"></div>
+                                        <small class="d-block mt-1">Gradient Primary<br><code>gradient</code></small>
+                                    </div>
+                                    <div class="text-center me-3 mb-3">
+                                        <div class="color-swatch" style="background: linear-gradient(135deg, #ffc107, #e0a800);"></div>
+                                        <small class="d-block mt-1">Gradient Warning<br><code>gradient</code></small>
+                                    </div>
+                                </div>
+                                
+                                <h3 class="h4 mb-3">Tema Escuro</h3>
+                                <div class="alert alert-dark">
+                                    <i class="fas fa-moon me-2"></i>
+                                    <strong>Cores adaptadas para tema escuro:</strong>
+                                    <ul class="mb-0 mt-2">
+                                        <li>Primary: #4facfe (mais claro)</li>
+                                        <li>Warning: #ffd43b (mais vibrante)</li>
+                                        <li>Success: #51cf66 (mais suave)</li>
+                                        <li>Background: #1a1a1a</li>
+                                        <li>Surface: #2d2d2d</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Componentes -->
+                    <section id="components" class="mb-5">
+                        <h2 class="h1 fw-bold mb-4">
+                            <i class="fas fa-puzzle-piece text-success me-3"></i>Componentes
+                        </h2>
+                        
+                        <!-- Botões -->
+                        <div class="mb-5">
+                            <h3 class="h4 mb-3">Botões</h3>
+                            <div class="demo-section">
+                                <h5 class="mb-3">Botões Padrão Bootstrap</h5>
+                                <div class="d-flex flex-wrap gap-2 mb-4">
+                                    <button class="btn btn-primary">Primary</button>
+                                    <button class="btn btn-secondary">Secondary</button>
+                                    <button class="btn btn-success">Success</button>
+                                    <button class="btn btn-info">Info</button>
+                                    <button class="btn btn-warning">Warning</button>
+                                    <button class="btn btn-danger">Danger</button>
+                                </div>
+                                
+                                <h5 class="mb-3">Botões Outline</h5>
+                                <div class="d-flex flex-wrap gap-2 mb-4">
+                                    <button class="btn btn-outline-primary">Primary</button>
+                                    <button class="btn btn-outline-secondary">Secondary</button>
+                                    <button class="btn btn-outline-success">Success</button>
+                                </div>
+                                
+                                <h5 class="mb-3">Botões com Efeito Neon</h5>
+                                <div class="d-flex flex-wrap gap-2 mb-4">
+                                    <button class="btn btn-primary btn-neon">
+                                        <i class="fas fa-rocket me-2"></i>Começar Agora
+                                    </button>
+                                    <button class="btn btn-warning btn-neon">
+                                        <i class="fas fa-star me-2"></i>Premium
+                                    </button>
+                                    <button class="btn btn-success btn-neon">
+                                        <i class="fas fa-check me-2"></i>Confirmar
+                                    </button>
+                                </div>
+                                
+                                <h5 class="mb-3">Tamanhos</h5>
+                                <div class="d-flex flex-wrap gap-2 align-items-center">
+                                    <button class="btn btn-primary btn-sm">Pequeno</button>
+                                    <button class="btn btn-primary">Normal</button>
+                                    <button class="btn btn-primary btn-lg">Grande</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Cards -->
+                        <div class="mb-5">
+                            <h3 class="h4 mb-3">Cards</h3>
+                            <div class="demo-section">
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card">
+                                            <div class="card-header bg-primary text-white">
+                                                <h5 class="card-title mb-0">Card Padrão</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <p class="card-text">Conteúdo do card usando estrutura Bootstrap padrão.</p>
+                                                <button class="btn btn-primary">Ação</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card card-hover">
+                                            <div class="card-body text-center">
+                                                <i class="fas fa-star text-warning fa-3x mb-3"></i>
+                                                <h5 class="card-title">Card com Hover</h5>
+                                                <p class="card-text">Card com efeito hover personalizado.</p>
+                                                <button class="btn btn-outline-primary">Ver Mais</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card border-primary">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <h5 class="card-title mb-0">Estatística</h5>
+                                                    <span class="badge bg-primary badge-neon">Ativo</span>
+                                                </div>
+                                                <h2 class="text-primary mb-0">1,234</h2>
+                                                <small class="text-muted">Total de usuários</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Badges e Labels -->
+                        <div class="mb-5">
+                            <h3 class="h4 mb-3">Badges e Labels</h3>
+                            <div class="demo-section">
+                                <h5 class="mb-3">Badges Padrão</h5>
+                                <div class="d-flex flex-wrap gap-2 mb-4">
+                                    <span class="badge bg-primary">Primary</span>
+                                    <span class="badge bg-secondary">Secondary</span>
+                                    <span class="badge bg-success">Success</span>
+                                    <span class="badge bg-warning text-dark">Warning</span>
+                                    <span class="badge bg-danger">Danger</span>
+                                </div>
+                                
+                                <h5 class="mb-3">Badges com Efeito</h5>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <span class="badge bg-primary badge-neon">Neon Primary</span>
+                                    <span class="badge bg-success badge-neon">Neon Success</span>
+                                    <span class="badge bg-warning text-dark badge-neon">Neon Warning</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Alertas -->
+                        <div class="mb-5">
+                            <h3 class="h4 mb-3">Alertas</h3>
+                            <div class="demo-section">
+                                <div class="alert alert-primary" role="alert">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    <strong>Informação:</strong> Este é um alerta informativo.
+                                </div>
+                                <div class="alert alert-success" role="alert">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    <strong>Sucesso:</strong> Operação realizada com sucesso!
+                                </div>
+                                <div class="alert alert-warning" role="alert">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                    <strong>Atenção:</strong> Verifique os dados antes de continuar.
+                                </div>
+                                <div class="alert alert-danger" role="alert">
+                                    <i class="fas fa-times-circle me-2"></i>
+                                    <strong>Erro:</strong> Ocorreu um problema na operação.
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Formulários -->
+                    <section id="forms" class="mb-5 section-alt p-4 rounded">
+                        <h2 class="h1 fw-bold mb-4">
+                            <i class="fas fa-wpforms text-info me-3"></i>Formulários
+                        </h2>
+                        
+                        <div class="demo-section">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h5 class="mb-3">Formulário Padrão Bootstrap</h5>
+                                    <form>
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Nome Completo</label>
+                                            <input type="text" class="form-control" id="name" placeholder="Digite seu nome">
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">E-mail</label>
+                                            <input type="email" class="form-control" id="email" placeholder="seu@email.com">
+                                            <div class="form-text">Nunca compartilharemos seu e-mail.</div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="select" class="form-label">Categoria</label>
+                                            <select class="form-select" id="select">
+                                                <option selected>Escolha uma opção...</option>
+                                                <option value="1">Desenvolvedor</option>
+                                                <option value="2">Designer</option>
+                                                <option value="3">Gerente</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="message" class="form-label">Mensagem</label>
+                                            <textarea class="form-control" id="message" rows="3" placeholder="Digite sua mensagem..."></textarea>
+                                        </div>
+                                        
+                                        <div class="mb-3 form-check">
+                                            <input type="checkbox" class="form-check-input" id="terms">
+                                            <label class="form-check-label" for="terms">
+                                                Aceito os termos e condi��ões
+                                            </label>
+                                        </div>
+                                        
+                                        <button type="submit" class="btn btn-primary btn-neon">
+                                            <i class="fas fa-paper-plane me-2"></i>Enviar
+                                        </button>
+                                    </form>
+                                </div>
+                                
+                                <div class="col-lg-6">
+                                    <h5 class="mb-3">Formulário Aprimorado</h5>
+                                    <form>
+                                        <div class="mb-3">
+                                            <label for="enhanced-name" class="form-label fw-semibold">Nome</label>
+                                            <input type="text" class="form-control form-control-enhanced" id="enhanced-name" placeholder="Digite seu nome">
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="enhanced-email" class="form-label fw-semibold">E-mail</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-envelope"></i>
+                                                </span>
+                                                <input type="email" class="form-control form-control-enhanced" id="enhanced-email" placeholder="seu@email.com">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="enhanced-phone" class="form-label fw-semibold">Telefone</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-phone"></i>
+                                                </span>
+                                                <input type="tel" class="form-control form-control-enhanced" id="enhanced-phone" placeholder="(11) 99999-9999">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Plano Desejado</label>
+                                            <div class="d-flex gap-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="plan" id="basic" value="basic">
+                                                    <label class="form-check-label" for="basic">Básico</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="plan" id="pro" value="pro">
+                                                    <label class="form-check-label" for="pro">Profissional</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="plan" id="enterprise" value="enterprise">
+                                                    <label class="form-check-label" for="enterprise">Empresarial</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-grid gap-2">
+                                            <button type="submit" class="btn btn-success btn-neon btn-lg">
+                                                <i class="fas fa-rocket me-2"></i>Começar Agora
+                                            </button>
+                                            <button type="button" class="btn btn-outline-secondary">
+                                                <i class="fas fa-times me-2"></i>Cancelar
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            
+                            <!-- Estados de Validação -->
+                            <div class="mt-5">
+                                <h5 class="mb-3">Estados de Validação</h5>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="valid-input" class="form-label">Campo Válido</label>
+                                            <input type="text" class="form-control is-valid" id="valid-input" value="Dados corretos">
+                                            <div class="valid-feedback">Perfeito!</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="invalid-input" class="form-label">Campo Inválido</label>
+                                            <input type="text" class="form-control is-invalid" id="invalid-input" value="Dados incorretos">
+                                            <div class="invalid-feedback">Por favor, corrija este campo.</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="neutral-input" class="form-label">Campo Neutro</label>
+                                            <input type="text" class="form-control" id="neutral-input" placeholder="Digite algo...">
+                                            <div class="form-text">Texto de ajuda opcional.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Grid System -->
+                    <section id="grid" class="mb-5">
+                        <h2 class="h1 fw-bold mb-4">
+                            <i class="fas fa-th text-secondary me-3"></i>Sistema de Grid
+                        </h2>
+                        
+                        <div class="demo-section">
+                            <h5 class="mb-3">Grid Responsivo Bootstrap</h5>
+                            <div class="row g-3 mb-4">
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="bg-primary text-white p-3 rounded text-center">
+                                        col-12 col-md-6 col-lg-4
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="bg-secondary text-white p-3 rounded text-center">
+                                        col-12 col-md-6 col-lg-4
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-4">
+                                    <div class="bg-success text-white p-3 rounded text-center">
+                                        col-12 col-md-12 col-lg-4
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <h5 class="mb-3">Breakpoints</h5>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Breakpoint</th>
+                                            <th>Class infix</th>
+                                            <th>Dimensions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Extra small</td>
+                                            <td><em>None</em></td>
+                                            <td>&lt;576px</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Small</td>
+                                            <td><code>sm</code></td>
+                                            <td>≥576px</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Medium</td>
+                                            <td><code>md</code></td>
+                                            <td>≥768px</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Large</td>
+                                            <td><code>lg</code></td>
+                                            <td>≥992px</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Extra large</td>
+                                            <td><code>xl</code></td>
+                                            <td>≥1200px</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Extra extra large</td>
+                                            <td><code>xxl</code></td>
+                                            <td>≥1400px</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Implementação -->
+                    <section id="implementation" class="mb-5">
+                        <h2 class="h1 fw-bold mb-4">
+                            <i class="fas fa-code text-info me-3"></i>Guia de Implementação
+                        </h2>
+                        
+                        <div class="alert alert-success">
+                            <h5 class="alert-heading">
+                                <i class="fas fa-check-circle me-2"></i>Próximos Passos
+                            </h5>
+                            <hr>
+                            <ol class="mb-0">
+                                <li><strong>Migrar CSS:</strong> Substituir variáveis customizadas por Bootstrap</li>
+                                <li><strong>Atualizar HTML:</strong> Usar classes Bootstrap padrão</li>
+                                <li><strong>Manter Efeitos:</strong> Preservar animações neon e gradientes únicos</li>
+                                <li><strong>Testar Responsividade:</strong> Verificar em todos os dispositivos</li>
+                                <li><strong>Otimizar Performance:</strong> Remover CSS desnecessário</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="card-title mb-0">✅ Manter</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled mb-0">
+                                            <li>• Efeitos neon únicos</li>
+                                            <li>• Gradientes personalizados</li>
+                                            <li>• Animações de hover</li>
+                                            <li>• Cores de marca</li>
+                                            <li>• Widget de venda isolado</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h5 class="card-title mb-0">🔄 Migrar</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled mb-0">
+                                            <li>• Sistema de espaçamento</li>
+                                            <li>• Classes de botões</li>
+                                            <li>• Estrutura de cards</li>
+                                            <li>• Formulários</li>
+                                            <li>• Grid system</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Toggle Theme
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            
+            if (html.getAttribute('data-bs-theme') === 'dark') {
+                html.setAttribute('data-bs-theme', 'light');
+                icon.className = 'fas fa-moon';
+            } else {
+                html.setAttribute('data-bs-theme', 'dark');
+                icon.className = 'fas fa-sun';
+            }
+        }
+        
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Add fade-in animation to sections
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        });
+        
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

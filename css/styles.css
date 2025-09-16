@@ -2860,4 +2860,114 @@ footer hr.border-white-50 {
     color: var(--neon-mustard-bright) !important;
 }
 
+/* ===== FILTROS DE WIDGETS - ALTURA UNIFORME ===== */
+.widgets-section .form-control,
+.widgets-section .form-select {
+    height: 38px !important;
+    padding: 6px 12px !important;
+    font-size: 14px !important;
+    line-height: 1.42857143 !important;
+    border: 1px solid var(--border-primary);
+    border-radius: 4px;
+}
+
+.widgets-section .form-select {
+    padding-right: 30px !important;
+}
+
+.widgets-section .form-label {
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Tema escuro para filtros */
+[data-theme="dark"] .widgets-section .form-control,
+[data-theme="dark"] .widgets-section .form-select {
+    background-color: var(--bg-tertiary);
+    border-color: var(--bg-quaternary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .widgets-section .form-control:focus,
+[data-theme="dark"] .widgets-section .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(79, 172, 254, 0.25);
+}
+
+/* ===== INDICADOR DE NÍVEL DE USUÁRIO ===== */
+.wallet-info {
+    position: relative;
+}
+
+.wallet-info.admin {
+    border-color: var(--danger-color) !important;
+    background: linear-gradient(135deg, rgba(220, 53, 69, 0.1) 0%, rgba(220, 53, 69, 0.05) 100%);
+}
+
+.wallet-info.user {
+    border-color: var(--success-color) !important;
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(40, 167, 69, 0.05) 100%);
+}
+
+.user-level-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: bold;
+    z-index: 10;
+}
+
+.user-level-badge.admin {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.user-level-badge.user {
+    background-color: var(--success-color);
+    color: white;
+}
+
+/* ===== COLAPSO DE MENUS (UM POR VEZ) ===== */
+.nav-link[data-bs-toggle="collapse"] {
+    position: relative;
+}
+
+.nav-link[aria-expanded="true"] {
+    background: rgba(0, 123, 255, 0.1);
+    color: var(--primary-color) !important;
+}
+
+.collapse.collapsing {
+    transition: height 0.35s ease;
+}
+
+.collapse.show {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* Indicador visual para menu ativo */
+.nav-link[aria-expanded="true"]::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--primary-color);
+}
+
+/* Animação da seta */
+.nav-link .menu-arrow {
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+}
+
+.nav-link[aria-expanded="true"] .menu-arrow {
+    transform: rotate(180deg);
+}
+
 /* ===== FINAL DO ARQUIVO ===== */

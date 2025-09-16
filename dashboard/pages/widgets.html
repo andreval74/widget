@@ -16,7 +16,7 @@
     <div class="card mb-4">
         <div class="card-body">
             <div class="row g-3">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label class="form-label">Status</label>
                     <select class="form-select" id="filter-status">
                         <option value="">Todos</option>
@@ -25,7 +25,7 @@
                         <option value="draft">Rascunho</option>
                     </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label class="form-label">Período</label>
                     <select class="form-select" id="filter-period">
                         <option value="">Todos</option>
@@ -34,7 +34,7 @@
                         <option value="quarter">Último trimestre</option>
                     </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label class="form-label">Buscar</label>
                     <input type="text" class="form-control" id="search-widgets" placeholder="Nome do token ou widget...">
                 </div>
@@ -45,42 +45,15 @@
     <!-- Lista de Widgets -->
     <div id="widgets-list">
         <div class="text-center py-5">
-            <i class="fas fa-spinner fa-spin fa-2x"></i>
-            <p class="mt-3">Carregando widgets...</p>
+            <i class="fas fa-search fa-3x text-muted mb-3"></i>
+            <p class="mt-3">Verificando widgets...</p>
         </div>
     </div>
 
     <!-- Paginação -->
-    <nav aria-label="Contratos pagination" id="contracts-pagination" style="display: none;">
+    <nav aria-label="Widgets pagination" id="widgets-pagination" style="display: none;">
         <ul class="pagination justify-content-center">
             <!-- Será preenchido dinamicamente -->
         </ul>
     </nav>
 </div>
-
-<script>
-// Função para carregar contratos
-function loadContractsPage() {
-    if (typeof dashboardManager !== 'undefined') {
-        dashboardManager.loadContracts();
-        
-        // Event listeners para filtros
-        document.getElementById('filter-status').addEventListener('change', filterContracts);
-        document.getElementById('filter-period').addEventListener('change', filterContracts);
-        document.getElementById('search-contracts').addEventListener('input', filterContracts);
-    }
-}
-
-function filterContracts() {
-    const status = document.getElementById('filter-status').value;
-    const period = document.getElementById('filter-period').value;
-    const search = document.getElementById('search-contracts').value;
-    
-    if (typeof dashboardManager !== 'undefined') {
-        dashboardManager.filterContracts({ status, period, search });
-    }
-}
-
-// Carregar dados quando a seção for exibida
-loadContractsPage();
-</script>
